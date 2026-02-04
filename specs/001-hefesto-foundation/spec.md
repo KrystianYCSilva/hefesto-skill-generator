@@ -1,3 +1,12 @@
+---
+description: "Feature specification for Hefesto Foundation Infrastructure with user stories and acceptance criteria"
+feature: "001-hefesto-foundation"
+type: "specification"
+status: "complete"
+created: "2026-02-04"
+version: "1.0.0"
+---
+
 # Feature Specification: Hefesto Foundation Infrastructure
 
 **Feature Branch**: `001-hefesto-foundation`  
@@ -65,7 +74,7 @@ As a project stakeholder, I want the CONSTITUTION.md to be immutable and enforce
 
 **Acceptance Scenarios**:
 
-1. **Given** Hefesto is initialized with CONSTITUTION.md, **When** I attempt to generate a skill with an invalid name (uppercase, special chars), **Then** the operation is rejected with a reference to T0-HEFESTO-04
+1. **Given** Hefesto is initialized with CONSTITUTION.md, **When** I attempt to generate a skill with an invalid name (uppercase, special chars), **Then** the operation is rejected with a reference to T0-HEFESTO-07
 2. **Given** CONSTITUTION.md exists, **When** any `/hefesto.*` command loads, **Then** the system validates against T0 rules before proceeding
 3. **Given** a skill violates T0-HEFESTO-03 (>500 lines), **When** I attempt to persist it, **Then** the Human Gate blocks persistence and suggests moving content to references/
 
@@ -79,7 +88,7 @@ As a project stakeholder, I want the CONSTITUTION.md to be immutable and enforce
 - When MEMORY.md is corrupted or contains invalid state data, the system backs up the corrupted file with timestamp suffix (e.g., MEMORY.md.backup.2026-02-04T14-30-00), creates a fresh MEMORY.md, and rescans the filesystem to rebuild state from existing skill directories
 - When CLIs are installed after Hefesto initialization, they are not automatically detected; users must manually trigger re-detection using a command (e.g., `/hefesto.detect` or `/hefesto.init --detect`) to add newly installed CLIs and create their directory structures
 - When CONSTITUTION.md is manually deleted or modified outside Hefesto, the system detects this on every command execution: if missing, it automatically restores from the bundled copy; if modified externally, it validates the structure and blocks all operations if T0 rules are violated or missing
-- How does the system handle projects with multiple Git worktrees or submodules?
+- When projects use multiple Git worktrees or submodules, each worktree gets independent MEMORY.md (separate state), CONSTITUTION.md is shared from main repo (symlink or copy), and submodules can have their own Hefesto initialization. Documentation maintained in `docs/guides/git-integration.md`.
 
 ## Clarifications
 

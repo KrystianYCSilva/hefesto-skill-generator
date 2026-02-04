@@ -1,3 +1,13 @@
+---
+description: "Quickstart guide with step-by-step instructions and test scenarios for Hefesto Foundation Infrastructure"
+feature: "001-hefesto-foundation"
+type: "quickstart"
+audience: "developers"
+status: "complete"
+created: "2026-02-04"
+version: "1.0.0"
+---
+
 # Quickstart: Hefesto Foundation Infrastructure
 
 **Feature**: 001-hefesto-foundation  

@@ -1,4 +1,4 @@
-﻿# AGENTS.md - Hefesto Skill Generator
+# AGENTS.md - Hefesto Skill Generator
 
 > **Bootstrap para AI Agents**
 > **Versao:** 1.0.0
@@ -48,12 +48,14 @@
 
 | Comando | Descricao | Human Gate |
 |---------|-----------|------------|
+| `/hefesto.init` | Inicializar Hefesto (bootstrap) | Nao |
 | `/hefesto.create` | Criar skill de descricao | Sim |
 | `/hefesto.extract` | Extrair skill de codigo | Sim |
 | `/hefesto.validate` | Validar skill existente | Nao |
 | `/hefesto.adapt` | Adaptar para outro CLI | Sim |
 | `/hefesto.sync` | Sincronizar entre CLIs | Sim |
 | `/hefesto.list` | Listar skills | Nao |
+| `/hefesto.detect` | Re-detectar CLIs instalados | Nao |
 
 ---
 

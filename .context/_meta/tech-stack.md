@@ -55,13 +55,30 @@
 | Formato | Markdown + YAML | Padrao Agent Skills |
 | Templates | Markdown com placeholders | Compatibilidade universal |
 | Validacao | Regex + Schema | Conformidade com spec |
+| Shell Scripts | Bash/PowerShell | Cross-platform CLI detection |
+| Linguagem | Markdown (prompt-based) | Zero dependencies |
+
+### Foundation Infrastructure (Implementado)
+
+| Componente | Tecnologia | Arquivo |
+|------------|------------|---------|
+| Bootstrap | Markdown definitions | `commands/hefesto.init.md` |
+| CLI Detection | Shell scripts (Bash/PowerShell) | `commands/helpers/cli-detection-strategy.md` |
+| State Management | YAML frontmatter + Markdown tables | `commands/templates/memory-template.md` |
+| Validation | Pattern matching + schema validation | `commands/helpers/constitution-validator.md` |
+| Recovery | Filesystem scanning + backup | `commands/helpers/memory-recovery.md` |
+| Error Handling | Structured error codes | `commands/helpers/error-handling.md` |
 
 ### Armazenamento
 
-| Local | Uso |
-|-------|-----|
-| Projeto atual | Skills geradas por padrao |
-| `~/.hefesto/` | Configuracoes globais (opcional) |
+| Local | Uso | Formato |
+|-------|-----|---------|
+| `MEMORY.md` (raiz projeto) | Estado persistente | YAML + Markdown |
+| `CONSTITUTION.md` (raiz projeto) | Regras T0 | YAML + Markdown |
+| `.{cli}/skills/` | Skills geradas por padrao | Markdown (SKILL.md) |
+| `commands/` | Definicoes de comandos | Markdown |
+| `commands/helpers/` | Logica auxiliar | Markdown |
+| `commands/templates/` | Templates | Markdown |
 
 ### Formatos Suportados
 

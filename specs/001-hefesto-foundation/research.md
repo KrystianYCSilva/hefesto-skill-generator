@@ -1,3 +1,13 @@
+---
+description: "Research findings and technical decisions for Hefesto Foundation Infrastructure implementation"
+feature: "001-hefesto-foundation"
+type: "research"
+phase: "0"
+status: "complete"
+created: "2026-02-04"
+version: "1.0.0"
+---
+
 # Research: Hefesto Foundation Infrastructure
 
 **Feature**: 001-hefesto-foundation  

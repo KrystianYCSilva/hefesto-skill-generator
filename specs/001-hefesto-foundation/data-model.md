@@ -1,3 +1,13 @@
+---
+description: "Data model definition with entities, attributes, relationships, and validation rules for Hefesto Foundation"
+feature: "001-hefesto-foundation"
+type: "data-model"
+phase: "1"
+status: "complete"
+created: "2026-02-04"
+version: "1.0.0"
+---
+
 # Data Model: Hefesto Foundation Infrastructure
 
 **Feature**: 001-hefesto-foundation  

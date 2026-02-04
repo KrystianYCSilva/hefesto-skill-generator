@@ -1,3 +1,12 @@
+---
+description: "Implementation plan for Hefesto Foundation Infrastructure including technical context and constitution compliance"
+feature: "001-hefesto-foundation"
+type: "plan"
+status: "complete"
+created: "2026-02-04"
+version: "1.0.0"
+---
+
 # Implementation Plan: Hefesto Foundation Infrastructure
 
 **Branch**: `001-hefesto-foundation` | **Date**: 2026-02-04 | **Spec**: [spec.md](./spec.md)
