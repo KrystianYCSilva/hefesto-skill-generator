@@ -1,4 +1,4 @@
-# AGENTS.md - Hefesto Skill Generator
+﻿# AGENTS.md - Hefesto Skill Generator
 
 > **Bootstrap para AI Agents**
 > **Versao:** 1.0.0
