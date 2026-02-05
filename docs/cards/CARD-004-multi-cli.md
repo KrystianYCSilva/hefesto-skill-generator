@@ -65,18 +65,24 @@
 - [x] Report de CLIs detectados vs nao detectados
 - [x] Fallback para pergunta se zero detectados
 
+### Test Results (2026-02-05)
+
+**Manual Tests:** 9/9 passed ✅
+**Mandatory Criteria:** 10/10 met ✅
+**Desirable Criteria:** 3/3 met ✅
+
 ---
 
 ## 6. Tarefas (Sub-Cards)
 
-- [ ] CARD-004.1: Implementar detector de executaveis (PATH)
-- [ ] CARD-004.2: Implementar detector de config dirs
-- [ ] CARD-004.3: Unificar resultados de deteccao
-- [ ] CARD-004.4: Implementar geracao paralela
-- [ ] CARD-004.5: Implementar argumento `--cli`
-- [ ] CARD-004.6: Implementar report de deteccao
-- [ ] CARD-004.7: Implementar fallback interativo
-- [ ] CARD-004.8: Testes de integracao por CLI
+- [x] CARD-004.1: Implementar detector de executaveis (PATH)
+- [x] CARD-004.2: Implementar detector de config dirs
+- [x] CARD-004.3: Unificar resultados de deteccao
+- [x] CARD-004.4: Implementar geracao paralela
+- [x] CARD-004.5: Implementar argumento `--cli`
+- [x] CARD-004.6: Implementar report de deteccao
+- [x] CARD-004.7: Implementar fallback interativo
+- [x] CARD-004.8: Testes de integracao por CLI
 
 ---
 

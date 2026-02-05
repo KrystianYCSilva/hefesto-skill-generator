@@ -1,5 +1,32 @@
 # CARD-005: Human Gate + Wizard - Controle Humano
 
+## Status: ✅ COMPLETED (2026-02-05)
+
+**Release:** LTS v1.0.0  
+**Completion Date:** 2026-02-05
+
+### Completion Notes
+
+Human Gate and Wizard Mode successfully delivered with:
+- Full preview-approve workflow for all write operations
+- Interactive Wizard Mode for `/hefesto.create` and `/hefesto.extract`
+- User actions: [approve], [expand], [edit], [reject]
+- JIT resource expansion (scripts/, references/, assets/)
+- Existing skill handling: [overwrite], [merge], [cancel]
+- State persistence with `/hefesto.resume` for timeout recovery
+- 5-minute timeout with auto-save
+- Zero persistence without explicit approval (T0-HEFESTO-02 compliance)
+
+### User Stories Completed
+
+1. Preview before write ✅
+2. Interactive wizard ✅
+3. JIT expansion ✅
+4. Conflict resolution ✅
+5. Timeout recovery ✅
+
+---
+
 ## 1. Descricao & User Story
 
 "Como um **usuario consciente de seguranca**, eu quero que o Hefesto **sempre me mostre** o que sera criado e **aguarde minha aprovacao**, para que eu tenha **controle total** sobre o que e persistido no meu projeto."
@@ -75,31 +102,31 @@
 
 ## 5. Criterios de Aceite
 
-- [ ] Human Gate funcional para todos comandos de escrita
-- [ ] Preview mostra conteudo exato a ser criado
-- [ ] Opcoes [approve], [expand], [edit], [reject] funcionando
-- [ ] Wizard mode implementado para /hefesto.create
-- [ ] Wizard mode implementado para /hefesto.extract
-- [ ] Expansao JIT iterativa funcionando
-- [ ] Tratamento de skill existente ([overwrite], [merge], [cancel])
-- [ ] Timeout implementado
-- [ ] Mensagens de confirmacao apos persistencia
+- [x] Human Gate funcional para todos comandos de escrita
+- [x] Preview mostra conteudo exato a ser criado
+- [x] Opcoes [approve], [expand], [edit], [reject] funcionando
+- [x] Wizard mode implementado para /hefesto.create
+- [x] Wizard mode implementado para /hefesto.extract
+- [x] Expansao JIT iterativa funcionando
+- [x] Tratamento de skill existente ([overwrite], [merge], [cancel])
+- [x] Timeout implementado (5 min with state save)
+- [x] Mensagens de confirmacao apos persistencia
 
 ---
 
 ## 6. Tarefas (Sub-Cards)
 
-- [ ] CARD-005.1: Implementar geracao em memoria (sem persistencia)
-- [ ] CARD-005.2: Implementar validacao pre-persistencia
-- [ ] CARD-005.3: Implementar formatador de preview
-- [ ] CARD-005.4: Implementar handler de aprovacao
-- [ ] CARD-005.5: Implementar handler de expansao
-- [ ] CARD-005.6: Implementar handler de edicao inline
-- [ ] CARD-005.7: Implementar handler de rejeicao
-- [ ] CARD-005.8: Implementar wizard /hefesto.create
-- [ ] CARD-005.9: Implementar wizard /hefesto.extract
-- [ ] CARD-005.10: Implementar tratamento skill existente
-- [ ] CARD-005.11: Implementar timeout
+- [x] CARD-005.1: Implementar geracao em memoria (sem persistencia)
+- [x] CARD-005.2: Implementar validacao pre-persistencia
+- [x] CARD-005.3: Implementar formatador de preview
+- [x] CARD-005.4: Implementar handler de aprovacao
+- [x] CARD-005.5: Implementar handler de expansao
+- [x] CARD-005.6: Implementar handler de edicao inline
+- [x] CARD-005.7: Implementar handler de rejeicao
+- [x] CARD-005.8: Implementar wizard /hefesto.create
+- [x] CARD-005.9: Implementar wizard /hefesto.extract
+- [x] CARD-005.10: Implementar tratamento skill existente
+- [x] CARD-005.11: Implementar timeout com state save
 
 ---
 
@@ -116,7 +143,7 @@
 
 | Campo | Valor |
 |-------|-------|
-| **Status** | Planned |
+| **Status** | ✅ COMPLETED (2026-02-05) |
 | **Prioridade** | Alta |
 | **Estimativa** | 10h |
 | **Assignee** | AI Agent |

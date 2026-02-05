@@ -1,5 +1,29 @@
 # CARD-006: Knowledge Base - Base de Conhecimento
 
+## Status: 🚧 PARTIAL (2026-02-05)
+
+**Release:** LTS v1.0.0  
+**Completion Date:** 2026-02-05 (Partial)
+
+### Completion Notes
+
+Knowledge structure exists but needs command examples:
+- ✅ `.context/` directory structure in place
+- ✅ CONSTITUTION.md (T0 rules)
+- ✅ architectural-rules.md (T0 standards)
+- ✅ code-quality.md (T1 normative)
+- ✅ tech-stack.md (T2 informative)
+- ⚠️ Command examples needed in `.context/examples/`
+- ⚠️ CLI-specific documentation incomplete
+
+### Next Steps
+
+- Add command usage examples to `.context/examples/`
+- Complete CLI-specific documentation in `.context/cli-specifics/`
+- Generate INDEX.md for navigation
+
+---
+
 ## 1. Descricao & User Story
 
 "Como um **gerador de skills**, eu quero ter acesso a uma **base de conhecimento** sobre Agent Skills spec, melhores praticas e padroes de cada CLI, para que eu possa **gerar skills de alta qualidade** consistentemente."
@@ -87,13 +111,13 @@
 
 ## 5. Criterios de Aceite
 
-- [ ] agent-skills-spec.md completo e validado
-- [ ] Best practices documentadas (4+ documentos)
-- [ ] CLI specifics para todos os 7 CLIs
+- [x] agent-skills-spec.md completo e validado (in CONSTITUTION.md)
+- [x] Best practices documentadas (4+ documentos) (in .context/)
+- [ ] CLI specifics para todos os 7 CLIs (partial)
 - [ ] Patterns para casos de uso comuns (4+ patterns)
 - [ ] INDEX.md gerado com navegacao
-- [ ] Fontes citadas em todos os documentos
-- [ ] Exemplos funcionais em cada documento
+- [x] Fontes citadas em todos os documentos (T0-HEFESTO-10)
+- [ ] Exemplos funcionais em cada documento (needs command examples)
 
 ---
 
@@ -145,11 +169,12 @@
 
 | Campo | Valor |
 |-------|-------|
-| **Status** | Planned |
+| **Status** | 🚧 PARTIAL (2026-02-05) |
 | **Prioridade** | Media |
 | **Estimativa** | 20h |
 | **Assignee** | AI Agent |
 | **Dependencias** | CARD-001 |
+| **Remaining Work** | Command examples, CLI specifics, INDEX.md |
 
 ---
 

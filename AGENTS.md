@@ -59,6 +59,19 @@
 | `/hefesto.sync` | Sincronizar skills com templates | Sim | ✅ Operacional |
 | `/hefesto.show` | Exibir conteudo de skill especifica | Nao | ✅ Operacional |
 | `/hefesto.delete` | Deletar skill com confirmacao | Sim | ✅ Operacional |
+| `/hefesto.resume` | Retomar wizard interrompido de estado salvo | Sim | ✅ Operacional |
+
+### Resume Usage
+
+```bash
+# Wizard timed out after 5 minutes
+# Output: "State saved to: .hefesto/temp/wizard-state-2026-02-05T14-30-00.json"
+# Resume from exact same state:
+/hefesto.resume .hefesto/temp/wizard-state-2026-02-05T14-30-00.json
+
+# List available wizard states
+ls .hefesto/temp/wizard-state-*.json
+```
 
 ### Multi-CLI Features
 

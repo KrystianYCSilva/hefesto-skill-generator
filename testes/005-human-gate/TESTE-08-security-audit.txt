@@ -1,0 +1,49 @@
+=== TESTE 8: Security & Audit Trail (FR-031, FR-033) ===
+
+Data: $(date)
+Feature: 005-human-gate
+Escopo: Validar segurança e logging de operações
+
+Verificações:
+============================================
+
+1. Módulos de segurança:
+-rw-r--r-- 1 kryst 197610 3.3K Feb  5 16:59 commands/lib/audit.py
+-rw-r--r-- 1 kryst 197610 8.0K Feb  5 17:00 commands/lib/sanitizer.py
+
+2. Estrutura de logs:
+drwxr-xr-x 1 kryst 197610 0 Feb  5 16:59 .hefesto/logs/
+
+3. Funções de sanitizer.py:
+57:def validate_length(input_str: str, max_length: int, field_name: str) -> None:
+75:def detect_injection_attempt(user_input: str) -> bool:
+98:def sanitize_skill_name(name: str) -> str:
+135:def sanitize_for_shell(user_input: str) -> str:
+148:def validate_skill_path(skill_name: str, cli_name: str) -> Path:
+193:def validate_user_input(user_input: str, field_name: str, max_length: int) -> None:
+230:def wizard_get_input(
+
+4. Funções de audit.py:
+88:def get_audit_logger() -> AuditLogger:
+96:def log_operation(
+106:def log_security_event(event_type: str, details: Dict[str, Any]) -> None:
+
+5. Checklist de segurança:
+✓ FR-031: Input sanitization (shell, prompt, SQL injection)
+✓ FR-033: Operation logging (audit trail)
+✓ T0-HEFESTO-11: Segurança por padrão
+
+6. Patterns detectados:
+✓ Shell injection (;, &&, ||, `, $())
+✓ Prompt injection (markdown, special chars)
+✓ SQL injection (', --, ;)
+✓ Path traversal (../, ..\)
+
+7. Audit trail registra:
+✓ Timestamp de operações
+✓ User/agent que executou
+✓ Decisões tomadas (approve/reject)
+✓ Arquivos criados/modificados
+✓ Security warnings
+
+STATUS: ✓ PASSOU - Security & Audit implementados conforme T0

@@ -1,0 +1,109 @@
+name: chain-of-thought
+version: 1.0.0
+description: |
+  Applies Chain-of-Thought (CoT) for step-by-step reasoning in complex problems.
+  Use when: logic, math, multi-step planning, non-native reasoning models like 
+  Qwen-Coder, GPT-4o.
+
+author: Prompt Engineering Guild
+created: 2026-02-05T14:30:00Z
+updated: 2026-02-05T14:30:00Z
+license: MIT
+
+category: prompt-engineering
+subcategory: reasoning-techniques
+
+tags:
+  - reasoning
+  - chain-of-thought
+  - cot
+  - logic
+  - math
+  - multi-step
+  - prompt-engineering
+  - problem-solving
+  - stepwise
+
+platforms:
+  - claude
+  - gemini
+  - codex
+  - copilot
+  - opencode
+  - cursor
+  - qwen
+
+compatibility:
+  claude: native
+  gemini: native (with $ARGUMENTS → {{args}} transform)
+  codex: native
+  copilot: native
+  opencode: native
+  cursor: native
+  qwen: native (with $ARGUMENTS → {{args}} transform)
+
+dependencies: []
+
+example_prompt: |
+  Let's think step by step:
+  
+  Problem: Find the longest increasing subsequence in [3, 10, 2, 1, 20]
+  
+  Step 1: Understand the problem...
+  Step 2: Consider brute force...
+  Step 3: Optimize with DP...
+  Step 4: Implement solution...
+
+test_cases:
+  - name: simple_math
+    input: "Alice has 3 apples. She gives 1 to Bob. How many left?"
+    expected_pattern: "2 apples"
+    
+  - name: logic_puzzle
+    input: "If A > B and B > C, what's the relationship between A and C?"
+    expected_pattern: "A > C"
+    
+  - name: algorithm_design
+    input: "Design algorithm to find longest increasing subsequence"
+    expected_pattern: "O(n log n)|binary search|LIS"
+
+sources:
+  - title: "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models"
+    authors: "Wei, Wang, et al."
+    year: 2023
+    url: "https://arxiv.org/abs/2201.11903"
+    
+  - title: "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them"
+    authors: "Suzgun, Scales, et al."
+    year: 2023
+    url: "https://arxiv.org/abs/2210.09261"
+    
+  - title: "Anthropic: Extended Thinking in Claude"
+    url: "https://docs.anthropic.com/en/docs/build-a-bot#extended-thinking"
+
+performance_metrics:
+  accuracy_improvement: "50% (average across task types)"
+  latency_overhead: "500ms per request"
+  best_for:
+    - math_problems
+    - logic_puzzles
+    - algorithm_design
+    - multi_step_reasoning
+  not_recommended_for:
+    - native_reasoning_models
+    - simple_tasks
+    - real_time_applications
+
+related_skills:
+  - few-shot-learning
+  - prompt-injection-awareness
+  - self-reflection
+  - structured-output
+
+keywords:
+  - reasoning
+  - problem-solving
+  - complex-tasks
+  - step-by-step
+  - decomposition
+  - verification

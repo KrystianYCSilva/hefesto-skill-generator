@@ -21,5 +21,24 @@ Thumbs.db
 # Environment
 .env*
 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
 # Spec artifacts (generated)
 .specify/cache/
