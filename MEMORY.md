@@ -171,7 +171,7 @@ skill-name/
 | **Versão** | 1.0.0 |
 | **Criada** | 2026-02-04 (Sessão 8) |
 | **Categoria** | development |
-| **Target CLI** | OpenCode |
+| **Target CLIs** | OpenCode, Claude, Gemini, Codex, Cursor, Qwen (6 CLIs) |
 | **Compatível** | Claude, Gemini, Codex, Copilot, OpenCode, Cursor, Qwen |
 | **Descrição** | Fundamentos Java (POO, clean code, recursos Java 6-25) |
 | **Estrutura** | Progressive Disclosure (SKILL.md + 8 references/*.md) |
@@ -179,10 +179,16 @@ skill-name/
 | **Java Versions** | 6-25 (generic, sem frameworks) |
 | **Tags** | java, oop, clean-code, best-practices, design-patterns |
 | **Fontes** | 5 (Oracle, Effective Java, JLS, Clean Code, GoF) |
-| **Status** | ✅ Validada contra T0, persistida |
+| **Status** | ✅ Validada contra T0, persistida, sincronizada |
+| **Sincronizada** | 2026-02-04 (Sessão 8) para 6 CLIs |
 
 **Arquivos criados:**
-- `.opencode/skills/java-fundamentals/SKILL.md` (480 linhas)
+- `.opencode/skills/java-fundamentals/SKILL.md` (425 linhas)
+- `.claude/skills/java-fundamentals/SKILL.md` (425 linhas)
+- `.gemini/skills/java-fundamentals/SKILL.md` (425 linhas)
+- `.codex/skills/java-fundamentals/SKILL.md` (425 linhas)
+- `.cursor/skills/java-fundamentals/SKILL.md` (425 linhas)
+- `.qwen/skills/java-fundamentals/SKILL.md` (425 linhas)
 - `.opencode/skills/java-fundamentals/metadata.yaml` (completo)
 - `.opencode/skills/java-fundamentals/references/generics.md` (450 linhas)
 - `.opencode/skills/java-fundamentals/references/concurrency.md` (400 linhas)
@@ -197,14 +203,20 @@ skill-name/
 
 ## CLIs Detectados
 
-| CLI | Status | Caminho |
-|-----|--------|---------|
-| **OpenCode** | ✅ Detectado | C:\Users\kryst\AppData\Roaming\npm\opencode |
-| **Java JDK** | ✅ Detectado (v25.0.2) | Multiple paths |
-| **Maven** | ✅ Detectado (v3.9.12) | C:\Maven\apache-maven-3.9.12 |
-| **Gradle** | ❌ Não detectado | - |
+| CLI | Status | Versão | Skills |
+|-----|--------|--------|--------|
+| **OpenCode** | ✅ Detectado | 1.1.48 | 1 (java-fundamentals) |
+| **Claude Code** | ✅ Detectado | 2.1.31 | 1 (java-fundamentals) |
+| **Gemini CLI** | ✅ Detectado | 0.27.0 | 1 (java-fundamentals) |
+| **Codex** | ✅ Detectado | unknown | 1 (java-fundamentals) |
+| **Cursor** | ✅ Detectado | 2.4.27 | 1 (java-fundamentals) |
+| **Qwen Code** | ✅ Detectado | unknown | 1 (java-fundamentals) |
+| **Java JDK** | ✅ Detectado | 25.0.2 | - |
+| **Maven** | ✅ Detectado | 3.9.12 | - |
+| **Gradle** | ❌ Não detectado | - | - |
 
-**Última detecção**: 2026-02-04
+**Última detecção**: 2026-02-04  
+**Total AI CLIs**: 6
 
 ---
 
@@ -222,6 +234,7 @@ skill-name/
 | **Regras T0** | 11 |
 | **ADRs** | 3 |
 | **Skills Criadas** | 1 (java-fundamentals) |
+| **Skills Sincronizadas** | 6 CLIs (OpenCode, Claude, Gemini, Codex, Cursor, Qwen) |
 
 ---
 
@@ -265,6 +278,8 @@ skill-name/
 | 2026-02-04 | 4 | Metadados JIT (ADR-003) |
 | 2026-02-04 | 5-7 | Feature 003: Comandos Hefesto (spec, implementação) |
 | 2026-02-04 | 8 | /hefesto.create: Primeira skill java-fundamentals ✅ |
+| 2026-02-04 | 8 | /hefesto.detect: 5 novos CLIs detectados (Claude, Gemini, Codex, Cursor, Qwen) |
+| 2026-02-04 | 8 | /hefesto.sync: java-fundamentals sincronizada para 6 CLIs ✅ |
 
 ---
 
