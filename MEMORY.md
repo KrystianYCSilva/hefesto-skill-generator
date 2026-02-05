@@ -166,6 +166,9 @@ skill-name/
 - [ ] Atualizar CONSTITUTION.md (validar T0-HEFESTO-02 enforcement)
 - [ ] Marcar CARDs 001-005 como finalizados
 - [ ] Atualizar docs/README.md com Features 004-005 sections
+- [ ] Criar arquivos de governança: `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, templates de Issues/PR, CI workflows
+- [x] Criados: `LICENSE` (MIT), `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, Issue templates, PR template, basic CI workflows
+- [ ] Atualizar `MEMORY.md` com sessão de governança (Session 13)
 
 ### Futuro (Por Ordem)
 
