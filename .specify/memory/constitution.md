@@ -1,50 +1,154 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+  SYNC IMPACT REPORT
+  ==================
+  Version Change: [TEMPLATE] → 1.0.0
+  
+  Modified Principles:
+  - [PRINCIPLE_1_NAME] → I. Spec-First Development
+  - [PRINCIPLE_2_NAME] → II. Human Gate Protocol
+  - [PRINCIPLE_3_NAME] → III. Test-Driven Implementation (NON-NEGOTIABLE)
+  - [PRINCIPLE_4_NAME] → IV. Progressive Documentation
+  - [PRINCIPLE_5_NAME] → V. Constitution Compliance
+  
+  Added Sections:
+  - Development Workflow (replaced [SECTION_2_NAME])
+  - Quality Gates (replaced [SECTION_3_NAME])
+  - Governance
+  
+  Removed Sections: None
+  
+  Templates Requiring Updates:
+  ✅ .specify/templates/plan-template.md - Constitution Check section reviewed and aligned
+  ✅ .specify/templates/spec-template.md - Requirements structure aligned with principles
+  ✅ .specify/templates/tasks-template.md - Task categorization aligned with workflow principles
+  
+  Follow-up TODOs: None - all placeholders filled
+  
+  Rationale for v1.0.0:
+  - Initial ratification of .specify tooling governance
+  - Establishes foundational principles for /speckit command workflow
+  - Separate from project-level CONSTITUTION.md (Hefesto governance)
+-->
+
+# SpecKit Tooling Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Spec-First Development
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Every feature begins with a complete specification before any implementation. Specifications MUST define user scenarios, requirements, and success criteria in technology-agnostic language. No code SHALL be written until the specification is approved by a human stakeholder.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**Rationale**: Prevents scope creep, ensures shared understanding, and enables independent testing of requirements before technical decisions are made.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Human Gate Protocol
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+All specification artifacts (spec.md, plan.md, tasks.md) MUST be presented to the user for explicit approval before persistence. The system SHALL offer [approve], [expand], [edit], [reject] options and MUST NOT assume implicit approval.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**Rationale**: Maintains human authority over project direction, prevents automated decisions from diverging from stakeholder intent, and ensures artifacts align with actual needs.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### III. Test-Driven Implementation (NON-NEGOTIABLE)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+When tests are specified in the feature requirements, they MUST be written FIRST and MUST FAIL before implementation begins. The Red-Green-Refactor cycle is strictly enforced: failing tests → implementation → passing tests → refactoring.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**Rationale**: Ensures code meets requirements, prevents regression, and validates that tests are actually testing the intended behavior rather than existing implementation.
+
+**Enforcement**: Tasks involving tests SHALL include explicit checkpoints: "Verify test fails" BEFORE "Implement feature".
+
+### IV. Progressive Documentation
+
+Documentation follows Just-In-Time (JIT) loading principles:
+- **plan.md**: Core technical context and structure (<200 lines preferred)
+- **research.md**: Detailed research and alternatives (Phase 0 output)
+- **data-model.md**: Entity and schema details (Phase 1 output)
+- **contracts/**: API contracts and interface definitions (Phase 1 output)
+- **tasks.md**: Granular implementation tasks (Phase 2 output, generated by separate command)
+
+Core documents MUST reference detailed documents rather than inlining extensive content.
+
+**Rationale**: Reduces cognitive load, enables targeted reading, and keeps core planning documents scannable and maintainable.
+
+### V. Constitution Compliance
+
+All generated artifacts MUST pass Constitution Check before Phase 0 research and MUST be re-checked after Phase 1 design. Violations MUST be documented in the "Complexity Tracking" section with explicit justification and rejected simpler alternatives.
+
+**Rationale**: Prevents architectural drift, enforces conscious decisions about complexity, and ensures governance rules are actively validated rather than passively assumed.
+
+## Development Workflow
+
+### Phase 0: Research (plan command)
+- Load feature specification from user
+- Generate plan.md with technical context
+- Generate research.md with alternatives and trade-offs
+- Present for Human Gate approval
+
+### Phase 1: Design (plan command)
+- Generate data-model.md with entities and schemas
+- Generate quickstart.md with setup and usage instructions
+- Generate contracts/ with API/interface definitions
+- Re-run Constitution Check
+- Present for Human Gate approval
+
+### Phase 2: Task Breakdown (tasks command)
+- Load approved plan.md, spec.md, and Phase 1 artifacts
+- Generate tasks.md organized by user story priority
+- Group tasks by story for independent implementation
+- Mark parallel opportunities with [P]
+- Present for Human Gate approval
+
+### Phase 3: Implementation (manual or automated)
+- Execute tasks following priority order (P1 → P2 → P3)
+- Follow Test-Driven Implementation principle when tests are specified
+- Commit after each logical task or group
+- Validate checkpoints at story completion
+
+## Quality Gates
+
+### Pre-Research Gate (Before Phase 0)
+- [ ] Feature specification exists and is approved
+- [ ] User scenarios are defined with acceptance criteria
+- [ ] Success criteria are measurable
+- [ ] Constitution Check passes or violations are justified
+
+### Pre-Design Gate (Before Phase 1)
+- [ ] Research document approved
+- [ ] Technical approach selected and justified
+- [ ] Dependencies and constraints identified
+
+### Pre-Implementation Gate (Before Phase 2)
+- [ ] All design documents approved (data-model, quickstart, contracts)
+- [ ] Constitution Check re-validated
+- [ ] Project structure defined
+- [ ] Test strategy determined (if applicable)
+
+### Per-Story Gate (During Phase 3)
+- [ ] Story tests written and failing (if tests are specified)
+- [ ] Implementation complete
+- [ ] Story tests passing (if tests are specified)
+- [ ] Story independently testable
+- [ ] Story documented
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### Amendment Procedure
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+1. **Proposal**: Document proposed change with rationale and impact analysis
+2. **Review**: Assess compatibility with existing artifacts and workflows
+3. **Approval**: Explicit human approval required
+4. **Migration**: Update all templates and documentation referencing changed principles
+5. **Version**: Increment version according to semantic versioning
+
+### Versioning Policy
+
+- **MAJOR**: Backward-incompatible changes to principles or workflow phases
+- **MINOR**: New principles added or existing principles materially expanded
+- **PATCH**: Clarifications, wording improvements, non-semantic refinements
+
+### Compliance Review
+
+All artifacts generated by /speckit commands MUST verify compliance with this constitution. Violations MUST be reported to the user with the specific principle violated and SHALL NOT be persisted without explicit override approval.
+
+### Runtime Guidance
+
+For general development practices and coding standards outside the /speckit workflow, refer to the project-level `CONSTITUTION.md` at the repository root. For Hefesto-specific skill generation rules, refer to `.context/standards/architectural-rules.md`.
+
+**Version**: 1.0.0 | **Ratified**: 2026-02-04 | **Last Amended**: 2026-02-04

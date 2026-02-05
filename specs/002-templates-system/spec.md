@@ -90,7 +90,7 @@ As a skill generator, I want to provide an MCP adapter that converts Agent Skill
 
 **Acceptance Scenarios**:
 
-1. **Given** a valid Agent Skills SKILL.md, **When** I apply the MCP adapter, **Then** the output is a valid MCP server following the Model Context Protocol specification
+1. **Given** a valid Agent Skills SKILL.md, **When** I apply the MCP adapter, **Then** the output is a valid MCP server following Model Context Protocol specification version 2024-11-05 or higher
 2. **Given** an MCP-adapted skill, **When** I start the server and query available tools, **Then** the skill appears with its name and description from the original frontmatter
 3. **Given** multiple skills adapted to MCP, **When** I deploy them, **Then** each runs as an independent server without shared state or conflicts
 
@@ -105,6 +105,8 @@ As a skill generator, I want to provide an MCP adapter that converts Agent Skill
 - When generating a skill with metadata.yaml but the target CLI doesn't support custom metadata files, the adapter flattens relevant metadata fields into the main SKILL.md as comments to preserve information without breaking compatibility
 - When applying multiple adapters sequentially (e.g., base → Claude → MCP), the system validates that each transformation preserves the Agent Skills structure and warns if adapter ordering creates conflicts
 - When a template references external resources via relative paths (e.g., `./scripts/helper.sh`) but the target directory structure doesn't match, the adapter adjusts paths or fails with clear instructions about expected structure
+- When templates in `.hefesto/templates/` are outdated (template version < Hefesto version in MEMORY.md), the system warns the user to run `/hefesto.init` to update templates and avoid generating skills with stale templates
+- When Agent Skills validation fails during generation, the system blocks persistence via Human Gate, displays each validation error with the failing rule ID and suggestion (e.g., "name contains uppercase - use lowercase per T0-HEFESTO-07"), and prompts user to fix input before retrying
 
 ## Clarifications
 
@@ -115,23 +117,34 @@ As a skill generator, I want to provide an MCP adapter that converts Agent Skill
 - Q: When skill bodies contain literal text resembling variables, how can users escape them? → A: Provide double-brace escape mechanism where `{{{{VAR}}}}` renders as `{{VAR}}`
 - Q: When CLIs don't support metadata.yaml, how should adapters handle expanded metadata? → A: Flatten relevant metadata into main SKILL.md as comments to preserve information
 - Q: When applying adapters sequentially, what validation should occur? → A: Validate each transformation preserves Agent Skills structure and warn about adapter ordering conflicts
+- Q: Where should template files (skill-template.md, adapters/, metadata.yaml template) be stored? → A: In each user project after `/hefesto.init` (`.hefesto/templates/`)
+- Q: How should Agent Skills specification validation be performed (FR-012)? → A: In-process validation via specification rules encoded in Hefesto
+- Q: How should template versioning be handled when templates evolve or Agent Skills spec changes? → A: Templates versioned with Hefesto releases; updates via re-init
+- Q: When Agent Skills validation fails during skill generation, what should happen? → A: Block with Human Gate; present errors with suggestions
+- Q: Which Model Context Protocol (MCP) specification version should the MCP adapter target (FR-005)? → A: 2024-11-05 (or higher)
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
-- **FR-001**: System MUST provide a base skill template (skill-template.md) that validates against the Agent Skills specification without any modifications
+- **FR-001**: System MUST provide a base skill template (skill-template.md) stored in `.hefesto/templates/` that validates against the Agent Skills specification without any modifications
+- **FR-020**: System MUST copy all templates from Hefesto source to `.hefesto/templates/` during `/hefesto.init` bootstrap
+- **FR-021**: System MUST encode Agent Skills specification validation rules internally (YAML frontmatter structure, required fields, naming conventions) without external dependencies
+- **FR-022**: Templates MUST be versioned with Hefesto releases (template version matches Hefesto version)
+- **FR-023**: System MUST support template updates by running `/hefesto.init` again to re-copy templates from updated Hefesto source
+- **FR-024**: System MUST track template version in MEMORY.md to detect when templates are outdated
 - **FR-002**: Base template MUST include YAML frontmatter with exactly 4 fields: name, description, license, metadata (per ADR-003)
 - **FR-003**: Base template MUST support Progressive Disclosure with core content under 500 lines (T0-HEFESTO-03)
-- **FR-004**: System MUST provide 7 CLI adapters: claude.adapter.md, gemini.adapter.md, codex.adapter.md, copilot.adapter.md, opencode.adapter.md, cursor.adapter.md, qwen.adapter.md
-- **FR-005**: System MUST provide 1 MCP adapter: mcp.adapter.md for Model Context Protocol server generation
-- **FR-006**: System MUST provide a metadata.yaml template with all 15 expanded metadata fields documented in ADR-002
+- **FR-004**: System MUST provide 7 CLI adapters stored in `.hefesto/templates/adapters/`: claude.adapter.md, gemini.adapter.md, codex.adapter.md, copilot.adapter.md, opencode.adapter.md, cursor.adapter.md, qwen.adapter.md
+- **FR-005**: System MUST provide 1 MCP adapter stored in `.hefesto/templates/adapters/`: mcp.adapter.md for Model Context Protocol server generation targeting MCP spec version 2024-11-05 or higher
+- **FR-006**: System MUST provide a metadata.yaml template stored in `.hefesto/templates/` with all 15 expanded metadata fields documented in ADR-002
 - **FR-007**: Variable substitution system MUST support exactly these variables: `{{SKILL_NAME}}`, `{{SKILL_DESCRIPTION}}`, `{{SKILL_BODY}}`, `{{CREATED_DATE}}`, `{{VERSION}}`, `{{ARGUMENTS}}`
 - **FR-008**: System MUST validate variable names against the official list (RT05) before substitution occurs
 - **FR-009**: System MUST automatically populate `{{CREATED_DATE}}` with current ISO 8601 timestamp if not provided
 - **FR-010**: CLI adapters MUST transform `{{ARGUMENTS}}` to CLI-specific syntax: `$ARGUMENTS` for Claude/Codex/Copilot/OpenCode/Cursor, `{{args}}` for Gemini/Qwen
 - **FR-011**: System MUST validate that generated SKILL.md frontmatter is under 100 tokens (ADR-003)
-- **FR-012**: System MUST validate generated skills against Agent Skills specification before persistence
+- **FR-012**: System MUST validate generated skills against Agent Skills specification before persistence using in-process validation rules (no external validator required)
+- **FR-025**: System MUST block skill persistence when Agent Skills validation fails, triggering Human Gate with detailed error report and actionable suggestions (T0-HEFESTO-02)
 - **FR-013**: System MUST enforce naming rules (T0-HEFESTO-07): lowercase, hyphens, max 64 chars for `{{SKILL_NAME}}` substitution
 - **FR-014**: System MUST create directory structure for JIT resources: scripts/, references/, assets/ when requested
 - **FR-015**: Adapters MUST be idempotent - same input produces byte-for-byte identical output (RQ03)
@@ -142,11 +155,13 @@ As a skill generator, I want to provide an MCP adapter that converts Agent Skill
 
 ### Key Entities *(include if feature involves data)*
 
-- **Template**: Represents a reusable skill structure with attributes: file path, content (string), variables (list), validation status (boolean), format (base | adapter | metadata)
+- **Template**: Represents a reusable skill structure with attributes: file path (relative to `.hefesto/templates/`), content (string), variables (list), validation status (boolean), format (base | adapter | metadata), version (string, matches Hefesto version)
 - **Variable**: Represents a substitution placeholder with attributes: name (string), value (string | null), required (boolean), default value (string | null), validation rules (regex | enum)
 - **Adapter**: Represents a CLI-specific transformation with attributes: target CLI (enum), input template (Template), output format (string), transformation rules (list), idempotency hash (string)
 - **Metadata Structure**: Represents JIT metadata with attributes: frontmatter fields (4 required), metadata.yaml fields (11 optional per ADR-002), JIT resources (scripts/references/assets paths)
-- **Validation Result**: Represents template validation outcome with attributes: is valid (boolean), errors (list of strings), warnings (list of strings), spec version (string)
+- **Validation Result**: Represents template validation outcome with attributes: is valid (boolean), errors (list of ValidationError), warnings (list of strings), spec version (string), validation rules applied (list)
+- **Validation Error**: Represents a specific validation failure with attributes: rule ID (string), field name (string), actual value (string), expected constraint (string), suggestion (string)
+- **Validation Rule**: Represents an Agent Skills specification constraint with attributes: rule ID (string), description (string), validator function (predicate), error message template (string)
 
 ## Success Criteria *(mandatory)*
 
@@ -161,6 +176,7 @@ As a skill generator, I want to provide an MCP adapter that converts Agent Skill
 - **SC-007**: Skills with metadata.yaml remain under 500 lines in SKILL.md while supporting 15+ metadata fields
 - **SC-008**: MCP adapter generates servers that successfully start and respond to tool queries in 100% of integration tests
 - **SC-009**: Template generation handles 95%+ of edge cases (undefined variables, escape sequences, missing defaults) without crashes
+- **SC-011**: Validation errors include actionable suggestions in 100% of cases (no generic "invalid input" messages)
 - **SC-010**: All templates and adapters are documented with usage examples and integrate with `/hefesto.create` command
 
 ### Assumptions
@@ -168,12 +184,13 @@ As a skill generator, I want to provide an MCP adapter that converts Agent Skill
 - Users generate skills using commands that invoke templates (templates are not manually edited by users)
 - CLI adapters are maintained as the respective CLI documentation evolves
 - The Agent Skills specification remains stable during development or changes are backward compatible
-- The Model Context Protocol (MCP) specification is sufficiently stable for adapter implementation
+- The Model Context Protocol (MCP) specification version 2024-11-05 or higher is sufficiently stable for adapter implementation
 - Users have at least one of the 7 supported CLIs installed when generating skills
 - Skills generated for a specific CLI are deployed to that CLI's designated skills directory (e.g., .claude/skills/)
 - Variable values provided by users or commands are pre-sanitized for basic security (no injection attacks via templates)
 - JIT metadata loading is supported by the AI agents consuming the skills (or gracefully ignored if not)
-- Template files themselves are stored in the Hefesto repository, not in individual user projects
+- Template files are copied to `.hefesto/templates/` in each user project during `/hefesto.init` and read from there during skill generation
+- Template versions are tied to Hefesto releases; users update templates by re-running `/hefesto.init` after upgrading Hefesto
 - The foundation infrastructure (CARD-001) is complete and provides CLI detection, state persistence, and constitutional validation
 
 ---
