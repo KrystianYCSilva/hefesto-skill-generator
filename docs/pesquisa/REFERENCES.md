@@ -211,6 +211,7 @@ CLIs e ferramentas:
 ---
 
 ## Projetos de Pesquisa, Artigos & Recursos Acadêmicos
+- Skill.sh: https://skills.sh/
 - DSPy: https://github.com/stanfordnlp/dspy  — https://docs.dspy.ai/
 - MasRouter (routing em multi-agent systems)
     - ACL paper: https://aclanthology.org/2025.acl-long.757.pdf
@@ -348,3 +349,4 @@ incluí todos os links identificáveis nas versões que você forneceu)
 - https://www.turing.com/resources/ai-agent-frameworks
 - https://windsurf.dev/
 - https://www.pinecone.io/
+- https://skills.sh/

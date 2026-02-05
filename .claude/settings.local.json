@@ -25,7 +25,9 @@
       "Bash(wc:*)",
       "Bash(/c/Users/kryst/AppData/Local/Microsoft/WindowsApps/python3:*)",
       "Bash(/c/Users/kryst/AppData/Local/Programs/Python/Python313/python.exe -c \"print\\(''hello''\\)\")",
-      "Bash(/c/Users/kryst/AppData/Local/Programs/Python/Python313/python.exe:*)"
+      "Bash(/c/Users/kryst/AppData/Local/Programs/Python/Python313/python.exe:*)",
+      "WebFetch(domain:learnprompting.org)",
+      "WebSearch"
     ]
   }
 }

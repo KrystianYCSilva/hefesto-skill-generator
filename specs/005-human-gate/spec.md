@@ -94,7 +94,7 @@ As an **advanced user**, I want to **edit the generated skill inline** before ap
 
 ### Edge Cases
 
-- **What happens when timeout occurs during wizard?** → Wizard saves current progress to temporary file with path displayed, allowing user to resume or reference later.
+- **What happens when timeout occurs during wizard?** → Wizard saves current progress to `.hefesto/temp/wizard-state-{timestamp}.json` and displays path with instructions to resume via `/hefesto.resume {path}` command.
 - **What happens when user provides empty description in wizard?** → System prompts again with error message (max 3 attempts), then aborts with helpful guidance.
 - **What happens when skill validation fails after Human Gate approval?** → This should never occur (validation happens before Human Gate), but if it does, operation aborts and files are not created (defensive programming).
 - **What happens when multiple CLIs are targeted and one fails to write?** → Atomic rollback: all created files across all CLIs are removed, backup is restored if overwrite was chosen.
@@ -109,7 +109,7 @@ As an **advanced user**, I want to **edit the generated skill inline** before ap
 
 - **FR-001**: System MUST generate all skill content in memory before displaying to user (no filesystem writes until approval)
 - **FR-002**: System MUST validate generated skill against Agent Skills spec (T0-HEFESTO-06) before showing Human Gate
-- **FR-003**: System MUST display formatted preview showing: exact file paths, exact file contents (with intelligent truncation after 50 lines), file sizes, target CLI directories
+- **FR-003**: System MUST display formatted preview showing: exact file paths, exact file contents (truncated to first 50 lines with "... [X more lines]" indicator if longer), file sizes, target CLI directories
 - **FR-004**: System MUST offer exactly four options at Human Gate: `[approve]` `[expand]` `[edit]` `[reject]`
 - **FR-005**: System MUST implement 5-minute timeout for Human Gate response, automatically cancelling operation if exceeded
 - **FR-006**: System MUST persist files atomically only after `[approve]` confirmation (all files succeed or all fail)
@@ -139,7 +139,7 @@ As an **advanced user**, I want to **edit the generated skill inline** before ap
 - **FR-021**: If collision detected, system MUST display existing skill metadata: created date, last modified, author, version
 - **FR-022**: System MUST offer collision resolution options: `[overwrite]` `[merge]` `[cancel]`
 - **FR-023**: For `[overwrite]`, system MUST create backup at `.hefesto/backups/{skill-name}-{ISO8601-timestamp}.tar.gz` before deletion
-- **FR-024**: For `[merge]`, system MUST display unified diff and allow selective merge of sections
+- **FR-024**: For `[merge]`, system MUST display section-by-section diff (frontmatter, each heading section) and prompt user to keep existing or replace with new for each changed section
 - **FR-025**: For `[cancel]`, system MUST abort operation and preserve existing skill intact
 
 #### Inline Editing (P3)
@@ -214,7 +214,7 @@ As an **advanced user**, I want to **edit the generated skill inline** before ap
 - **Collaborative Approval**: Multi-user approval workflows (e.g., skill creation requires team lead approval) not included in v1.0
 - **Approval History UI**: While audit log is created (FR-033), no dashboard or search UI for viewing historical approvals in v1.0
 - **Custom Timeout Configuration**: 5-minute timeout is hardcoded. User-configurable timeout deferred to v1.1
-- **Resumable Wizard from Backup**: Wizard saves progress on timeout, but automatic resume from backup requires manual command (not auto-suggested in v1.0)
+- **Auto-Resume Detection**: Wizard saves progress on timeout to temporary file, but requires explicit `/hefesto.resume` command. Auto-detection of interrupted sessions deferred to v1.1
 
 ## Dependencies
 
@@ -232,53 +232,24 @@ As an **advanced user**, I want to **edit the generated skill inline** before ap
 - **Cross-Platform**: Must work on Windows (PowerShell), macOS/Linux (Bash) without modification
 - **Atomic Operations**: All multi-file operations (multi-CLI generation) must be atomic (all succeed or all fail with rollback)
 
-## Open Questions
+## Clarifications
 
-[NEEDS CLARIFICATION: Merge Strategy for Conflicting Sections]
+### Session 2026-02-05
 
-**Context**: FR-024 requires merge capability when skill collision occurs. Current spec says "display unified diff and allow selective merge of sections."
+**Q1: Merge Strategy for Conflicting Sections**
+- **Decision**: Option C - Section-by-section approval
+- **Rationale**: Aligns with wizard UX pattern, accessible to non-technical users, provides granular control
+- **Impact**: FR-024 updated to specify section-by-section diff with keep/replace prompts per changed section
 
-**What we need to know**: Should the merge be:
+**Q2: Preview Truncation Strategy**
+- **Decision**: Option A - First 50 lines only
+- **Rationale**: Simplest implementation, predictable behavior, consistent truncation point
+- **Impact**: FR-003 updated to specify first 50 lines with "... [X more lines]" indicator
 
-| Option | Answer | Implications |
-| ------ | ------ | ------------ |
-| A | Manual text selection (user edits combined file) | Simpler implementation, requires user to resolve conflicts manually like git merge |
-| B | Three-way merge with conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) | Familiar to developers, automated conflict detection, but complex for non-technical users |
-| C | Section-by-section approval (show each changed section, ask keep/replace) | User-friendly for non-developers, but potentially many prompts for large skills |
-
-**Your choice**: _Option C is recommended for v1.0 (aligns with wizard UX pattern), with Option B as enhancement in v1.1_
-
----
-
-[NEEDS CLARIFICATION: Preview Truncation Strategy]
-
-**Context**: FR-003 specifies "intelligent truncation after 50 lines" for preview display.
-
-**What we need to know**: For skills exceeding 50 lines, what should truncation show?
-
-| Option | Answer | Implications |
-| ------ | ------ | ------------ |
-| A | First 50 lines only (with "... truncated" note) | Simple, predictable, but user doesn't see end of file |
-| B | First 25 lines + last 25 lines (with "... [X lines hidden] ..." in middle) | Shows both beginning and end, but might miss important middle sections |
-| C | Smart truncation (frontmatter + section headers + first few lines of each section) | Most informative, but requires markdown parsing and more complex logic |
-
-**Your choice**: _Option B is recommended for v1.0 (balance of simplicity and usefulness), with Option C as v1.1 enhancement_
-
----
-
-[NEEDS CLARIFICATION: Wizard Interrupt Recovery]
-
-**Context**: Edge case specifies wizard saves progress on timeout/interrupt.
-
-**What we need to know**: When user returns after interrupt, how should recovery work?
-
-| Option | Answer | Implications |
-| ------ | ------ | ------------ |
-| A | Auto-detect interrupted session on next command and prompt to resume | Seamless UX, but requires session tracking and auto-detection logic |
-| B | Explicit resume command: `/hefesto.resume` with saved state path | User must remember to resume, but simpler implementation |
-| C | Save to named temp file, show path in timeout message, user manually copies content | No special resume logic needed, but manual and error-prone |
-
-**Your choice**: _Option B is recommended for v1.0 (clear and simple), with Option A as v1.1 enhancement for better UX_
+**Q3: Wizard Interrupt Recovery**
+- **Decision**: Option B - Explicit `/hefesto.resume` command
+- **Rationale**: Clear user action, simpler implementation, predictable CLI interaction
+- **Impact**: Edge case updated to specify `.hefesto/temp/wizard-state-{timestamp}.json` with resume instructions; Out of Scope updated to defer auto-detection to v1.1
 
 ---
 

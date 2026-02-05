@@ -166,6 +166,26 @@ skill-name/
 
 ## Skills Criadas
 
+### prompt-engineering-basics
+
+| Campo | Valor |
+|-------|-------|
+| **Nome** | prompt-engineering-basics |
+| **Versão** | 1.0.0 |
+| **Criada** | 2026-02-05 (Sessão 11) |
+| **Categoria** | ai-development |
+| **Target CLIs** | OpenCode, Claude (2 CLIs) |
+| **Descrição** | Fundamentos de prompt engineering para modelos generativos (ChatGPT, Claude, Gemini) com técnicas core e avançadas |
+| **Estrutura** | Progressive Disclosure (SKILL.md 335 linhas + 6 references) |
+| **Tamanho** | ~335 linhas (core) + ~2870 linhas (references) |
+| **Técnicas Core** | Zero-shot, Few-shot, Chain-of-Thought, Role Prompting, Instruction Prompting |
+| **Técnicas Avançadas** | Self-Criticism, Decomposition (Least-to-Most), Ensembling (Self-Consistency), Thought Generation (Tree of Thoughts) |
+| **Tags** | prompt-engineering, ai, llm, chatgpt, claude, gemini, best-practices, fundamentals, self-criticism, decomposition, ensembling, thought-generation, chain-of-thought, few-shot |
+| **Fontes** | 9 (Learn Prompting x6, OpenAI Guide, Anthropic Guide, Tree of Thoughts paper arXiv) |
+| **References** | few-shot-prompting, chain-of-thought, advanced-techniques (novo), prompt-templates, model-specific-tips, evaluation-testing |
+| **Adaptações** | Target reduzido de 6 para 2 CLIs conforme solicitação do usuário |
+| **Status** | ✅ Validada contra T0 (335 linhas < 500), aprovada pelo Human Gate com edições, sincronizada para 2 CLIs |
+
 ### coala-framework
 
 | Campo | Valor |
@@ -271,10 +291,10 @@ skill-name/
 
 | CLI | Método | Status | Versão | Skills Dir | Skills |
 |-----|--------|--------|--------|------------|--------|
-| **Claude Code** | PATH + Config | ✅ active | 2.1.31 | .claude/skills/ | java-fundamentals, coala-framework |
+| **Claude Code** | PATH + Config | ✅ active | 2.1.31 | .claude/skills/ | java-fundamentals, coala-framework, prompt-engineering-basics |
 | **Gemini CLI** | PATH + Config | ✅ active | 0.27.0 | .gemini/skills/ | java-fundamentals, coala-framework |
 | **Codex** | PATH + Config | ✅ active | (npm) | .codex/skills/ | java-fundamentals, coala-framework |
-| **OpenCode** | PATH + Config | ✅ active | 1.1.48 | .opencode/skills/ | java-fundamentals, coala-framework |
+| **OpenCode** | PATH + Config | ✅ active | 1.1.48 | .opencode/skills/ | java-fundamentals, coala-framework, prompt-engineering-basics |
 | **Cursor** | PATH + Config | ✅ active | 2.4.27 | .cursor/skills/ | java-fundamentals, coala-framework |
 | **Qwen Code** | PATH + Config | ✅ active | 0.9.0 | .qwen/skills/ | java-fundamentals, coala-framework |
 | **Copilot** | config_dir only | ⚠️ warning_no_path | null | .copilot/skills/ | (vazio) |
@@ -301,8 +321,8 @@ skill-name/
 | **Progresso Geral** | ~57% (4/7 CARDs) |
 | **Regras T0** | 11 |
 | **ADRs** | 3 |
-| **Skills Criadas** | 4 (java-fundamentals, kotlin-fundamentals, markdown-fundamentals, coala-framework) |
-| **Skills Sincronizadas** | 6 CLIs (OpenCode, Claude, Gemini, Codex, Cursor, Qwen) |
+| **Skills Criadas** | 5 (java-fundamentals, kotlin-fundamentals, markdown-fundamentals, coala-framework, prompt-engineering-basics) |
+| **Skills Sincronizadas** | 2-6 CLIs por skill (média: 5 CLIs) |
 
 ---
 
@@ -358,6 +378,7 @@ skill-name/
 | 2026-02-05 | 10 | Executados 9 testes manuais - 100% aprovação (TESTE-01 a TESTE-09) |
 | 2026-02-05 | 10 | Gerados relatórios: test-report (400L), executive-summary (300L), final-checklist (350L), INDEX |
 | 2026-02-05 | 10 | Feature 004 Status: 9/9 testes ✅, 10/10 critérios obrigatórios ✅, 3/3 critérios desejáveis ✅, 8/8 T0 rules ✅ |
+| 2026-02-05 | 10 | /hefesto.create: coala-framework criada e sincronizada para 6 CLIs ✅ (framework CoALA, 4 references, cat. ai-development) |
 
 ---
 
