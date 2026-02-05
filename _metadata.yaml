@@ -1,0 +1,107 @@
+author: "Hefesto Skill Generator"
+version: "1.0.0"
+created: 2026-02-05
+updated: 2026-02-05
+category: documentation
+tags:
+  - markdown
+  - documentation
+  - commonmark
+  - gfm
+  - writing
+  - best-practices
+  - fundamentals
+  - compatibility
+platforms:
+  - opencode
+  - claude
+  - gemini
+  - codex
+  - copilot
+  - cursor
+  - qwen
+dependencies: []
+markdown_specs:
+  primary: "CommonMark"
+  extensions:
+    - "GFM (GitHub Flavored Markdown)"
+    - "GitLab Markdown"
+    - "Mermaid Diagrams"
+    - "Front Matter YAML"
+    - "Footnotes"
+    - "Details/Summary (HTML)"
+example_prompt: |
+  "Crie um README completo para este projeto seguindo boas práticas de Markdown"
+  "Revise este documento Markdown e corrija problemas de hierarquia e compatibilidade"
+  "Adicione um diagrama Mermaid ao README para documentar o fluxo de dados"
+test_cases:
+  - input: "Criar README básico com badges, instalação e uso"
+    expected_output: "Documento com H1 único, badges via shields.io, seções H2, blocos de código com linguagem"
+  - input: "Revisar documento com hierarquia de headings quebrada"
+    expected_output: "Identificar saltos de nível (ex: H1 → H3), sugerir inserção de H2 intermediário"
+  - input: "Adicionar tabela de comparação de features"
+    expected_output: "Tabela GFM com alinhamento consistente, cabeçalho separador, sem conteúdo multi-linha"
+sources:
+  - title: "CommonMark Specification"
+    url: "https://spec.commonmark.org/"
+    accessed: 2026-02-05
+    type: "specification"
+  - title: "GitHub Flavored Markdown Spec"
+    url: "https://github.github.com/gfm/"
+    accessed: 2026-02-05
+    type: "official"
+  - title: "GitHub Writing and Formatting Documentation"
+    url: "https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github"
+    accessed: 2026-02-05
+    type: "official"
+  - title: "GitLab Markdown Reference"
+    url: "https://docs.gitlab.com/ee/user/markdown.html"
+    accessed: 2026-02-05
+    type: "official"
+  - title: "Mermaid JS Documentation"
+    url: "https://mermaid.js.org/"
+    accessed: 2026-02-05
+    type: "official"
+  - title: "W3C WCAG 2.1 Guidelines"
+    url: "https://www.w3.org/WAI/WCAG21/Overview.html"
+    accessed: 2026-02-05
+    type: "standard"
+compatibility: |
+  Requer acesso ao filesystem para ler documentos Markdown existentes.
+  Conhecimento da plataforma de destino (GitHub, GitLab, MkDocs, etc.) é recomendado
+  para aplicar extensões adequadas. Todas as instruções são aplicáveis manualmente
+  sem ferramentas específicas.
+skill_level: beginner-intermediate
+estimated_time: "5-10 minutos por documento"
+interactive: true
+requires_approval: false
+security_notes: |
+  - Não executa código automaticamente
+  - Não acessa rede ou recursos externos
+  - Apenas leitura e análise/geração de texto Markdown
+  - Exemplos não incluem credenciais, tokens ou secrets
+  - Links externos devem ser verificados manualmente antes de publicar
+  - Front matter não deve conter dados sensíveis
+performance_considerations: |
+  - Documentos muito longos (>1000 linhas) podem causar lentidão na renderização em alguns renderizadores
+  - Diagramas Mermaid complexos podem demorar para renderizar; considere dividir em múltiplos diagramas
+  - Imagens grandes (>1MB) devem ser otimizadas antes de incluir no repositório
+progressive_disclosure:
+  core: SKILL.md
+  references:
+    - headings-structure.md
+    - links-images.md
+    - code-blocks.md
+    - tables-lists.md
+    - advanced-features.md
+    - compatibility.md
+total_size: "~268 linhas (core) + ~2200 linhas (references)"
+validation_status: "✅ Validated against Agent Skills spec"
+constitution_compliance:
+  - T0-HEFESTO-01: "✅ Agent Skills Standard compliant"
+  - T0-HEFESTO-02: "✅ Human Gate protocol followed"
+  - T0-HEFESTO-03: "✅ Progressive Disclosure (<500 lines core)"
+  - T0-HEFESTO-06: "✅ Pre-persist validation complete"
+  - T0-HEFESTO-07: "✅ Name format valid (markdown-fundamentals)"
+  - T0-HEFESTO-10: "✅ 6 authoritative sources cited"
+  - T0-HEFESTO-11: "✅ Security best practices included"

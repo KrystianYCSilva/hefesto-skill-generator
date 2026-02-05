@@ -22,7 +22,10 @@
       "Bash(node -e:*)",
       "Bash(for f in \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/SKILL.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/metadata.yaml\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/coroutines.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/collections.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/oop.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/functions.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/types.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/error-handling.md\")",
       "Bash(echo:*)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(/c/Users/kryst/AppData/Local/Microsoft/WindowsApps/python3:*)",
+      "Bash(/c/Users/kryst/AppData/Local/Programs/Python/Python313/python.exe -c \"print\\(''hello''\\)\")",
+      "Bash(/c/Users/kryst/AppData/Local/Programs/Python/Python313/python.exe:*)"
     ]
   }
 }
