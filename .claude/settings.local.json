@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(for d in .claude .gemini .qwen .codex .cursor .copilot .opencode)",
+      "Bash(if [ -d \"$d/skills\" ])",
+      "Bash(then find \"$d/skills\" -type f)",
+      "Bash(else echo \"NÃO EXISTE\")",
+      "Bash(fi:*)",
+      "Bash(done)",
+      "Bash(for d in \"$USERPROFILE/.claude\" \"$USERPROFILE/.gemini\" \"$USERPROFILE/.codex\" \"$USERPROFILE/.opencode\" \"$USERPROFILE/.cursor\" \"$USERPROFILE/.qwen\" \"$USERPROFILE/.vscode\" \"$USERPROFILE/.github\")",
+      "Bash(do if [ -d \"$d\" ])",
+      "Bash(then echo \"EXISTS: $d\")",
+      "Bash(else echo \"MISSING: $d\")",
+      "Bash(for cli in claude gemini codex opencode cursor qwen)",
+      "Bash(do echo \"=== .$cli/skills/kotlin-fundamentals ===\")",
+      "Bash(if [ -d \".$cli/skills/kotlin-fundamentals\" ])",
+      "Bash(then echo \"EXISTE\")",
+      "Bash(else echo \"LIVRE\")",
+      "Bash(for f in /c/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/SKILL.md /c/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/metadata.yaml /c/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/*.md)",
+      "Bash(python3:*)",
+      "Bash(node -e:*)",
+      "Bash(for f in \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/SKILL.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/metadata.yaml\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/coroutines.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/collections.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/oop.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/functions.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/types.md\" \"C:/Users/kryst/IdeaProjects/cli-and-ai/hefesto-skill-generator/.claude/skills/kotlin-fundamentals/references/error-handling.md\")"
+    ]
+  }
+}

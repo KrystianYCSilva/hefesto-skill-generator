@@ -163,7 +163,18 @@ skill-name/
 
 ## Skills Criadas
 
-### 1. java-fundamentals
+### fundamentos-do-kotlin-1xx-e-2xx
+
+| Campo | Valor |
+|-------|-------|
+| **Nome** | fundamentos-do-kotlin-1xx-e-2xx |
+| **Versão** | 1.0.0 |
+| **Criada** | 2026-02-04 |
+| **Categoria** | development |
+| **Target CLIs** | qwen (1 CLI) |
+| **Status** | ⚠️ Registrada no MEMORY mas NÃO encontrada no disco (.qwen/skills/) — requere re-criação |
+
+### java-fundamentals
 
 | Campo | Valor |
 |-------|-------|
@@ -203,20 +214,20 @@ skill-name/
 
 ## CLIs Detectados
 
-| CLI | Status | Versão | Skills |
-|-----|--------|--------|--------|
-| **OpenCode** | ✅ Detectado | 1.1.48 | 1 (java-fundamentals) |
-| **Claude Code** | ✅ Detectado | 2.1.31 | 1 (java-fundamentals) |
-| **Gemini CLI** | ✅ Detectado | 0.27.0 | 1 (java-fundamentals) |
-| **Codex** | ✅ Detectado | unknown | 1 (java-fundamentals) |
-| **Cursor** | ✅ Detectado | 2.4.27 | 1 (java-fundamentals) |
-| **Qwen Code** | ✅ Detectado | unknown | 1 (java-fundamentals) |
-| **Java JDK** | ✅ Detectado | 25.0.2 | - |
-| **Maven** | ✅ Detectado | 3.9.12 | - |
-| **Gradle** | ❌ Não detectado | - | - |
+| CLI | Método | Status | Versão | Skills Dir | Skills |
+|-----|--------|--------|--------|------------|--------|
+| **Claude Code** | PATH + Config | ✅ active | 2.1.31 | .claude/skills/ | java-fundamentals |
+| **Gemini CLI** | PATH + Config | ✅ active | 0.27.0 | .gemini/skills/ | java-fundamentals |
+| **Codex** | PATH + Config | ✅ active | (npm) | .codex/skills/ | java-fundamentals |
+| **OpenCode** | PATH + Config | ✅ active | 1.1.48 | .opencode/skills/ | java-fundamentals |
+| **Cursor** | PATH + Config | ✅ active | 2.4.27 | .cursor/skills/ | java-fundamentals |
+| **Qwen Code** | PATH + Config | ✅ active | 0.9.0 | .qwen/skills/ | java-fundamentals |
+| **Copilot** | config_dir only | ⚠️ warning_no_path | null | .copilot/skills/ | (vazio) |
 
-**Última detecção**: 2026-02-04  
-**Total AI CLIs**: 6
+**Nota:** `code` no PATH aponta para binário do Cursor, não VS Code. Copilot não detectável sem ~/.vscode ou extensão instalada.
+
+**Última detecção**: 2026-02-04 (hefesto.init re-scan)
+**Total AI CLIs**: 7 (6 active, 1 warning_no_path)
 
 ---
 
@@ -280,7 +291,31 @@ skill-name/
 | 2026-02-04 | 8 | /hefesto.create: Primeira skill java-fundamentals ✅ |
 | 2026-02-04 | 8 | /hefesto.detect: 5 novos CLIs detectados (Claude, Gemini, Codex, Cursor, Qwen) |
 | 2026-02-04 | 8 | /hefesto.sync: java-fundamentals sincronizada para 6 CLIs ✅ |
+| 2026-02-04 | 9 | /hefesto.init: re-scan CLIs, 7 detectados (6 active + Copilot warning), inconsistência kotlin skill flagged |
 
 ---
 
 **MEMORY.md** | Hefesto Skill Generator | Atualizado: 2026-02-04
+
+---
+
+## Reports Generated
+
+### Session 008 Reports (2026-02-04)
+
+| Report | Description | Size | Status |
+|--------|-------------|------|--------|
+| **session-008-execution-report.md** | Detailed session execution analysis | 269 lines | ✅ Complete |
+| **session-008-new-commands-proposal.md** | Proposed new commands (distribute, extend, edit) | ~300 lines | ✅ Complete |
+
+**Location**: `docs/reports/`
+
+**Key Findings**:
+- ✅ Successfully created and distributed java-fundamentals skill
+- ❌ Identified `/hefesto.sync` semantic confusion (used incorrectly for distribution)
+- ❌ Missing `/hefesto.extend` command for incremental skill updates
+- ❌ Missing `/hefesto.distribute` command for multi-CLI distribution
+- 📋 Proposed 3 new CARDs (008, 009, 010) with 36h total effort
+
+**Next Sprint**: Implement CARD-008 (extend), CARD-009 (edit), CARD-010 (distribute)
+
