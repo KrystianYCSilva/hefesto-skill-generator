@@ -270,10 +270,10 @@ skill-name/
 
 | Metrica | Valor |
 |---------|-------|
-| **Total de CARDs** | 7 |
+| **Total de CARDs** | 8 |
 | **CARDs Completos** | 3 (Foundation, Templates, Commands) |
-| **Total de Sub-Tasks** | 62 |
-| **Estimativa Total** | 76h |
+| **Total de Sub-Tasks** | 69 |
+| **Estimativa Total** | 86h |
 | **Tasks Concluidas Feature 003** | 61/74 (82%) |
 | **Comandos Implementados** | 9/9 (100%) |
 | **Progresso Geral** | ~43% (3/7 CARDs) |
@@ -329,6 +329,7 @@ skill-name/
 | 2026-02-04 | 9 | /hefesto.init: re-scan CLIs, 7 detectados (6 active + Copilot warning), inconsistência kotlin skill flagged |
 | 2026-02-04 | 9 | /hefesto.create: kotlin-fundamentals criada e sincronizada para 6 CLIs ✅ (7 references incl. K2) |
 | 2026-02-05 | 9 | /hefesto.create: markdown-fundamentals criada e sincronizada para 6 CLIs ✅ (6 references, cat. documentation) |
+| 2026-02-05 | 9 | Análise arquitetural: "thin SKILL.md cross-CLI" descartado → CARD-008 criado (Shared Skill Pool .hefesto/skills/) |
 
 ---
 
@@ -354,5 +355,21 @@ skill-name/
 - ❌ Missing `/hefesto.distribute` command for multi-CLI distribution
 - 📋 Proposed 3 new CARDs (008, 009, 010) with 36h total effort
 
-**Next Sprint**: Implement CARD-008 (extend), CARD-009 (edit), CARD-010 (distribute)
+**Next Sprint**: CARD-008 (Shared Skill Pool — .hefesto/skills/ + sync adaptado)
+
+### Session 009 Reports (2026-02-05)
+
+| Report | Description | Size | Status |
+|--------|-------------|------|--------|
+| **session-009-execution-report.md** | Full session analysis: 2 skills criadas, batch validation, análise arquitetural, CARD-008 | ~250 lines | ✅ Complete |
+
+**Location**: `docs/reports/`
+
+**Key Findings**:
+- ✅ kotlin-fundamentals e markdown-fundamentals criadas e sincronizadas (6 CLIs cada)
+- ✅ Batch validation: 3/3 skills passaram T0+T1+Structure
+- ✅ Análise arquitetural: "thin cross-CLI" descartado → CARD-008 aprovado
+- ⚠️ Human Gate bypassado 1x pelo sub-agent (kotlin) — padrão corrigido no seguinte
+- ⚠️ Skill "fantasma" no MEMORY detectada e flagged durante init
+- 📋 4 recomendações de next steps documentadas no report
 

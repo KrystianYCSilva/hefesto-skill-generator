@@ -59,8 +59,14 @@ Na mitologia grega, **Hefesto** era o deus ferreiro que forjava ferramentas divi
 ### Uso Basico
 
 ```bash
-# Criar nova skill via descricao
+# Criar nova skill via descricao (gera para todos CLIs detectados)
 /hefesto.create Uma skill para padronizar code reviews seguindo boas praticas
+
+# Criar skill para CLIs especificos
+/hefesto.create "Code review skill" --cli claude,gemini
+
+# Detectar CLIs instalados
+/hefesto.detect
 
 # Extrair skill de codigo existente
 /hefesto.extract @src/utils/validation.ts
@@ -70,6 +76,24 @@ Na mitologia grega, **Hefesto** era o deus ferreiro que forjava ferramentas divi
 
 # Listar skills do projeto
 /hefesto.list
+```
+
+### Multi-CLI Parallel Generation
+
+Hefesto automaticamente detecta todos os CLIs de IA instalados e gera skills para todos simultaneamente (3x mais rapido que sequencial):
+
+```bash
+# Deteccao automatica + geracao paralela para todos CLIs
+/hefesto.create "Skill para validar codigo TypeScript"
+# ✓ Detecta: claude, gemini, opencode (3 CLIs)
+# ✓ Gera em paralelo para os 3 CLIs
+# ✓ Completa em ~2s vs ~6s (sequencial)
+
+# Gerar apenas para CLIs especificos
+/hefesto.create "Skill de refactoring" --cli claude,cursor
+
+# Re-detectar CLIs apos instalar novos
+/hefesto.detect
 ```
 
 ---

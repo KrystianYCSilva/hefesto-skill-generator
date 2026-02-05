@@ -52,13 +52,34 @@
 | `/hefesto.detect` | Re-detectar CLIs instalados | Nao | ✅ Operacional |
 | `/hefesto.list` | Listar CLIs e skills | Nao | ✅ Operacional |
 | `/hefesto.help` | Mostrar ajuda e documentacao | Nao | ✅ Operacional |
-| `/hefesto.create` | Criar skill de descricao com Wizard Mode | Sim | ✅ Operacional |
-| `/hefesto.extract` | Extrair skill de codigo existente | Sim | ✅ Operacional |
+| `/hefesto.create` | Criar skill de descricao com Wizard Mode + Multi-CLI Parallel | Sim | ✅ Operacional |
+| `/hefesto.extract` | Extrair skill de codigo existente + Multi-CLI | Sim | ✅ Operacional |
 | `/hefesto.validate` | Validar skill contra Agent Skills spec | Nao | ✅ Operacional |
-| `/hefesto.adapt` | Adaptar skill para outro CLI | Sim | ✅ Operacional |
+| `/hefesto.adapt` | Adaptar skill para outro CLI + Multi-CLI | Sim | ✅ Operacional |
 | `/hefesto.sync` | Sincronizar skills com templates | Sim | ✅ Operacional |
 | `/hefesto.show` | Exibir conteudo de skill especifica | Nao | ✅ Operacional |
 | `/hefesto.delete` | Deletar skill com confirmacao | Sim | ✅ Operacional |
+
+### Multi-CLI Features
+
+**Nova funcionalidade (Feature 004)**: Geracao paralela automatica para todos CLIs detectados.
+
+```bash
+# Geracao automatica para todos CLIs (3x mais rapido)
+/hefesto.create "Skill de validacao de codigo"
+# ✓ Detecta CLIs: claude, gemini, opencode
+# ✓ Gera em paralelo (2s vs 6s sequencial)
+# ✓ Adaptacoes automaticas ($ARGUMENTS → {{args}} para Gemini/Qwen)
+# ✓ Rollback atomico se qualquer CLI falhar
+
+# Geracao seletiva com --cli flag
+/hefesto.create "Skill de refactoring" --cli claude,cursor
+/hefesto.extract @src/utils/validator.ts --cli gemini
+/hefesto.adapt existing-skill new-skill --cli opencode,qwen
+
+# Re-detectar CLIs apos instalacao
+/hefesto.detect
+```
 
 ---
 

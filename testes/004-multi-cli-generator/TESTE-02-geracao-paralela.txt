@@ -1,0 +1,13 @@
+=== TESTE 2: Geração Paralela (Estrutura) ===
+
+Verificando helpers criados:
+✓ commands/helpers/cli-detector.md (374 linhas)
+✓ commands/helpers/cli-adapter.md (407 linhas)
+✓ commands/helpers/parallel-generator.md (365 linhas)
+✓ commands/helpers/rollback-handler.md (194 linhas)
+
+Validando funções principais:
+✓ Função detect_all_clis() definida em cli-detector.md
+✓ Função generate_all() definida em parallel-generator.md
+✓ Função adapt() definida em cli-adapter.md
+✓ Função rollback_all() definida em rollback-handler.md

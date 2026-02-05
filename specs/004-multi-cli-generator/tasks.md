@@ -53,14 +53,14 @@ Hefesto is a prompt-based system - implementation consists of Markdown command d
 
 ### Implementation for User Story 1
 
-- [ ] T009 [US1] Implement PATH scanning logic in commands/helpers/cli-detector.md (Unix: which, Windows: where.exe)
-- [ ] T010 [US1] Implement config directory checking logic in commands/helpers/cli-detector.md (check .claude/, .gemini/, etc.)
-- [ ] T011 [US1] Implement result merging with priority-based conflict resolution in commands/helpers/cli-detector.md
-- [ ] T012 [US1] Implement version extraction with 200ms timeout in commands/helpers/cli-detector.md
-- [ ] T013 [US1] Implement detection report generation using commands/templates/detection-report.md
-- [ ] T014 [US1] Implement MEMORY.md persistence for detection results in commands/helpers/cli-detector.md
-- [ ] T015 [US1] Create /hefesto.detect command in commands/hefesto.detect.md (call cli-detector, display report, persist to MEMORY.md)
-- [ ] T016 [US1] Add fallback mode for zero CLIs detected in commands/hefesto.detect.md
+- [X] T009 [US1] Implement PATH scanning logic in commands/helpers/cli-detector.md (Unix: which, Windows: where.exe)
+- [X] T010 [US1] Implement config directory checking logic in commands/helpers/cli-detector.md (check .claude/, .gemini/, etc.)
+- [X] T011 [US1] Implement result merging with priority-based conflict resolution in commands/helpers/cli-detector.md
+- [X] T012 [US1] Implement version extraction with 200ms timeout in commands/helpers/cli-detector.md
+- [X] T013 [US1] Implement detection report generation using commands/templates/detection-report.md
+- [X] T014 [US1] Implement MEMORY.md persistence for detection results in commands/helpers/cli-detector.md
+- [X] T015 [US1] Create /hefesto.detect command in commands/hefesto.detect.md (call cli-detector, display report, persist to MEMORY.md)
+- [X] T016 [US1] Add fallback mode for zero CLIs detected in commands/hefesto.detect.md
 
 **Checkpoint**: CLI detection fully functional - can detect 0-7 CLIs in <500ms and persist results
 
@@ -74,30 +74,30 @@ Hefesto is a prompt-based system - implementation consists of Markdown command d
 
 ### Implementation for User Story 2
 
-- [ ] T017 [P] [US2] Define Claude adapter (no transformations) in commands/helpers/cli-adapter.md
-- [ ] T018 [P] [US2] Define Gemini adapter ($ARGUMENTS to {{args}}) in commands/helpers/cli-adapter.md
-- [ ] T019 [P] [US2] Define Codex adapter (no transformations) in commands/helpers/cli-adapter.md
-- [ ] T020 [P] [US2] Define Copilot adapter (github_integration field) in commands/helpers/cli-adapter.md
-- [ ] T021 [P] [US2] Define OpenCode adapter (no transformations) in commands/helpers/cli-adapter.md
-- [ ] T022 [P] [US2] Define Cursor adapter (no transformations) in commands/helpers/cli-adapter.md
-- [ ] T023 [P] [US2] Define Qwen adapter ($ARGUMENTS to {{args}}) in commands/helpers/cli-adapter.md
-- [ ] T024 [US2] Implement transform_variables() logic in commands/helpers/cli-adapter.md
-- [ ] T025 [US2] Implement transform_structure() directory construction in commands/helpers/cli-adapter.md
-- [ ] T026 [US2] Implement add_frontmatter() CLI-specific fields in commands/helpers/cli-adapter.md
-- [ ] T027 [US2] Implement validate() with CLI-specific rules in commands/helpers/cli-adapter.md
-- [ ] T028 [US2] Implement generate_all() main orchestration in commands/helpers/parallel-generator.md
-- [ ] T029 [US2] Implement generate_single_cli() per-CLI generation in commands/helpers/parallel-generator.md
-- [ ] T030 [US2] Implement temp directory staging (create, use, cleanup) in commands/helpers/parallel-generator.md
-- [ ] T031 [US2] Implement parallel execution (bash background jobs for Unix) in commands/helpers/parallel-generator.md
-- [ ] T032 [US2] Implement parallel execution (PowerShell jobs for Windows) in commands/helpers/parallel-generator.md
-- [ ] T033 [US2] Implement validate_all_generated() parallel validation in commands/helpers/parallel-generator.md
-- [ ] T034 [US2] Implement commit_to_targets() atomic move operation in commands/helpers/parallel-generator.md
-- [ ] T035 [US2] Implement rollback_all() cleanup logic in commands/helpers/rollback-handler.md
-- [ ] T036 [US2] Implement generation report using commands/templates/generation-report.md
-- [ ] T037 [US2] Modify /hefesto.create to call cli-detector before generation in commands/hefesto.create.md
-- [ ] T038 [US2] Modify /hefesto.create to call parallel-generator instead of single generation in commands/hefesto.create.md
-- [ ] T039 [US2] Extend idempotence check for multi-CLI collision detection in commands/hefesto.create.md
-- [ ] T040 [US2] Add progress indicators (detection, generation, validation, commit) in commands/hefesto.create.md
+- [X] T017 [P] [US2] Define Claude adapter (no transformations) in commands/helpers/cli-adapter.md
+- [X] T018 [P] [US2] Define Gemini adapter ($ARGUMENTS to {{args}}) in commands/helpers/cli-adapter.md
+- [X] T019 [P] [US2] Define Codex adapter (no transformations) in commands/helpers/cli-adapter.md
+- [X] T020 [P] [US2] Define Copilot adapter (github_integration field) in commands/helpers/cli-adapter.md
+- [X] T021 [P] [US2] Define OpenCode adapter (no transformations) in commands/helpers/cli-adapter.md
+- [X] T022 [P] [US2] Define Cursor adapter (no transformations) in commands/helpers/cli-adapter.md
+- [X] T023 [P] [US2] Define Qwen adapter ($ARGUMENTS to {{args}}) in commands/helpers/cli-adapter.md
+- [X] T024 [US2] Implement transform_variables() logic in commands/helpers/cli-adapter.md
+- [X] T025 [US2] Implement transform_structure() directory construction in commands/helpers/cli-adapter.md
+- [X] T026 [US2] Implement add_frontmatter() CLI-specific fields in commands/helpers/cli-adapter.md
+- [X] T027 [US2] Implement validate() with CLI-specific rules in commands/helpers/cli-adapter.md
+- [X] T028 [US2] Implement generate_all() main orchestration in commands/helpers/parallel-generator.md
+- [X] T029 [US2] Implement generate_single_cli() per-CLI generation in commands/helpers/parallel-generator.md
+- [X] T030 [US2] Implement temp directory staging (create, use, cleanup) in commands/helpers/parallel-generator.md
+- [X] T031 [US2] Implement parallel execution (bash background jobs for Unix) in commands/helpers/parallel-generator.md
+- [X] T032 [US2] Implement parallel execution (PowerShell jobs for Windows) in commands/helpers/parallel-generator.md
+- [X] T033 [US2] Implement validate_all_generated() parallel validation in commands/helpers/parallel-generator.md
+- [X] T034 [US2] Implement commit_to_targets() atomic move operation in commands/helpers/parallel-generator.md
+- [X] T035 [US2] Implement rollback_all() cleanup logic in commands/helpers/rollback-handler.md
+- [X] T036 [US2] Implement generation report using commands/templates/generation-report.md
+- [X] T037 [US2] Modify /hefesto.create to call cli-detector before generation in commands/hefesto.create.md
+- [X] T038 [US2] Modify /hefesto.create to call parallel-generator instead of single generation in commands/hefesto.create.md
+- [X] T039 [US2] Extend idempotence check for multi-CLI collision detection in commands/hefesto.create.md
+- [X] T040 [US2] Add progress indicators (detection, generation, validation, commit) in commands/hefesto.create.md
 
 **Checkpoint**: Parallel generation fully functional - skills generated for all CLIs with 3x speedup and atomic rollback
 
@@ -111,14 +111,14 @@ Hefesto is a prompt-based system - implementation consists of Markdown command d
 
 ### Implementation for User Story 3
 
-- [ ] T041 [US3] Add --cli flag parsing to /hefesto.create in commands/hefesto.create.md
-- [ ] T042 [US3] Implement comma-separated CLI name parsing in commands/hefesto.create.md
-- [ ] T043 [US3] Implement CLI name validation against detected CLIs in commands/hefesto.create.md
-- [ ] T044 [US3] Implement CLI filtering logic (apply --cli filter to detected list) in commands/hefesto.create.md
-- [ ] T045 [US3] Add error handling for invalid CLI names with helpful message in commands/hefesto.create.md
-- [ ] T046 [US3] Add warning for non-detected CLI with prompt to create anyway in commands/hefesto.create.md
-- [ ] T047 [US3] Modify /hefesto.extract to support --cli flag in commands/hefesto.extract.md
-- [ ] T048 [US3] Modify /hefesto.adapt to support --cli flag in commands/hefesto.adapt.md
+- [X] T041 [US3] Add --cli flag parsing to /hefesto.create in commands/hefesto.create.md
+- [X] T042 [US3] Implement comma-separated CLI name parsing in commands/hefesto.create.md
+- [X] T043 [US3] Implement CLI name validation against detected CLIs in commands/hefesto.create.md
+- [X] T044 [US3] Implement CLI filtering logic (apply --cli filter to detected list) in commands/hefesto.create.md
+- [X] T045 [US3] Add error handling for invalid CLI names with helpful message in commands/hefesto.create.md
+- [X] T046 [US3] Add warning for non-detected CLI with prompt to create anyway in commands/hefesto.create.md
+- [X] T047 [US3] Modify /hefesto.extract to support --cli flag in commands/hefesto.extract.md
+- [X] T048 [US3] Modify /hefesto.adapt to support --cli flag in commands/hefesto.adapt.md
 
 **Checkpoint**: CLI targeting fully functional - users can restrict generation to specific CLIs
 
@@ -132,12 +132,12 @@ Hefesto is a prompt-based system - implementation consists of Markdown command d
 
 ### Implementation for User Story 4
 
-- [ ] T049 [US4] Enhance detection report template with formatted CLI list in commands/templates/detection-report.md
-- [ ] T050 [US4] Add summary line "X out of 7 supported CLIs detected" in commands/templates/detection-report.md
-- [ ] T051 [US4] Add status indicators (detected, config_only, not_found, error) in commands/templates/detection-report.md
-- [ ] T052 [US4] Add warning indicators for config_only status in commands/templates/detection-report.md
-- [ ] T053 [US4] Implement cached detection display in /hefesto.list command in commands/hefesto.list.md
-- [ ] T054 [US4] Add detection timestamp display in report in commands/templates/detection-report.md
+- [X] T049 [US4] Enhance detection report template with formatted CLI list in commands/templates/detection-report.md
+- [X] T050 [US4] Add summary line "X out of 7 supported CLIs detected" in commands/templates/detection-report.md
+- [X] T051 [US4] Add status indicators (detected, config_only, not_found, error) in commands/templates/detection-report.md
+- [X] T052 [US4] Add warning indicators for config_only status in commands/templates/detection-report.md
+- [X] T053 [US4] Implement cached detection display in /hefesto.list command in commands/hefesto.list.md
+- [X] T054 [US4] Add detection timestamp display in report in commands/templates/detection-report.md
 
 **Checkpoint**: Detection visibility complete - users see clear reports of CLI availability
 
@@ -147,13 +147,13 @@ Hefesto is a prompt-based system - implementation consists of Markdown command d
 
 **Purpose**: Improvements affecting multiple user stories
 
-- [ ] T055 [P] Add performance logging (measure detection time, generation time) in commands/helpers/cli-detector.md and parallel-generator.md
-- [ ] T056 [P] Add error message standardization across all commands in commands/helpers/
-- [ ] T057 [P] Update project README.md with multi-CLI examples in README.md
-- [ ] T058 [P] Update AGENTS.md with multi-CLI command documentation in AGENTS.md
-- [ ] T059 Validate against constitution (T0-HEFESTO-04, T0-HEFESTO-09) using CONSTITUTION.md
+- [X] T055 [P] Add performance logging (measure detection time, generation time) in commands/helpers/cli-detector.md and parallel-generator.md
+- [X] T056 [P] Add error message standardization across all commands in commands/helpers/
+- [X] T057 [P] Update project README.md with multi-CLI examples in README.md
+- [X] T058 [P] Update AGENTS.md with multi-CLI command documentation in AGENTS.md
+- [X] T059 Validate against constitution (T0-HEFESTO-04, T0-HEFESTO-09) using CONSTITUTION.md
 - [ ] T060 Run manual testing checklist from quickstart.md (40+ test cases)
-- [ ] T061 Update MEMORY.md with initial empty detected_clis section if not exists
+- [X] T061 Update MEMORY.md with initial empty detected_clis section if not exists
 
 ---
 

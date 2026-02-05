@@ -1,0 +1,26 @@
+=== TESTE 1: Detecção de CLIs ===
+
+✓ MEMORY.md encontrado
+375 MEMORY.md
+✓ Seção 'CLIs Detectados' encontrada em MEMORY.md
+## CLIs Detectados
+
+| CLI | Método | Status | Versão | Skills Dir | Skills |
+|-----|--------|--------|--------|------------|--------|
+| **Claude Code** | PATH + Config | ✅ active | 2.1.31 | .claude/skills/ | java-fundamentals |
+| **Gemini CLI** | PATH + Config | ✅ active | 0.27.0 | .gemini/skills/ | java-fundamentals |
+| **Codex** | PATH + Config | ✅ active | (npm) | .codex/skills/ | java-fundamentals |
+| **OpenCode** | PATH + Config | ✅ active | 1.1.48 | .opencode/skills/ | java-fundamentals |
+| **Cursor** | PATH + Config | ✅ active | 2.4.27 | .cursor/skills/ | java-fundamentals |
+| **Qwen Code** | PATH + Config | ✅ active | 0.9.0 | .qwen/skills/ | java-fundamentals |
+| **Copilot** | config_dir only | ⚠️ warning_no_path | null | .copilot/skills/ | (vazio) |
+
+**Nota:** `code` no PATH aponta para binário do Cursor, não VS Code. Copilot não detectável sem ~/.vscode ou extensão instalada.
+
+**Última detecção**: 2026-02-04 (hefesto.init re-scan)
+**Total AI CLIs**: 7 (6 active, 1 warning_no_path)
+
+---
+
+## Metricas
+
