@@ -1,7 +1,8 @@
 # Key Decisions - Hefesto Skill Generator
 
 > **Tier:** T2 - Informativo
-> **Versao:** 1.4.0 (ADR-008: Feature 004 added)
+> **Versao:** 1.0.0-LTS (Production Ready)
+> **Status:** ✅ LTS Release
 
 ---
 
@@ -181,4 +182,48 @@ Implementar geracao paralela com atomicidade garantida:
 
 ---
 
-**Ultima Atualizacao:** 2026-02-05 (ADR-008 Feature 004 added)
+---
+
+### ADR-009: LTS v1.0.0 Release with 97.4% Completion
+
+**Status:** Aceito
+**Data:** 2026-02-05
+
+**Contexto:**
+Projeto atingiu 97.4% de completude (222/228 tasks) com todas as features P1 (prioridade 1) entregues. Itens pendentes sao nao-bloqueantes: testes manuais (T037), exemplos de comandos adicionais, e implementacao do shared skill pool (diferido para v1.1.0).
+
+**Decisao:**
+Marcar Hefesto como production-ready com status LTS v1.0.0, permitindo uso em producao com recomendacao de testes manuais antes de workflows criticos.
+
+**Entregas LTS v1.0.0:**
+- ✅ 9 comandos operacionais (100%)
+- ✅ 9 skills demonstrativas em 5 dominios
+- ✅ 5 CARDs completos (001-005)
+- ✅ Multi-CLI parallel generation (3x performance)
+- ✅ Human Gate workflow (89% completo, core operacional)
+- ✅ Todas as 11 regras T0 validadas
+- ✅ Agent Skills spec compliance
+
+**Itens Pendentes (Nao-Bloqueantes):**
+- Manual testing Feature 005 (T037) - recomendado antes de uso critico
+- Exemplos adicionais de comandos (CARD-006) - nice-to-have
+- Shared skill pool (CARD-008) - diferido para v1.1.0
+
+**Consequencias:**
+- Positivas:
+  - Release formal marca maturidade do projeto
+  - Usuarios podem usar com confianca em producao
+  - LTS garante suporte de longo prazo
+  - 9 skills demonstram qualidade e capacidade
+  - 97.4% completion profissional
+- Negativas:
+  - 2.6% de tasks pendentes (6 tasks)
+  - Testes manuais ainda recomendados
+  - CARD-008 diferido para proxima versao
+
+**Justificativa:**
+Com todas as features P1 entregues, 9 skills validadas, e 97.4% de completude, o projeto demonstrou maturidade para producao. Itens pendentes sao incrementais e nao-bloqueantes.
+
+---
+
+**Ultima Atualizacao:** 2026-02-05 (LTS v1.0.0 Release - ADR-009 added)

@@ -1,5 +1,22 @@
 # CARD-001: Foundation - Estrutura Base
 
+## Status: ✅ COMPLETED (2026-02-05)
+
+**Release:** LTS v1.0.0  
+**Completion Date:** 2026-02-05
+
+### Completion Notes
+
+Foundation infrastructure successfully delivered with:
+- Multi-CLI detection system (7 CLIs: claude, gemini, codex, copilot, opencode, cursor, qwen)
+- Directory structure auto-creation for detected CLIs
+- CONSTITUTION.md (T0) and MEMORY.md state tracking
+- All 9 core commands operational: init, create, extract, validate, adapt, sync, show, delete, help
+- Human Gate protocol integrated
+- Zero external dependencies, offline-capable
+
+---
+
 ## 1. Descricao & User Story
 
 "Como um **desenvolvedor usando CLIs de IA**, eu quero ter uma **estrutura base do Hefesto** instalada no meu projeto, para que eu possa **gerar Agent Skills padronizadas** para qualquer CLI suportado."
@@ -60,11 +77,11 @@
 
 ## 6. Tarefas (Sub-Cards)
 
-- [ ] CARD-001.1: Criar detector de CLIs (PATH + config dirs)
-- [ ] CARD-001.2: Implementar criacao de estrutura de diretorios
-- [ ] CARD-001.3: Copiar CONSTITUTION.md para projeto
-- [ ] CARD-001.4: Inicializar MEMORY.md
-- [ ] CARD-001.5: Registrar comandos /hefesto.*
+- [x] CARD-001.1: Criar detector de CLIs (PATH + config dirs)
+- [x] CARD-001.2: Implementar criacao de estrutura de diretorios
+- [x] CARD-001.3: Copiar CONSTITUTION.md para projeto
+- [x] CARD-001.4: Inicializar MEMORY.md
+- [x] CARD-001.5: Registrar comandos /hefesto.*
 
 ---
 

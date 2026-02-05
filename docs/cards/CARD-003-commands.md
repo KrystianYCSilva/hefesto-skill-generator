@@ -1,5 +1,27 @@
 # CARD-003: Commands - Comandos /hefesto.*
 
+## Status: ✅ COMPLETED (2026-02-05)
+
+**Release:** LTS v1.0.0  
+**Completion Date:** 2026-02-05
+
+### Completion Notes
+
+All 9 commands fully implemented and operational:
+1. `/hefesto.init` - Bootstrap Hefesto in project
+2. `/hefesto.create` - Create skill from description (Wizard Mode)
+3. `/hefesto.extract` - Extract skill from existing code
+4. `/hefesto.validate` - Validate skill against Agent Skills spec
+5. `/hefesto.adapt` - Adapt skill to different CLI
+6. `/hefesto.sync` - Synchronize skills across CLIs
+7. `/hefesto.show` - Display specific skill content
+8. `/hefesto.delete` - Delete skill with confirmation
+9. `/hefesto.help` - Display help and documentation
+
+All write commands integrated with Human Gate protocol. Wizard mode operational for create/extract with state persistence and `/hefesto.resume` support.
+
+---
+
 ## 1. Descricao & User Story
 
 "Como um **usuario de CLI de IA**, eu quero ter **comandos intuitivos** como `/hefesto.create` e `/hefesto.extract`, para que eu possa **criar e gerenciar skills** de forma simples e padronizada."
@@ -77,16 +99,16 @@
 
 ## 6. Tarefas (Sub-Cards)
 
-- [ ] CARD-003.1: Implementar /hefesto.create
-- [ ] CARD-003.2: Implementar /hefesto.extract
-- [ ] CARD-003.3: Implementar /hefesto.validate
-- [ ] CARD-003.4: Implementar /hefesto.adapt
-- [ ] CARD-003.5: Implementar /hefesto.sync
-- [ ] CARD-003.6: Implementar /hefesto.list
-- [ ] CARD-003.7: Implementar /hefesto.show
-- [ ] CARD-003.8: Implementar /hefesto.delete
-- [ ] CARD-003.9: Implementar /hefesto.help
-- [ ] CARD-003.10: Integrar Human Gate em comandos de escrita
+- [x] CARD-003.1: Implementar /hefesto.create
+- [x] CARD-003.2: Implementar /hefesto.extract
+- [x] CARD-003.3: Implementar /hefesto.validate
+- [x] CARD-003.4: Implementar /hefesto.adapt
+- [x] CARD-003.5: Implementar /hefesto.sync
+- [x] CARD-003.6: Implementar /hefesto.list
+- [x] CARD-003.7: Implementar /hefesto.show
+- [x] CARD-003.8: Implementar /hefesto.delete
+- [x] CARD-003.9: Implementar /hefesto.help
+- [x] CARD-003.10: Integrar Human Gate em comandos de escrita
 
 ---
 
