@@ -1,0 +1,25 @@
+# Hefesto Skill Generator - Git Ignore
+
+# Backup files (do not commit)
+*.backup.*
+MEMORY.md.backup.*
+
+# OS-specific
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# Environment
+.env*
+
+# Spec artifacts (generated)
+.specify/cache/
