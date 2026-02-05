@@ -91,7 +91,7 @@ Antes de criar ou revisar um documento Markdown, identifique:
 [texto do link](https://exemplo.com)
 [link com título](https://exemplo.com "Título ao hover")
 
-Duas barras finais para quebra de linha  
+Duas barras finais para quebra de linha
 ou uma linha em branco entre parágrafos.
 ```
 
@@ -173,7 +173,7 @@ Estas referências são carregadas just-in-time quando necessário.
 ## Quick Examples
 
 ### README básico com badges e seções essenciais
-```markdown
+````markdown
 # Meu Projeto
 
 [![Licença](https://img.shields.io/badge/licença-MIT-verde)](LICENSE)
@@ -193,17 +193,17 @@ pip install meu-projeto
 from meu_projeto import principal
 principal()
 ```
-```
+````
 
 ### Tabela de comparação com alinhamento misto
 ```markdown
 | Recurso          | CommonMark | GFM    | GitLab MD |
 |------------------|:----------:|:------:|:---------:|
-| Headings         | Sim        | Sim    | Sim       |
-| Tabelas          | Não        | Sim    | Sim       |
-| Task Lists       | Não        | Sim    | Sim       |
-| Mermaid          | Não        | Sim    | Sim       |
-| Footnotes        | Não        | Não    | Sim       |
+| Headings         | ✅         | ✅     | ✅        |
+| Tabelas          | ❌         | ✅     | ✅        |
+| Task Lists       | ❌         | ✅     | ✅        |
+| Mermaid          | ❌         | ✅     | ✅        |
+| Footnotes        | ❌         | ❌     | ✅        |
 ```
 
 ### Diagrama de sequência com Mermaid
@@ -224,7 +224,7 @@ Para exemplos detalhados, consulte as **[referências JIT](#referências-jit)**.
 ## Compatibility
 
 | CLI | Status | Notes |
-|-----|--------|---------|
+|-----|--------|-------|
 | Claude Code | Supported | Fully supported |
 | Gemini CLI | Supported | Fully supported |
 | OpenAI Codex | Supported | Fully supported |
@@ -256,10 +256,10 @@ Para exemplos detalhados, consulte as **[referências JIT](#referências-jit)**.
 | Fonte | Tipo | URL |
 |-------|------|-----|
 | CommonMark Spec | Especificação | [spec.commonmark.org](https://spec.commonmark.org/) |
-| GitHub Flavored Markdown | Oficial (GitHub) | [docs.github.com/en/get-started/writing-on-github](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github) |
-| GitLab Markdown | Oficial (GitLab) | [docs.gitlab.com/ee/user/markdown.html](https://docs.gitlab.com/ee/user/markdown.html) |
+| GitHub Flavored Markdown | Oficial (GitHub) | [docs.github.com](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github) |
+| GitLab Markdown | Oficial (GitLab) | [docs.gitlab.com](https://docs.gitlab.com/ee/user/markdown.html) |
 | Mermaid JS Docs | Oficial (Mermaid) | [mermaid.js.org](https://mermaid.js.org/) |
-| W3C WCAG 2.1 | Padrão Acessibilidade | [w3.org/WAI/WCAG21/Overview](https://www.w3.org/WAI/WCAG21/Overview.html) |
+| W3C WCAG 2.1 | Padrão Acessibilidade | [w3.org/WAI/WCAG21](https://www.w3.org/WAI/WCAG21/Overview.html) |
 
 ---
 

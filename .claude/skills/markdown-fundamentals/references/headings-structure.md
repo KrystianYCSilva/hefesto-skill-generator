@@ -233,9 +233,8 @@ Cada H2 pode ser uma página de busca por si só.
 
 ### MkDocs / Docusaurus
 
-- Suportam yet another anchor generation
-- Permitem personalização de IDs via extensões
-- Geram sidebar automática a partir dos headings
+- Suportam personalização de IDs via extensões
+- Permitem sidebar automática a partir dos headings
 
 ```markdown
 ## Seção Principal {#custom-id}
@@ -272,11 +271,10 @@ Cada H2 pode ser uma página de busca por si só.
 
 <!-- Saltos de hierarquia -->
 # Título
-### Subseção sem H2  <!-- ERRO -->
+### Subseção sem H2
 
 <!-- Headings para formatação visual -->
 ## ─────────────
-## ...
 
 <!-- Headings vazios ou genéricos -->
 ##

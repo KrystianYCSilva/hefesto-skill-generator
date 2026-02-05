@@ -83,8 +83,8 @@ security_notes: |
   - Links externos devem ser verificados manualmente antes de publicar
   - Front matter não deve conter dados sensíveis
 performance_considerations: |
-  - Documentos muito longos (>1000 linhas) podem causar lentidão na renderização em alguns renderizadores
-  - Diagramas Mermaid complexos podem demorar para renderizar; considere dividir em múltiplos diagramas
+  - Documentos muito longos (>1000 linhas) podem causar lentidão na renderização
+  - Diagramas Mermaid complexos podem demorar; considere dividir em múltiplos diagramas
   - Imagens grandes (>1MB) devem ser otimizadas antes de incluir no repositório
 progressive_disclosure:
   core: SKILL.md
@@ -95,7 +95,7 @@ progressive_disclosure:
     - tables-lists.md
     - advanced-features.md
     - compatibility.md
-total_size: "~268 linhas (core) + ~2200 linhas (references)"
+total_size: "~270 linhas (core) + ~2200 linhas (references)"
 validation_status: "✅ Validated against Agent Skills spec"
 constitution_compliance:
   - T0-HEFESTO-01: "✅ Agent Skills Standard compliant"

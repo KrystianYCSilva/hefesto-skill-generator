@@ -23,7 +23,7 @@ Hefesto is a prompt-based system - implementation consists of Markdown command d
 
 **Purpose**: Project initialization and basic structure (no changes needed - Hefesto infrastructure exists)
 
-- [ ] T001 Verify existing Hefesto infrastructure (commands/, templates/, MEMORY.md, CONSTITUTION.md)
+- [X] T001 Verify existing Hefesto infrastructure (commands/, templates/, MEMORY.md, CONSTITUTION.md)
 
 ---
 
@@ -33,13 +33,13 @@ Hefesto is a prompt-based system - implementation consists of Markdown command d
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T002 [P] Create cli-detector.md helper in commands/helpers/cli-detector.md
-- [ ] T003 [P] Create cli-adapter.md registry in commands/helpers/cli-adapter.md
-- [ ] T004 [P] Create parallel-generator.md orchestrator in commands/helpers/parallel-generator.md
-- [ ] T005 [P] Create rollback-handler.md cleanup logic in commands/helpers/rollback-handler.md
-- [ ] T006 [P] Create detection-report.md template in commands/templates/detection-report.md
-- [ ] T007 [P] Create generation-report.md template in commands/templates/generation-report.md
-- [ ] T008 Extend MEMORY.md schema with detected_clis section in MEMORY.md
+- [X] T002 [P] Create cli-detector.md helper in commands/helpers/cli-detector.md
+- [X] T003 [P] Create cli-adapter.md registry in commands/helpers/cli-adapter.md
+- [X] T004 [P] Create parallel-generator.md orchestrator in commands/helpers/parallel-generator.md
+- [X] T005 [P] Create rollback-handler.md cleanup logic in commands/helpers/rollback-handler.md
+- [X] T006 [P] Create detection-report.md template in commands/templates/detection-report.md
+- [X] T007 [P] Create generation-report.md template in commands/templates/generation-report.md
+- [X] T008 Extend MEMORY.md schema with detected_clis section in MEMORY.md
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -134,4 +134,145 @@ Hefesto is a prompt-based system - implementation consists of Markdown command d
 
 - [ ] T049 [US4] Enhance detection report template with formatted CLI list in commands/templates/detection-report.md
 - [ ] T050 [US4] Add summary line "X out of 7 supported CLIs detected" in commands/templates/detection-report.md
-- [ ] T051 [US4] Add status indicators (detected, config_only, not_found, error) in commands/temp
+- [ ] T051 [US4] Add status indicators (detected, config_only, not_found, error) in commands/templates/detection-report.md
+- [ ] T052 [US4] Add warning indicators for config_only status in commands/templates/detection-report.md
+- [ ] T053 [US4] Implement cached detection display in /hefesto.list command in commands/hefesto.list.md
+- [ ] T054 [US4] Add detection timestamp display in report in commands/templates/detection-report.md
+
+**Checkpoint**: Detection visibility complete - users see clear reports of CLI availability
+
+---
+
+## Phase 7: Polish & Cross-Cutting Concerns
+
+**Purpose**: Improvements affecting multiple user stories
+
+- [ ] T055 [P] Add performance logging (measure detection time, generation time) in commands/helpers/cli-detector.md and parallel-generator.md
+- [ ] T056 [P] Add error message standardization across all commands in commands/helpers/
+- [ ] T057 [P] Update project README.md with multi-CLI examples in README.md
+- [ ] T058 [P] Update AGENTS.md with multi-CLI command documentation in AGENTS.md
+- [ ] T059 Validate against constitution (T0-HEFESTO-04, T0-HEFESTO-09) using CONSTITUTION.md
+- [ ] T060 Run manual testing checklist from quickstart.md (40+ test cases)
+- [ ] T061 Update MEMORY.md with initial empty detected_clis section if not exists
+
+---
+
+## Dependencies & Execution Order
+
+### Phase Dependencies
+
+- **Setup (Phase 1)**: No dependencies - can start immediately (verification only)
+- **Foundational (Phase 2)**: Depends on Setup - BLOCKS all user stories
+- **User Stories (Phase 3-6)**: All depend on Foundational phase completion
+  - US1 (Detection) can start after Foundational
+  - US2 (Generation) depends on US1 detection logic
+  - US3 (Targeting) depends on US2 generation integration
+  - US4 (Visibility) can start after US1 (independent of US2/US3)
+- **Polish (Phase 7)**: Depends on all user stories being complete
+
+### User Story Dependencies
+
+- **User Story 1 (P1)**: Can start after Foundational - No dependencies
+- **User Story 2 (P1)**: Depends on US1 detection logic - Uses cli-detector.md from US1
+- **User Story 3 (P2)**: Depends on US2 generation integration - Modifies /hefesto.create from US2
+- **User Story 4 (P2)**: Can start after US1 - Independent of US2/US3 (only enhances display)
+
+### Within Each User Story
+
+- **US1**: Tasks T009-T016 must run sequentially (building cli-detector.md incrementally)
+- **US2**: T017-T023 can run parallel (different adapter definitions), then T024-T040 sequential
+- **US3**: Tasks T041-T048 sequential (modifying same commands)
+- **US4**: Tasks T049-T054 can run parallel (different templates/commands)
+
+### Parallel Opportunities
+
+- **Foundational Phase**: All tasks T002-T007 can run in parallel (different files)
+- **US2 Adapters**: Tasks T017-T023 can run in parallel (7 independent adapter definitions)
+- **US4 Visibility**: Tasks T049-T054 can run in parallel (different files)
+- **Polish Phase**: Tasks T055-T058 can run in parallel (different files)
+
+---
+
+## Parallel Example: User Story 2 Adapters
+
+```bash
+# Launch all adapter definitions together:
+Task T017: "Define Claude adapter in commands/helpers/cli-adapter.md"
+Task T018: "Define Gemini adapter in commands/helpers/cli-adapter.md"
+Task T019: "Define Codex adapter in commands/helpers/cli-adapter.md"
+Task T020: "Define Copilot adapter in commands/helpers/cli-adapter.md"
+Task T021: "Define OpenCode adapter in commands/helpers/cli-adapter.md"
+Task T022: "Define Cursor adapter in commands/helpers/cli-adapter.md"
+Task T023: "Define Qwen adapter in commands/helpers/cli-adapter.md"
+```
+
+---
+
+## Implementation Strategy
+
+### MVP First (User Stories 1 + 2 Only)
+
+1. Complete Phase 1: Setup (T001)
+2. Complete Phase 2: Foundational (T002-T008) - CRITICAL
+3. Complete Phase 3: User Story 1 (T009-T016) - Detection
+4. Complete Phase 4: User Story 2 (T017-T040) - Parallel Generation
+5. **STOP and VALIDATE**: Test detection and generation independently
+6. Deploy/demo if ready
+
+**MVP Delivers**: Automatic CLI detection + parallel skill generation for all detected CLIs
+
+### Incremental Delivery
+
+1. Setup + Foundational → Foundation ready
+2. Add US1 (Detection) → Test independently
+3. Add US2 (Generation) → Test independently → **MVP COMPLETE**
+4. Add US3 (Targeting) → Test independently
+5. Add US4 (Visibility) → Test independently
+6. Polish → Final release
+
+### Parallel Team Strategy
+
+With multiple developers:
+
+1. Team completes Setup + Foundational together (T001-T008)
+2. Once Foundational done:
+   - Developer A: User Story 1 (T009-T016)
+   - Developer B: Start User Story 4 visibility templates (T049-T054)
+3. After US1 complete:
+   - Developer A: User Story 2 (T017-T040)
+   - Developer B: Continue US4 (T053-T054)
+4. After US2 complete:
+   - Developer A or B: User Story 3 (T041-T048)
+5. Polish together (T055-T061)
+
+---
+
+## Notes
+
+- **[P] tasks**: Different files, no dependencies - can run in parallel
+- **[Story] label**: Maps task to specific user story (US1-US4)
+- **Prompt-based system**: Implementation is Markdown definitions, not traditional code
+- **No automated tests**: Manual validation only (per specification Principle III N/A)
+- **Commit strategy**: Commit after each helper/command file is complete
+- **Checkpoint validation**: Test each user story independently before moving forward
+- **Avoid**: Same-file conflicts when parallelizing (US2 adapters write to same cli-adapter.md in sequence)
+
+---
+
+## Task Summary
+
+- **Total Tasks**: 61
+- **Setup Phase**: 1 task
+- **Foundational Phase**: 7 tasks (all parallelizable)
+- **User Story 1 (P1 - Detection)**: 8 tasks (MVP)
+- **User Story 2 (P1 - Generation)**: 24 tasks (MVP)
+- **User Story 3 (P2 - Targeting)**: 8 tasks
+- **User Story 4 (P2 - Visibility)**: 6 tasks
+- **Polish Phase**: 7 tasks (5 parallelizable)
+
+**MVP Scope**: Phases 1-4 (40 tasks) = Detection + Parallel Generation
+**Full Feature**: All 61 tasks = Detection + Generation + Targeting + Visibility + Polish
+
+**Parallel Opportunities Identified**: 21 tasks marked [P]
+
+**Format Validation**: ✅ All tasks follow checklist format (checkbox, ID, labels, file paths)

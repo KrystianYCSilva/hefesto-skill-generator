@@ -163,6 +163,23 @@ skill-name/
 
 ## Skills Criadas
 
+### markdown-fundamentals
+
+| Campo | Valor |
+|-------|-------|
+| **Nome** | markdown-fundamentals |
+| **Versão** | 1.0.0 |
+| **Criada** | 2026-02-05 (Sessão 9) |
+| **Categoria** | documentation |
+| **Target CLIs** | Claude, Gemini, Codex, OpenCode, Cursor, Qwen (6 CLIs) |
+| **Descrição** | Fundamentos Markdown (CommonMark, GFM, compatibilidade entre plataformas) |
+| **Estrutura** | Progressive Disclosure (SKILL.md 268 linhas + 6 references) |
+| **Tamanho** | ~268 linhas (core) + ~2392 linhas (references) |
+| **Tags** | markdown, documentation, commonmark, gfm, writing, best-practices, fundamentals, compatibility |
+| **Fontes** | 6 (CommonMark spec, GFM spec, GitHub docs, GitLab docs, Mermaid docs, W3C WCAG) |
+| **References** | headings-structure, links-images, code-blocks, tables-lists, advanced-features, compatibility |
+| **Status** | ✅ Validada contra T0+T1, aprovada pelo Human Gate, sincronizada para 6 CLIs |
+
 ### kotlin-fundamentals
 
 | Campo | Valor |
@@ -262,7 +279,7 @@ skill-name/
 | **Progresso Geral** | ~43% (3/7 CARDs) |
 | **Regras T0** | 11 |
 | **ADRs** | 3 |
-| **Skills Criadas** | 2 (java-fundamentals, kotlin-fundamentals) |
+| **Skills Criadas** | 3 (java-fundamentals, kotlin-fundamentals, markdown-fundamentals) |
 | **Skills Sincronizadas** | 6 CLIs (OpenCode, Claude, Gemini, Codex, Cursor, Qwen) |
 
 ---
@@ -311,6 +328,7 @@ skill-name/
 | 2026-02-04 | 8 | /hefesto.sync: java-fundamentals sincronizada para 6 CLIs ✅ |
 | 2026-02-04 | 9 | /hefesto.init: re-scan CLIs, 7 detectados (6 active + Copilot warning), inconsistência kotlin skill flagged |
 | 2026-02-04 | 9 | /hefesto.create: kotlin-fundamentals criada e sincronizada para 6 CLIs ✅ (7 references incl. K2) |
+| 2026-02-05 | 9 | /hefesto.create: markdown-fundamentals criada e sincronizada para 6 CLIs ✅ (6 references, cat. documentation) |
 
 ---
 
