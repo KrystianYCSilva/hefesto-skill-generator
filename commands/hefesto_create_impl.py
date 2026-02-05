@@ -648,25 +648,34 @@ def main(args):
     target_cli = parsed_args.target_cli
     template_name = parsed_args.template_name
 
-    # If no description provided, enter wizard mode
+    # If no description provided, enter NEW wizard mode (FR-008)
     if not description:
-        result = wizard_mode()
-        if result is None:
-            return 1
+        try:
+            from lib.wizard import run_wizard, WizardTimeoutError
 
-        # Handle tuple return from wizard_mode
-        if isinstance(result, tuple):
-            parsed_args, skill_name, targets = result
-            description = parsed_args.description
-        else:
-            # If wizard_mode returns just parsed_args, get targets differently
+            wizard_result = run_wizard("create")
+
+            if wizard_result is None:
+                print("Wizard cancelled.")
+                return 1
+
+            # Extract wizard inputs
+            skill_name = wizard_result.get("skill_name")
+            description = wizard_result.get("description")
+
+            # Determine targets
             detected_clis = detect_installed_clis()
             if target_cli:
                 targets = [target_cli] if target_cli in detected_clis else detected_clis
             else:
                 targets = detected_clis
 
-            skill_name = auto_generate_name(description)
+        except WizardTimeoutError as e:
+            # Timeout handled by wizard (state saved)
+            return 1
+        except Exception as e:
+            print(f"Wizard error: {e}")
+            return 1
     else:
         # Use provided description, determine targets
         detected_clis = detect_installed_clis()
@@ -686,12 +695,7 @@ def main(args):
     if not template:
         return 1
 
-    # Detect collision
-    ok, skill_name = detect_collision(skill_name, targets)
-    if not ok:
-        return 1
-
-    # Generate skill content
+    # Generate skill content FIRST (needed for collision resolution)
     skill_data = {
         "name": skill_name,
         "description": description,
@@ -704,45 +708,89 @@ def main(args):
     skill_content = generate_skill_content(template, skill_data)
     metadata_content = generate_metadata(skill_data)
 
+    # Phase 2b: Collision Detection (NEW - FR-020 to FR-025)
+    try:
+        from lib.collision import (
+            detect_collisions,
+            prompt_collision_resolution,
+            handle_overwrite,
+            handle_merge,
+            handle_cancel,
+            BackupError,
+        )
+
+        collisions = detect_collisions(skill_name, targets)
+
+        if collisions:
+            # Collision detected - prompt for resolution
+            decision = prompt_collision_resolution(collisions)
+
+            if decision.decision == "cancel":
+                handle_cancel(collisions, skill_name)
+                return 1
+
+            elif decision.decision == "overwrite":
+                try:
+                    # Create backup before proceeding
+                    backup_path = handle_overwrite(
+                        collisions, skill_name, skill_content
+                    )
+                    # Proceed with new skill (overwrite handled by Human Gate persistence)
+                except BackupError:
+                    # Backup failed - abort
+                    return 1
+
+            elif decision.decision == "merge":
+                # Merge existing with new
+                merged_content = handle_merge(collisions, skill_name, skill_content)
+                # Update skill_content with merged version
+                skill_content = merged_content
+
+    except Exception as e:
+        print(f"\n❌ Collision handling error: {e}")
+        import traceback
+
+        traceback.print_exc()
+        return 1
+
     # Phase 3: Validation
     validation_errors = validate_skill(skill_content)
 
-    if validation_errors:
-        print("❌ Validation Failed:")
-        for error in validation_errors:
-            print(f"  - {error}")
+    # Phase 4: Human Gate (NEW - FR-001 to FR-007)
+    try:
+        from lib.preview import create_preview
+        from lib.human_gate import run_human_gate_workflow
 
-        print("ERROR [E-CREATE-005]: Template validation failed")
+        # Create preview object (FR-001: generate in memory)
+        preview = create_preview(
+            skill_content=skill_content,
+            metadata=metadata_content,
+            target_clis=targets,
+            validation_errors=validation_errors if validation_errors else [],
+        )
+
+        # Run Human Gate workflow (FR-002 to FR-007)
+        # This includes: validation, preview display, timeout, decision handling, atomic persistence
+        success = run_human_gate_workflow(preview)
+
+        if not success:
+            # User rejected or timeout occurred
+            return 1
+
+        # Success - Human Gate already displayed confirmation message
+        print("\nNext steps:")
+        print(f"  - Validate: /hefesto.validate {skill_name}")
+        print(f"  - View: /hefesto.show {skill_name}")
+        print(f"  - Test: Use the skill with your AI CLI")
+
+        return 0
+
+    except Exception as e:
+        print(f"\n❌ Error during Human Gate: {e}")
+        import traceback
+
+        traceback.print_exc()
         return 1
-
-    # Phase 4: Human Gate
-    approved = human_gate(
-        skill_name, description, targets, skill_content, not validation_errors
-    )
-
-    if not approved:
-        print("Operation cancelled. No changes made.")
-        return 1
-
-    # Phase 5: Persistence
-    success = persist_skill(skill_name, targets, skill_content, metadata_content)
-
-    if not success:
-        return 1
-
-    # Success message
-    print("\n[SUCCESS] Skill created successfully!")
-    print(f"\nName: {skill_name}")
-    print("Location(s):")
-    for cli in targets:
-        print(f"  - .{cli}/skills/{skill_name}/SKILL.md")
-
-    print("\nNext steps:")
-    print(f"  - Validate: /hefesto.validate {skill_name}")
-    print(f"  - View: /hefesto.show {skill_name}")
-    print(f"  - Test: Use the skill with your AI CLI")
-
-    return 0
 
 
 if __name__ == "__main__":

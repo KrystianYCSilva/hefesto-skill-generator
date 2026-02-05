@@ -1,0 +1,125 @@
+author: "Hefesto Skill Generator <hefesto@agentskills.io>"
+version: "1.0.0"
+created: 2026-02-05
+updated: 2026-02-05
+category: ai-development
+tags:
+  - context-engineering
+  - ai
+  - llm
+  - context-management
+  - token-optimization
+  - memory-systems
+  - prompt-caching
+  - rag
+  - dynamic-retrieval
+  - context-compression
+  - jit-loading
+  - semantic-search
+  - working-memory
+  - knowledge-management
+  - agent-architecture
+platforms:
+  - claude
+  - gemini
+  - codex
+  - opencode
+  - cursor
+  - qwen
+  - copilot
+dependencies: []
+example_prompt: |
+  Help me implement a context management system for my chatbot that:
+  1. Retrieves relevant information from a 100K-token knowledge base
+  2. Keeps conversation history under 4K tokens
+  3. Uses semantic search for document retrieval
+  4. Implements prompt caching for system instructions
+test_cases:
+  - input: "How do I implement dynamic context retrieval?"
+    expected_output: "Explains semantic search, relevance scoring, and hybrid retrieval patterns"
+  - input: "My context is too large, how do I compress it?"
+    expected_output: "Describes summarization, entity extraction, and pruning strategies"
+  - input: "How can I optimize repeated context usage?"
+    expected_output: "Explains prompt caching mechanisms and KV-cache optimization"
+  - input: "How do I manage conversation memory over long sessions?"
+    expected_output: "Describes memory consolidation patterns and hierarchical memory systems"
+  - input: "What's the best way to load context incrementally?"
+    expected_output: "Explains JIT context loading, lazy loading, and incremental expansion"
+sources:
+  - title: "Anthropic Prompt Caching Documentation"
+    url: "https://docs.anthropic.com/claude/docs/prompt-caching"
+    type: official_docs
+  - title: "OpenAI Prompt Engineering Guide"
+    url: "https://platform.openai.com/docs/guides/prompt-engineering"
+    type: official_docs
+  - title: "LangChain Memory Management"
+    url: "https://python.langchain.com/docs/modules/memory/"
+    type: framework_docs
+  - title: "CoALA: Cognitive Architectures for Language Agents"
+    url: "https://arxiv.org/abs/2309.02427"
+    type: research_paper
+  - title: "Retrieval-Augmented Generation (RAG) Evaluation"
+    url: "https://arxiv.org/abs/2401.15884"
+    type: research_paper
+  - title: "Lost in the Middle: How Language Models Use Long Contexts"
+    url: "https://arxiv.org/abs/2307.03172"
+    type: research_paper
+  - title: "LlamaIndex Documentation"
+    url: "https://docs.llamaindex.ai"
+    type: framework_docs
+  - title: "Efficient Memory Management for Large Language Model Serving"
+    url: "https://arxiv.org/abs/2309.06180"
+    type: research_paper
+structure:
+  core_file: SKILL.md
+  lines: 485
+  references:
+    - name: dynamic-context-discovery.md
+      lines: 850
+      topics:
+        - semantic_search
+        - hybrid_retrieval
+        - relevance_scoring
+        - query_expansion
+        - reranking_algorithms
+    - name: context-compression.md
+      lines: 950
+      topics:
+        - summarization_techniques
+        - entity_extraction
+        - redundancy_elimination
+        - pruning_strategies
+        - compression_quality_metrics
+    - name: prompt-caching.md
+      lines: 400
+      topics:
+        - kv_cache_optimization
+        - provider_implementations
+        - cache_invalidation
+        - prefix_reuse
+        - performance_benchmarks
+    - name: memory-consolidation.md
+      lines: 400
+      topics:
+        - memory_hierarchies
+        - episodic_memory
+        - semantic_memory
+        - working_memory
+        - coala_integration
+    - name: jit-context-loading.md
+      lines: 400
+      topics:
+        - lazy_loading
+        - incremental_expansion
+        - context_routing
+        - performance_optimization
+        - graceful_degradation
+progressive_disclosure:
+  level_1: "SKILL.md - Core concepts and common patterns (485 lines)"
+  level_2: "References - Deep dives into specific techniques (3000+ lines total)"
+  level_3: "Code examples and implementations in each reference"
+validation:
+  t0_compliant: true
+  token_budget: "~500 lines for core skill"
+  reference_depth: "~400-950 lines per reference"
+  total_skill_size: "~3485 lines (core + references)"

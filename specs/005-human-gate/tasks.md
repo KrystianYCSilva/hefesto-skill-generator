@@ -57,11 +57,11 @@ Based on plan.md structure:
 
 ### Implementation for User Story 1
 
-- [ ] T010 [P] [US1] Create `commands/lib/preview.py` for preview generation (FR-003)
-- [ ] T011 [P] [US1] Create `commands/lib/atomic.py` for atomic file operations (FR-006)
-- [ ] T012 [US1] Implement Human Gate decision flow in `commands/lib/human_gate.py` (FR-001 to FR-007)
-- [ ] T013 [US1] Integrate Human Gate into `commands/hefesto_create_impl.py`
-- [ ] T014 [US1] Add operation logging to Human Gate in `commands/lib/human_gate.py`
+- [X] T010 [P] [US1] Create `commands/lib/preview.py` for preview generation (FR-003)
+- [X] T011 [P] [US1] Create `commands/lib/atomic.py` for atomic file operations (FR-006)
+- [X] T012 [US1] Implement Human Gate decision flow in `commands/lib/human_gate.py` (FR-001 to FR-007)
+- [X] T013 [US1] Integrate Human Gate into `commands/hefesto_create_impl.py`
+- [X] T014 [US1] Add operation logging to Human Gate in `commands/lib/human_gate.py`
 
 **Checkpoint**: User Story 1 complete - Human Gate prevents unwanted file creation
 
@@ -75,12 +75,12 @@ Based on plan.md structure:
 
 ### Implementation for User Story 2
 
-- [ ] T015 [P] [US2] Create `commands/lib/wizard.py` with Wizard State class (FR-010 to FR-014)
-- [ ] T016 [US2] Implement wizard step collection in `commands/lib/wizard.py`
-- [ ] T017 [US2] Implement wizard final review in `commands/lib/wizard.py` (FR-014)
-- [ ] T018 [US2] Implement wizard timeout handling in `commands/lib/wizard.py`
-- [ ] T019 [US2] Integrate Wizard Mode into `commands/hefesto_create_impl.py`
-- [ ] T020 [US2] Integrate Wizard Mode into `commands/hefesto_extract_impl.py` (FR-009)
+- [X] T015 [P] [US2] Create `commands/lib/wizard.py` with Wizard State class (FR-010 to FR-014)
+- [X] T016 [US2] Implement wizard step collection in `commands/lib/wizard.py`
+- [X] T017 [US2] Implement wizard final review in `commands/lib/wizard.py` (FR-014)
+- [X] T018 [US2] Implement wizard timeout handling in `commands/lib/wizard.py`
+- [X] T019 [US2] Integrate Wizard Mode into `commands/hefesto_create_impl.py`
+- [ ] T020 [US2] Integrate Wizard Mode into `commands/hefesto_extract_impl.py` (FR-009) - DEFERRED (extract command not implemented yet)
 
 **Checkpoint**: User Story 2 complete - Wizard guides first-time users through skill creation
 
@@ -94,9 +94,9 @@ Based on plan.md structure:
 
 ### Implementation for User Story 3
 
-- [ ] T021 [P] [US3] Create `commands/lib/expansion.py` for JIT resource management (FR-015 to FR-019)
-- [ ] T022 [US3] Implement `[expand]` handler in `commands/lib/human_gate.py`
-- [ ] T023 [US3] Update atomic persistence in `commands/lib/atomic.py`
+- [X] T021 [P] [US3] Create `commands/lib/expansion.py` for JIT resource management (FR-015 to FR-019)
+- [X] T022 [US3] Implement `[expand]` handler in `commands/lib/human_gate.py`
+- [X] T023 [US3] Update atomic persistence in `commands/lib/atomic.py` (already supports resources)
 
 **Checkpoint**: User Story 3 complete - Users can add optional resources iteratively
 
@@ -110,12 +110,12 @@ Based on plan.md structure:
 
 ### Implementation for User Story 4
 
-- [ ] T024 [P] [US4] Create `commands/lib/backup.py` for .tar.gz backup creation (FR-023)
-- [ ] T025 [P] [US4] Create `commands/lib/diff.py` for markdown section diffing (FR-024)
-- [ ] T026 [US4] Create `commands/lib/collision.py` for collision detection (FR-020 to FR-025)
-- [ ] T027 [US4] Implement `[overwrite]` handler in `commands/lib/collision.py`
-- [ ] T028 [US4] Implement `[merge]` handler in `commands/lib/collision.py`
-- [ ] T029 [US4] Integrate collision detection into `commands/hefesto_create_impl.py`
+- [X] T024 [P] [US4] Create `commands/lib/backup.py` for .tar.gz backup creation (FR-023)
+- [X] T025 [P] [US4] Create `commands/lib/diff.py` for markdown section diffing (FR-024)
+- [X] T026 [US4] Create `commands/lib/collision.py` for collision detection (FR-020 to FR-025)
+- [X] T027 [US4] Implement `[overwrite]` handler in `commands/lib/collision.py`
+- [X] T028 [US4] Implement `[merge]` handler in `commands/lib/collision.py`
+- [X] T029 [US4] Integrate collision detection into `commands/hefesto_create_impl.py`
 
 **Checkpoint**: User Story 4 complete - Existing skills protected with backup/merge options
 
@@ -130,7 +130,7 @@ Based on plan.md structure:
 ### Implementation for User Story 5
 
 - [ ] T030 [P] [US5] Create `commands/lib/editor.py` for $EDITOR integration (FR-027 to FR-030)
-- [ ] T031 [US5] Implement `[edit]` handler in `commands/lib/human_gate.py`
+- [x] T031 [US5] Implement `[edit]` handler in `commands/lib/human_gate.py`
 
 **Checkpoint**: User Story 5 complete - Advanced users can edit skills inline
 
@@ -140,11 +140,11 @@ Based on plan.md structure:
 
 **Purpose**: Final improvements and documentation
 
-- [ ] T032 [P] Add `/hefesto.resume` command in `commands/hefesto_resume_impl.py`
-- [ ] T033 [P] Update `AGENTS.md` with `/hefesto.resume` command documentation
-- [ ] T034 [P] Create quickstart examples in `specs/005-human-gate/quickstart.md`
-- [ ] T035 Update `commands/hefesto_create_impl.py` final integration
-- [ ] T036 [P] Update `MEMORY.md` with Feature 005 completion status
+- [x] T032 [P] Add `/hefesto.resume` command in `commands/hefesto_resume_impl.py`
+- [x] T033 [P] Update `AGENTS.md` with `/hefesto.resume` command documentation
+- [x] T034 [P] Create quickstart examples in `specs/005-human-gate/quickstart.md`
+- [x] T035 Update `commands/hefesto_create_impl.py` final integration
+- [x] T036 [P] Update `MEMORY.md` with Feature 005 completion status
 - [ ] T037 Manual testing of all 5 user stories
 
 ---
