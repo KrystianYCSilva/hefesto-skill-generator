@@ -12,8 +12,6 @@
 | Arquivo | Titulo | Status |
 |---------|--------|--------|
 | [skill-generator-automatizado.md](./skill-generator-automatizado.md) | Da Conformidade a Geracao Automatizada | Validado |
-| [slash-commands-sintese.md](slash-commands-sintese.md) | Comandos Slash em CLIs de IA para Programação | Validado |
-
 ---
 
 ## Referencias Academicas Chave
