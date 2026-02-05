@@ -166,6 +166,23 @@ skill-name/
 
 ## Skills Criadas
 
+### coala-framework
+
+| Campo | Valor |
+|-------|-------|
+| **Nome** | coala-framework |
+| **Versão** | 1.0.0 |
+| **Criada** | 2026-02-05 |
+| **Categoria** | ai-development |
+| **Target CLIs** | Claude, Gemini, Codex, OpenCode, Cursor, Qwen (6 CLIs) |
+| **Descrição** | Framework CoALA (Cognitive Architectures for Language Agents) com memórias especializadas e ciclo de decisão |
+| **Estrutura** | Progressive Disclosure (SKILL.md 445 linhas + 4 references) |
+| **Tamanho** | ~445 linhas (core) + ~2313 linhas (references) |
+| **Tags** | coala, cognitive-architecture, language-agents, memory-systems, decision-making, ai-agents, llm-agents, episodic-memory, semantic-memory, procedural-memory, working-memory, long-term-memory, agent-framework, reasoning, planning |
+| **Fontes** | 4 (CoALA paper arXiv, Soar docs, ACT-R docs, Awesome Language Agents) |
+| **References** | memory-implementation, action-space-patterns, decision-cycle-advanced, integration-examples |
+| **Status** | ✅ Validada contra T0+T1, aprovada pelo Human Gate, sincronizada para 6 CLIs |
+
 ### markdown-fundamentals
 
 | Campo | Valor |
@@ -254,12 +271,12 @@ skill-name/
 
 | CLI | Método | Status | Versão | Skills Dir | Skills |
 |-----|--------|--------|--------|------------|--------|
-| **Claude Code** | PATH + Config | ✅ active | 2.1.31 | .claude/skills/ | java-fundamentals |
-| **Gemini CLI** | PATH + Config | ✅ active | 0.27.0 | .gemini/skills/ | java-fundamentals |
-| **Codex** | PATH + Config | ✅ active | (npm) | .codex/skills/ | java-fundamentals |
-| **OpenCode** | PATH + Config | ✅ active | 1.1.48 | .opencode/skills/ | java-fundamentals |
-| **Cursor** | PATH + Config | ✅ active | 2.4.27 | .cursor/skills/ | java-fundamentals |
-| **Qwen Code** | PATH + Config | ✅ active | 0.9.0 | .qwen/skills/ | java-fundamentals |
+| **Claude Code** | PATH + Config | ✅ active | 2.1.31 | .claude/skills/ | java-fundamentals, coala-framework |
+| **Gemini CLI** | PATH + Config | ✅ active | 0.27.0 | .gemini/skills/ | java-fundamentals, coala-framework |
+| **Codex** | PATH + Config | ✅ active | (npm) | .codex/skills/ | java-fundamentals, coala-framework |
+| **OpenCode** | PATH + Config | ✅ active | 1.1.48 | .opencode/skills/ | java-fundamentals, coala-framework |
+| **Cursor** | PATH + Config | ✅ active | 2.4.27 | .cursor/skills/ | java-fundamentals, coala-framework |
+| **Qwen Code** | PATH + Config | ✅ active | 0.9.0 | .qwen/skills/ | java-fundamentals, coala-framework |
 | **Copilot** | config_dir only | ⚠️ warning_no_path | null | .copilot/skills/ | (vazio) |
 
 **Nota:** `code` no PATH aponta para binário do Cursor, não VS Code. Copilot não detectável sem ~/.vscode ou extensão instalada.
@@ -284,7 +301,7 @@ skill-name/
 | **Progresso Geral** | ~57% (4/7 CARDs) |
 | **Regras T0** | 11 |
 | **ADRs** | 3 |
-| **Skills Criadas** | 3 (java-fundamentals, kotlin-fundamentals, markdown-fundamentals) |
+| **Skills Criadas** | 4 (java-fundamentals, kotlin-fundamentals, markdown-fundamentals, coala-framework) |
 | **Skills Sincronizadas** | 6 CLIs (OpenCode, Claude, Gemini, Codex, Cursor, Qwen) |
 
 ---
