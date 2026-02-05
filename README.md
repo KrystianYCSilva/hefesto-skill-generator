@@ -247,3 +247,16 @@ MIT License - veja [LICENSE](./LICENSE) para detalhes.
 ---
 
 **Hefesto Skill Generator** | Forjando ferramentas para agentes de IA | 2026
+
+---
+
+## Contributing & Governance
+
+- See `CONTRIBUTING.md` for how to contribute (issues, PRs, tests, coding standards).
+- See `CODE_OF_CONDUCT.md` for community behavior expectations (Contributor Covenant).
+- This repository is licensed under the `LICENSE` file (MIT).
+- Issue and PR templates are available under `.github/` to help contributors provide the information maintainers need.
+- CI: Basic GitHub Actions workflow is configured to run test jobs on PRs and pushes to `main` (.github/workflows/ci.yml).
+- Use Conventional Commits (`feat:`, `fix:`, `docs:`) — see `CONTRIBUTING.md` for details.
+
+We welcome contributions — please read `CONTRIBUTING.md` and follow the T0 rules in `CONSTITUTION.md` before submitting changes.
