@@ -9,8 +9,8 @@ version: "1.0.0"
 
 # /hefesto.init - Bootstrap Command
 
-**Command**: `/hefesto.init`  
-**Purpose**: Initialize Hefesto Foundation Infrastructure in a project  
+**Command**: `/hefesto.init`
+**Purpose**: Initialize Hefesto Foundation Infrastructure in a project
 **User Story**: US1 - Bootstrap Hefesto in Existing Project (P1)
 
 ---
@@ -97,7 +97,7 @@ START timer
    - {CLI Name} (config only, ⚠️ not in PATH) → {skills_dir}
 ```
 
-**Performance Target**: < 2 seconds  
+**Performance Target**: < 2 seconds
 **References**: FR-001, FR-006, FR-012, FR-013, cli-detection-strategy.md
 
 ---
@@ -123,7 +123,7 @@ START timer
    error_count = COUNT(CLIs WHERE status = "error_permission")
 ```
 
-**Performance Target**: < 1 second  
+**Performance Target**: < 1 second
 **References**: FR-002, FR-009, FR-014, FR-017, platform-detection.md
 
 ---
@@ -134,19 +134,19 @@ START timer
 1. Display: "📄 Initializing MEMORY.md..."
 
 2. Generate MEMORY.md from template (see: templates/memory-template.md)
-   
+
    frontmatter:
      hefesto_version: "{current_version}"
      initialized: "{current_timestamp_iso8601}"
      last_updated: "{current_timestamp_iso8601}"
-   
+
    detected_clis_table:
      FOR EACH detected_cli:
        | {cli.id} | {cli.detection_method} | {cli.skills_dir} | {cli.version} | {cli.status} |
-   
+
    skill_registry_table:
      (empty - no skills generated yet)
-   
+
    state_metadata:
      Total Skills: 0
      Active CLIs: {count_active}
@@ -166,7 +166,7 @@ START timer
      LOG: "Warning: MEMORY.md created but failed validation"
 ```
 
-**Performance Target**: < 100ms  
+**Performance Target**: < 100ms
 **References**: FR-004, FR-011, memory-template.md, data-model.md
 
 ---
@@ -180,7 +180,7 @@ duration = timer.elapsed_seconds()
 1. Display: "📜 Generating bootstrap report..."
 
 2. Generate report (see: templates/bootstrap-report-template.md)
-   
+
    report = generate_bootstrap_report({
      operation: "init",
      timestamp: current_timestamp,
@@ -203,7 +203,7 @@ duration = timer.elapsed_seconds()
      DISPLAY: "⚠️ Bootstrap completed with {warning_count} warnings in {duration}s"
 ```
 
-**Performance Target**: < 500ms  
+**Performance Target**: < 500ms
 **References**: FR-012, bootstrap-report-template.md
 
 ---
@@ -356,7 +356,7 @@ last_updated: 2026-02-04T14:30:00Z
 
 2. Validate CONSTITUTION.md structure
    (see: helpers/constitution-validator.md)
-   
+
    IF validation fails:
      DISPLAY: "❌ CONSTITUTION.md invalid"
      ABORT with ERR-004
@@ -365,7 +365,7 @@ last_updated: 2026-02-04T14:30:00Z
    REQUIRED_RULES = [
      "T0-HEFESTO-01", "T0-HEFESTO-02", ..., "T0-HEFESTO-11"
    ]
-   
+
    FOR EACH rule_id:
      IF NOT constitution_contains(rule_id):
        ABORT with ERR-004 (missing T0 rule)
@@ -550,6 +550,21 @@ Bootstrap aborted.
 
 ---
 
+## Implementation
+
+The implementation of `/hefesto.init` is contained in the Python script `hefesto_init_impl.py` which handles all phases of the initialization process:
+
+1. **Constitution Validation**: Ensures CONSTITUTION.md exists and contains all required T0 rules
+2. **Initialization Check**: Verifies if Hefesto is already initialized (unless --force is used)
+3. **CLI Detection**: Scans PATH and config directories to detect installed AI CLIs
+4. **Directory Creation**: Creates skill directories for each detected CLI
+5. **State Initialization**: Generates and writes MEMORY.md with detected CLIs
+6. **Report Generation**: Produces a comprehensive bootstrap report
+
+The script follows all specified requirements and performance targets, with proper error handling and user feedback.
+
+---
+
 ## Testing
 
 ### Manual Testing (Quickstart Scenarios)
@@ -577,7 +592,7 @@ CHECK: Re-running /hefesto.init reports "already initialized"
 - **Specification**: specs/001-hefesto-foundation/spec.md (User Story 1)
 - **Plan**: specs/001-hefesto-foundation/plan.md
 - **Data Model**: specs/001-hefesto-foundation/data-model.md (Project State, CLI Detection Result)
-- **Helpers**: 
+- **Helpers**:
   - `helpers/cli-detection-strategy.md`
   - `helpers/error-handling.md`
   - `helpers/constitution-validator.md`

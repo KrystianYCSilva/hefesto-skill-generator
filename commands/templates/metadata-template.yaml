@@ -1,0 +1,10 @@
+# metadata.yaml template
+author: "{{AUTHOR}}"
+version: "{{VERSION}}"
+created: "{{CREATED_DATE}}"
+updated: "{{CREATED_DATE}}"
+category: "{{CATEGORY}}"
+tags: [{{TAGS}}]
+platforms: [{{PLATFORMS}}]
+dependencies: [{{DEPENDENCIES}}]
+example_prompt: "{{EXAMPLE_PROMPT}}"
