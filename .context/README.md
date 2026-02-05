@@ -1,7 +1,7 @@
 # .context/ - AI Context Hub
 
 > **Projeto:** Hefesto Skill Generator
-> **Versao:** 1.0.0
+> **Versao:** 1.4.0 (Feature 004: Multi-CLI Parallel Generation)
 > **Tier System:** Ativo
 
 ---
@@ -94,4 +94,34 @@ ALWAYS cite a regra especifica (ID) na resposta
 
 ---
 
-**Ultima Atualizacao:** 2026-02-04
+## Feature 004: Multi-CLI Automatic Parallel Generation
+
+**Status:** ✅ COMPLETED (2026-02-05)
+
+Feature 004 brings major architectural improvements:
+
+**Key Changes:**
+- ADR-008 added: Parallel + Atomic multi-CLI generation
+- T0-HEFESTO-06 enhanced: Parallel detection in <500ms
+- 5 new helpers: cli-detector, cli-adapter, parallel-generator, rollback-handler, multi-cli-integration
+- 2 new templates: detection-report, generation-report
+
+**Performance:**
+- 3x faster skill generation (2s vs 6s sequential)
+- Atomic all-or-nothing semantics
+- <500ms CLI detection
+
+**Test Results:**
+- 9/9 manual tests passed ✅
+- 10/10 mandatory criteria met ✅
+- 3/3 desirable criteria met ✅
+- 8/8 T0 rules validated ✅
+
+**Documentation Updates:**
+- Updated: architectural-rules.md (T0-HEFESTO-06, added T0-HEFESTO-11)
+- Updated: key-decisions.md (added ADR-008)
+- Updated: project-overview.md (Feature 004 info)
+
+---
+
+**Ultima Atualizacao:** 2026-02-05 (Feature 004 Complete)

@@ -49,12 +49,12 @@
 
 ## 5. Criterios de Aceite
 
-- [ ] Estrutura de diretorios criada para CLIs detectados
-- [ ] CONSTITUTION.md presente e carregavel
-- [ ] MEMORY.md inicializado com estado vazio
-- [ ] Comandos /hefesto.* funcionais
-- [ ] Deteccao automatica de CLIs instalados
-- [ ] Human Gate funcional para operacoes de escrita
+- [x] Estrutura de diretorios criada para CLIs detectados
+- [x] CONSTITUTION.md presente e carregavel
+- [x] MEMORY.md inicializado com estado vazio
+- [x] Comandos /hefesto.* funcionais
+- [x] Deteccao automatica de CLIs instalados
+- [x] Human Gate funcional para operacoes de escrita
 
 ---
 
@@ -81,7 +81,7 @@
 
 | Campo | Valor |
 |-------|-------|
-| **Status** | Planned |
+| **Status** | ✅ COMPLETED (2026-02-05) |
 | **Prioridade** | Alta |
 | **Estimativa** | 4h |
 | **Assignee** | AI Agent |

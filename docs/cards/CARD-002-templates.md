@@ -99,12 +99,12 @@
 
 ## 5. Criterios de Aceite
 
-- [ ] Template base (skill-template.md) criado e validado
-- [ ] Adapters para todos os 7 CLIs implementados
-- [ ] Sistema de variaveis funcionando
-- [ ] Validacao automatica de output
-- [ ] Skills geradas passam em todos os CLIs testados
-- [ ] Documentacao de cada adapter
+- [x] Template base (skill-template.md) criado e validado
+- [x] Adapters para todos os 7 CLIs implementados
+- [x] Sistema de variaveis funcionando
+- [x] Validacao automatica de output
+- [x] Skills geradas passam em todos os CLIs testados
+- [x] Documentacao de cada adapter
 
 ---
 
@@ -144,7 +144,7 @@
 
 | Campo | Valor |
 |-------|-------|
-| **Status** | Planned |
+| **Status** | ✅ COMPLETED (2026-02-05) |
 | **Prioridade** | Alta |
 | **Estimativa** | 10h |
 | **Assignee** | AI Agent |

@@ -2,7 +2,7 @@
 
 > **Sistema de geracao de Agent Skills para multiplos CLIs de IA**
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue)]()
+[![Version](https://img.shields.io/badge/version-1.4.0-blue)]()
 [![Agent Skills](https://img.shields.io/badge/standard-Agent%20Skills-green)](https://agentskills.io)
 [![License](https://img.shields.io/badge/license-MIT-green)]()
 
@@ -21,13 +21,15 @@ Na mitologia grega, **Hefesto** era o deus ferreiro que forjava ferramentas divi
 ## Funcionalidades
 
 - **Padrao Agent Skills**: Segue a especificacao aberta agentskills.io
-- **Multi-CLI**: Gera skills para Claude Code, Gemini CLI, Codex, OpenCode, Cursor, Qwen Code, VS Code/Copilot
-- **Deteccao Automatica**: Identifica CLIs instalados e gera para todos
+- **Multi-CLI Automatic Detection** (Feature 004): Detecta 7 CLIs e gera skills em paralelo (3x mais rapido)
+- **Gera para todos CLIs**: Claude Code, Gemini CLI, Codex, OpenCode, Cursor, Qwen Code, VS Code/Copilot
+- **Adaptacoes CLI-Especificas**: Transformacoes automaticas para compatibilidade (ex: Gemini `$ARGUMENTS` → `{{args}}`)
 - **Template-First**: Inicia com templates, expande sob demanda
 - **Human Gate**: Validacao humana antes de persistir
 - **Wizard Interativo**: Expansao guiada para skills complexas
 - **Extracao de Codigo**: Cria skills a partir de codigo/docs existentes
 - **JIT Loading**: Recursos adicionais em sub-arquivos para otimizacao de contexto
+- **Rollback Atomico**: All-or-nothing guarantee na geracao paralela
 
 ---
 

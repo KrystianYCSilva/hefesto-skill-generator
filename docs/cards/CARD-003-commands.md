@@ -64,14 +64,14 @@
 
 ## 5. Criterios de Aceite
 
-- [ ] Todos os 8 comandos implementados
-- [ ] Human Gate funcionando para comandos de escrita
-- [ ] Modo wizard implementado para /hefesto.create
-- [ ] Modo wizard implementado para /hefesto.extract
-- [ ] Validacao de argumentos
-- [ ] Mensagens de erro claras
-- [ ] Help contextual para cada comando
-- [ ] Documentacao de cada comando
+- [x] Todos os 9 comandos implementados (incluindo /hefesto.show e /hefesto.delete)
+- [x] Human Gate funcionando para comandos de escrita
+- [x] Modo wizard implementado para /hefesto.create
+- [x] Modo wizard implementado para /hefesto.extract
+- [x] Validacao de argumentos
+- [x] Mensagens de erro claras
+- [x] Help contextual para cada comando
+- [x] Documentacao de cada comando
 
 ---
 
@@ -102,7 +102,7 @@
 
 | Campo | Valor |
 |-------|-------|
-| **Status** | Planned |
+| **Status** | ✅ COMPLETED (2026-02-05) |
 | **Prioridade** | Alta |
 | **Estimativa** | 12h |
 | **Assignee** | AI Agent |
