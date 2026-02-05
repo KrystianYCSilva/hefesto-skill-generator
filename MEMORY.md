@@ -163,13 +163,48 @@ skill-name/
 
 ## Skills Criadas
 
-Nenhuma skill criada ainda.
+### 1. java-fundamentals
+
+| Campo | Valor |
+|-------|-------|
+| **Nome** | java-fundamentals |
+| **Versão** | 1.0.0 |
+| **Criada** | 2026-02-04 (Sessão 8) |
+| **Categoria** | development |
+| **Target CLI** | OpenCode |
+| **Compatível** | Claude, Gemini, Codex, Copilot, OpenCode, Cursor, Qwen |
+| **Descrição** | Fundamentos Java (POO, clean code, recursos Java 6-25) |
+| **Estrutura** | Progressive Disclosure (SKILL.md + 8 references/*.md) |
+| **Tamanho** | 480 linhas (core) + 3200 linhas (references) |
+| **Java Versions** | 6-25 (generic, sem frameworks) |
+| **Tags** | java, oop, clean-code, best-practices, design-patterns |
+| **Fontes** | 5 (Oracle, Effective Java, JLS, Clean Code, GoF) |
+| **Status** | ✅ Validada contra T0, persistida |
+
+**Arquivos criados:**
+- `.opencode/skills/java-fundamentals/SKILL.md` (480 linhas)
+- `.opencode/skills/java-fundamentals/metadata.yaml` (completo)
+- `.opencode/skills/java-fundamentals/references/generics.md` (450 linhas)
+- `.opencode/skills/java-fundamentals/references/concurrency.md` (400 linhas)
+- `.opencode/skills/java-fundamentals/references/memory.md` (380 linhas)
+- `.opencode/skills/java-fundamentals/references/design-patterns.md` (420 linhas)
+- `.opencode/skills/java-fundamentals/references/io-nio.md` (380 linhas)
+- `.opencode/skills/java-fundamentals/references/serialization.md` (350 linhas)
+- `.opencode/skills/java-fundamentals/references/reflection.md` (400 linhas)
+- `.opencode/skills/java-fundamentals/references/functional.md` (420 linhas)
 
 ---
 
 ## CLIs Detectados
 
-Deteccao pendente (executar apos implementacao CARD-001).
+| CLI | Status | Caminho |
+|-----|--------|---------|
+| **OpenCode** | ✅ Detectado | C:\Users\kryst\AppData\Roaming\npm\opencode |
+| **Java JDK** | ✅ Detectado (v25.0.2) | Multiple paths |
+| **Maven** | ✅ Detectado (v3.9.12) | C:\Maven\apache-maven-3.9.12 |
+| **Gradle** | ❌ Não detectado | - |
+
+**Última detecção**: 2026-02-04
 
 ---
 
@@ -186,6 +221,7 @@ Deteccao pendente (executar apos implementacao CARD-001).
 | **Progresso Geral** | ~43% (3/7 CARDs) |
 | **Regras T0** | 11 |
 | **ADRs** | 3 |
+| **Skills Criadas** | 1 (java-fundamentals) |
 
 ---
 
@@ -227,6 +263,8 @@ Deteccao pendente (executar apos implementacao CARD-001).
 | 2026-02-04 | 2 | CARDs (7) e PLAN-001 |
 | 2026-02-04 | 3 | Integracao pesquisa (ADR-002) |
 | 2026-02-04 | 4 | Metadados JIT (ADR-003) |
+| 2026-02-04 | 5-7 | Feature 003: Comandos Hefesto (spec, implementação) |
+| 2026-02-04 | 8 | /hefesto.create: Primeira skill java-fundamentals ✅ |
 
 ---
 
