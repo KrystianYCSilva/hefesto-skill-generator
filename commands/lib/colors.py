@@ -145,21 +145,35 @@ def gray(text: str) -> str:
     return colorize(text, Colors.GRAY)
 
 
+def safe_unicode(char: str, fallback: str = "*") -> str:
+    """Return char if Unicode supported, otherwise fallback (Windows fix)"""
+    try:
+        # Test if char can be encoded in current stdout encoding
+        char.encode(sys.stdout.encoding or "utf-8")
+        return char
+    except (UnicodeEncodeError, AttributeError):
+        return fallback
+
+
 def success(text: str) -> str:
-    """Format success message (green checkmark)"""
-    return green(f"✓ {text}")
+    """Format success message with checkmark (Unicode-safe)"""
+    check = safe_unicode("✓", "[OK]")
+    return green(f"{check} {text}")
 
 
 def error(text: str) -> str:
-    """Format error message (red cross)"""
-    return red(f"✗ {text}")
+    """Format error message (red cross, Unicode-safe)"""
+    cross = safe_unicode("✗", "[X]")
+    return red(f"{cross} {text}")
 
 
 def warning(text: str) -> str:
-    """Format warning message (yellow exclamation)"""
-    return yellow(f"⚠ {text}")
+    """Format warning message (yellow exclamation, Unicode-safe)"""
+    warn = safe_unicode("⚠", "[!]")
+    return yellow(f"{warn} {text}")
 
 
 def info(text: str) -> str:
-    """Format info message (blue info icon)"""
-    return blue(f"ℹ {text}")
+    """Format info message (blue info icon, Unicode-safe)"""
+    icon = safe_unicode("ℹ", "[i]")
+    return blue(f"{icon} {text}")

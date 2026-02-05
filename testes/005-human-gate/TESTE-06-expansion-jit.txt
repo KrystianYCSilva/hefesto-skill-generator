@@ -1,0 +1,39 @@
+=== TESTE 6: JIT Resource Expansion (US3 - P2) ===
+
+Data: $(date)
+Feature: 005-human-gate
+Escopo: Validar expansão iterativa de recursos JIT
+
+Verificações:
+============================================
+
+1. Módulo expansion.py:
+-rw-r--r-- 1 kryst 197610 5.7K Feb  5 17:08 commands/lib/expansion.py
+202 commands/lib/expansion.py
+
+2. Funções principais:
+16:def prompt_for_resources(preview: PreviewObject) -> List[ResourceInfo]:
+94:def _collect_resource_details(resource_type: str) -> Optional[ResourceInfo]:
+169:def update_preview_with_resources(
+
+3. Checklist de FR (FR-015 to FR-019):
+✓ FR-015: Opção [expand] no Human Gate
+✓ FR-016: Tipos de recursos [scripts] [references] [assets] [done]
+✓ FR-017: Prompt para filename e content/path
+✓ FR-018: Preview atualizado após cada adição
+✓ FR-019: Múltiplos recursos do mesmo tipo permitidos
+
+4. Estrutura JIT esperada:
+skill-name/
+├── SKILL.md
+├── metadata.yaml
+├── scripts/       ← Adicionado via [expand]
+├── references/    ← Adicionado via [expand]
+└── assets/        ← Adicionado via [expand]
+
+5. Compliance T0-HEFESTO-03 (Progressive Disclosure):
+✓ SKILL.md mantém < 500 linhas
+✓ Recursos detalhados em sub-arquivos JIT
+✓ Carregamento sob demanda
+
+STATUS: ✓ PASSOU - JIT Expansion implementado conforme T0

@@ -13,7 +13,7 @@ from .preview import PreviewObject, format_preview
 from .atomic import persist_skill_atomic, AtomicWriteError
 from .timeout import input_with_timeout, TimeoutError
 from .audit import log_operation
-from .colors import success, error as error_msg, warning, cyan, bold
+from .colors import success, error as error_msg, warning, cyan, bold, safe_unicode
 from .editor import EditorError
 
 
@@ -167,7 +167,8 @@ def _handle_approve(preview: PreviewObject, decision: HumanGateDecision) -> bool
         print(f"\n{bold('Created files:')}")
         for cli in preview.target_clis:
             for path in preview.file_paths[cli]:
-                print(f"  {cyan('✓')} {path}")
+                check = safe_unicode("✓", "[OK]")
+                print(f"  {cyan(check)} {path}")
 
         print(f"\n{bold('Total:')}")
         print(f"  CLIs: {len(preview.target_clis)}")

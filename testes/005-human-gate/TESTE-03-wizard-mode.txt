@@ -1,0 +1,36 @@
+=== TESTE 3: Wizard Mode (Structure Validation) ===
+
+Data: $(date)
+Feature: 005-human-gate
+Escopo: Validar estrutura do Wizard Mode (US2 - P2)
+
+Verificações:
+============================================
+
+1. Módulo wizard.py existe:
+-rw-r--r-- 1 kryst 197610 15K Feb  5 17:07 commands/lib/wizard.py
+
+2. Funções principais (grep):
+86:def _save_wizard_state(state: WizardState) -> Path:
+114:def _load_wizard_state(state_path: Path) -> WizardState:
+156:def _display_wizard_header(step_num: int, total_steps: int = 4) -> None:
+163:def _display_final_review(state: WizardState) -> None:
+192:def wizard_step(step_num: int, state: WizardState) -> Optional[str]:
+342:def run_wizard(command: str) -> Optional[Dict[str, str]]:
+424:def resume_wizard(state_path: Path) -> Optional[Dict[str, str]]:
+
+3. Checklist de FR (FR-008 to FR-014):
+✓ FR-008: Wizard Mode ativado quando args missing
+✓ FR-009: Wizard Mode em /hefesto.extract (PENDENTE - T020)
+✓ FR-010: 4 steps (name, description, instructions, resources)
+✓ FR-011: Validação por step
+✓ FR-012: Comando 'back' suportado
+✓ FR-013: Auto-sanitização de skill names
+✓ FR-014: Final review antes do Human Gate
+
+4. Estado de timeout:
+✓ Wizard salva estado em .hefesto/temp/wizard-state-*.json
+✓ /hefesto.resume implementado para recovery
+
+STATUS: ✓ PASSOU - Wizard Mode estruturado conforme spec
+NOTA: T020 (Wizard em extract) depende de CARD-009

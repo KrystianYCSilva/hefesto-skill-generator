@@ -1,0 +1,53 @@
+=== TESTE 9: Integração com /hefesto.create ===
+
+Data: $(date)
+Feature: 005-human-gate
+Escopo: Validar integração do Human Gate em comando real
+
+Verificações:
+============================================
+
+1. Comando hefesto_create_impl.py:
+-rwxr-xr-x 1 kryst 197610 27K Feb  5 17:12 commands/hefesto_create_impl.py
+
+2. Comando /hefesto.resume:
+-rw-r--r-- 1 kryst 197610 4.6K Feb  5 17:18 commands/hefesto_resume_impl.py
+
+3. Spec do comando create:
+2:description: "Create new Agent Skill from natural language description with Human Gate approval"
+23:2. **Human Gate**: Mandatory approval before persistence (T0-HEFESTO-02)
+28:**Target Performance**: < 7s (excluding Human Gate wait)
+222:     ABORT (do not proceed to Human Gate)
+230:### Phase 4: Human Gate
+
+4. Documentação em AGENTS.md:
+| `/hefesto.create` | Criar skill de descricao com Wizard Mode + Multi-CLI Parallel | Sim | ✅ Operacional |
+| `/hefesto.extract` | Extrair skill de codigo existente + Multi-CLI | Sim | ✅ Operacional |
+| `/hefesto.validate` | Validar skill contra Agent Skills spec | Nao | ✅ Operacional |
+--
+/hefesto.create "Skill de validacao de codigo"
+| `/hefesto.resume` | Retomar wizard interrompido de estado salvo | Sim | ✅ Operacional |
+
+### Resume Usage
+--
+/hefesto.resume .hefesto/temp/wizard-state-2026-02-05T14-30-00.json
+
+5. Fluxo de integração esperado:
+/hefesto.create "description"
+  ↓
+1. Detectar CLIs (CARD-004)
+2. Wizard Mode se args missing (wizard.py)
+3. Gerar skill em memória
+4. Validar contra Agent Skills spec
+5. Collision detection (collision.py)
+6. Human Gate (human_gate.py)
+   - Preview (preview.py)
+   - Timeout (timeout.py)
+   - Options: [approve] [expand] [edit] [reject]
+7. Se [approve]: Atomic persist (atomic.py)
+8. Multi-CLI parallel (CARD-004)
+9. Audit log (audit.py)
+10. Confirmação ao usuário
+
+STATUS: ⚠️ PARCIAL - Spec completa, implementação pendente
+NOTA: Implementação depende de execução real do comando

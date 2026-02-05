@@ -217,7 +217,10 @@ def format_preview(preview: PreviewObject) -> str:
 
     # Validation status
     if preview.validation_status == "valid":
-        lines.append(colorize("✓ Valid", c.GREEN))
+        from .colors import safe_unicode
+
+        check = safe_unicode("✓", "[OK]")
+        lines.append(colorize(f"{check} Valid", c.GREEN))
     else:
         lines.append(colorize("✗ Invalid", c.RED))
         for error in preview.validation_errors:
