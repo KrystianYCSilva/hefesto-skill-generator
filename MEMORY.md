@@ -163,6 +163,24 @@ skill-name/
 
 ## Skills Criadas
 
+### kotlin-fundamentals
+
+| Campo | Valor |
+|-------|-------|
+| **Nome** | kotlin-fundamentals |
+| **Versão** | 1.0.0 |
+| **Criada** | 2026-02-04 (Sessão 9) |
+| **Categoria** | development |
+| **Target CLIs** | Claude, Gemini, Codex, OpenCode, Cursor, Qwen (6 CLIs) |
+| **Descrição** | Fundamentos Kotlin (tipos seguros, funcional, coroutines básicas, Kotlin 1.x–2.x) |
+| **Estrutura** | Progressive Disclosure (SKILL.md 290 linhas + 7 references) |
+| **Tamanho** | ~290 linhas (core) + ~2500 linhas (references) |
+| **Kotlin Versions** | 1.0–2.x (genérico, sem framework específico) |
+| **Tags** | kotlin, programming, oop, clean-code, best-practices, fundamentals, coroutines, functional |
+| **Fontes** | 5 (kotlinlang.org x3, Kotlin in Action, Effective Kotlin) |
+| **References** | types, oop, functions, collections, coroutines, error-handling, kotlin-versions (K2) |
+| **Status** | ✅ Validada contra T0, aprovada pelo Human Gate, sincronizada para 6 CLIs |
+
 ### fundamentos-do-kotlin-1xx-e-2xx
 
 | Campo | Valor |
@@ -172,7 +190,7 @@ skill-name/
 | **Criada** | 2026-02-04 |
 | **Categoria** | development |
 | **Target CLIs** | qwen (1 CLI) |
-| **Status** | ⚠️ Registrada no MEMORY mas NÃO encontrada no disco (.qwen/skills/) — requere re-criação |
+| **Status** | ⚠️ Registrada no MEMORY mas NÃO encontrada no disco (.qwen/skills/) — substituída por kotlin-fundamentals |
 
 ### java-fundamentals
 
@@ -244,7 +262,7 @@ skill-name/
 | **Progresso Geral** | ~43% (3/7 CARDs) |
 | **Regras T0** | 11 |
 | **ADRs** | 3 |
-| **Skills Criadas** | 1 (java-fundamentals) |
+| **Skills Criadas** | 2 (java-fundamentals, kotlin-fundamentals) |
 | **Skills Sincronizadas** | 6 CLIs (OpenCode, Claude, Gemini, Codex, Cursor, Qwen) |
 
 ---
@@ -292,6 +310,7 @@ skill-name/
 | 2026-02-04 | 8 | /hefesto.detect: 5 novos CLIs detectados (Claude, Gemini, Codex, Cursor, Qwen) |
 | 2026-02-04 | 8 | /hefesto.sync: java-fundamentals sincronizada para 6 CLIs ✅ |
 | 2026-02-04 | 9 | /hefesto.init: re-scan CLIs, 7 detectados (6 active + Copilot warning), inconsistência kotlin skill flagged |
+| 2026-02-04 | 9 | /hefesto.create: kotlin-fundamentals criada e sincronizada para 6 CLIs ✅ (7 references incl. K2) |
 
 ---
 
