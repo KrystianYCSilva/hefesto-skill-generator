@@ -46,16 +46,19 @@
 
 ## Comandos Disponiveis
 
-| Comando | Descricao | Human Gate |
-|---------|-----------|------------|
-| `/hefesto.init` | Inicializar Hefesto (bootstrap) | Nao |
-| `/hefesto.create` | Criar skill de descricao | Sim |
-| `/hefesto.extract` | Extrair skill de codigo | Sim |
-| `/hefesto.validate` | Validar skill existente | Nao |
-| `/hefesto.adapt` | Adaptar para outro CLI | Sim |
-| `/hefesto.sync` | Sincronizar entre CLIs | Sim |
-| `/hefesto.list` | Listar skills | Nao |
-| `/hefesto.detect` | Re-detectar CLIs instalados | Nao |
+| Comando | Descricao | Human Gate | Status |
+|---------|-----------|------------|--------|
+| `/hefesto.init` | Inicializar Hefesto (bootstrap) | Nao | ✅ Operacional |
+| `/hefesto.detect` | Re-detectar CLIs instalados | Nao | ✅ Operacional |
+| `/hefesto.list` | Listar CLIs e skills | Nao | ✅ Operacional |
+| `/hefesto.help` | Mostrar ajuda e documentacao | Nao | ✅ Operacional |
+| `/hefesto.create` | Criar skill de descricao com Wizard Mode | Sim | ✅ Operacional |
+| `/hefesto.extract` | Extrair skill de codigo existente | Sim | ✅ Operacional |
+| `/hefesto.validate` | Validar skill contra Agent Skills spec | Nao | ✅ Operacional |
+| `/hefesto.adapt` | Adaptar skill para outro CLI | Sim | ✅ Operacional |
+| `/hefesto.sync` | Sincronizar skills com templates | Sim | ✅ Operacional |
+| `/hefesto.show` | Exibir conteudo de skill especifica | Nao | ✅ Operacional |
+| `/hefesto.delete` | Deletar skill com confirmacao | Sim | ✅ Operacional |
 
 ---
 

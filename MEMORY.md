@@ -16,9 +16,9 @@
 | Campo | Valor |
 |-------|-------|
 | **Projeto** | Hefesto Skill Generator |
-| **Versao** | 1.2.0 |
+| **Versao** | 1.3.0 |
 | **Status** | Em Desenvolvimento |
-| **Fase** | Planning Completo + Research + Metadata JIT |
+| **Fase** | Feature 003 Complete - Command System Operational |
 
 ---
 
@@ -116,26 +116,48 @@ skill-name/
 - [x] Atualizado CARD-002 com nova estrutura
 - [x] Atualizado MEMORY.md
 
+### 2026-02-04 (Sessao 5-7) - Feature 003: Hefesto Commands
+
+- [x] Gerado spec.md com 4 user stories e 11 functional requirements
+- [x] Gerado plan.md com technical context e constitution check
+- [x] Gerado research.md com command structure patterns
+- [x] Gerado data-model.md com 6 entities (Command, Wizard, Human Gate, etc.)
+- [x] Gerado quickstart.md com developer guide
+- [x] Gerados 7 contracts em contracts/ directory
+- [x] Gerado tasks.md com 74 tarefas organizadas por user story
+- [x] Executado /speckit.analyze - 0 critical issues
+- [x] Implementados 7 novos comandos em commands/:
+  - hefesto.create.md (545 linhas)
+  - hefesto.extract.md (599 linhas)
+  - hefesto.validate.md (537 linhas)
+  - hefesto.adapt.md (592 linhas)
+  - hefesto.sync.md (595 linhas)
+  - hefesto.show.md (509 linhas)
+  - hefesto.delete.md (561 linhas)
+- [x] Atualizado hefesto.help.md com todos os 9 comandos
+- [x] Atualizado MEMORY.md v1.3.0
+
 ---
 
 ## Next Steps
 
 ### Imediato (Proxima Sessao)
 
-- [ ] Iniciar CARD-001: Foundation
-  - [ ] Implementar detector de CLIs
-  - [ ] Criar estrutura de diretorios
-  - [ ] Registrar comandos
+- [ ] Testar execucao dos 9 comandos Hefesto
+- [ ] Validar contra success criteria (SC-001 a SC-005)
+- [ ] Criar primeira skill usando /hefesto.create
+- [ ] Documentar troubleshooting common issues
 
 ### Futuro (Por Ordem)
 
-1. CARD-002: Templates System (inclui MCP + metadata.yaml template)
-2. CARD-003: Commands /hefesto.*
-3. CARD-004: Multi-CLI Generator
-4. CARD-005: Human Gate + Wizard
-5. CARD-006: Knowledge Base
-6. CARD-007: Examples
-7. Validacao Final e Release v1.0.0
+1. ✅ CARD-001: Foundation (COMPLETO)
+2. ✅ CARD-002: Templates System (COMPLETO - inclui MCP + metadata.yaml)
+3. ✅ CARD-003: Commands /hefesto.* (COMPLETO - 9 comandos)
+4. CARD-004: Multi-CLI Generator (usar comandos implementados)
+5. CARD-005: Human Gate + Wizard (patterns definidos, testar execucao)
+6. CARD-006: Knowledge Base (adicionar command examples)
+7. CARD-007: Examples (criar skills de demonstracao)
+8. Validacao Final e Release v1.0.0
 
 ---
 
@@ -156,10 +178,12 @@ Deteccao pendente (executar apos implementacao CARD-001).
 | Metrica | Valor |
 |---------|-------|
 | **Total de CARDs** | 7 |
+| **CARDs Completos** | 3 (Foundation, Templates, Commands) |
 | **Total de Sub-Tasks** | 62 |
 | **Estimativa Total** | 76h |
-| **Tasks Concluidas** | 0 |
-| **Progresso** | 0% |
+| **Tasks Concluidas Feature 003** | 61/74 (82%) |
+| **Comandos Implementados** | 9/9 (100%) |
+| **Progresso Geral** | ~43% (3/7 CARDs) |
 | **Regras T0** | 11 |
 | **ADRs** | 3 |
 

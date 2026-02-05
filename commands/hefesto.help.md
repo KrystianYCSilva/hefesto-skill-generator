@@ -55,13 +55,15 @@ Options:
 ### State & Information
 - `/hefesto.list [--clis|--skills|--check-sync]` - List CLIs and skills
 - `/hefesto.help [command]` - Show this help
+- `/hefesto.show <skill>` - Display specific skill content
+- `/hefesto.validate <skill>` - Validate skill compliance
 
-### Skill Management (Future)
-- `/hefesto.create` - Create new skill from description
-- `/hefesto.extract` - Extract skill from existing code
-- `/hefesto.validate` - Validate skill against spec
-- `/hefesto.adapt` - Adapt skill for different CLI
-- `/hefesto.sync` - Synchronize skills across CLIs
+### Skill Management
+- `/hefesto.create [description]` - Create new skill with Wizard Mode
+- `/hefesto.extract <file>` - Extract skill from existing code
+- `/hefesto.adapt <skill> --target <cli>` - Adapt skill for different CLI
+- `/hefesto.sync [skill]` - Synchronize skills with latest templates
+- `/hefesto.delete <skill>` - Delete skill with confirmation
 
 ## Quick Start
 
@@ -269,15 +271,18 @@ Show command help and reference
 
 ---
 
-### 🔧 Skill Management Commands (Future)
+### 🔧 Skill Management Commands
 
-These commands will be available in future releases:
+Core Skill Operations (P1):
+- `/hefesto.create` - Create skill from description with Wizard Mode
+- `/hefesto.extract` - Extract skill from existing code
+- `/hefesto.validate` - Validate skill against Agent Skills spec and T0 rules
 
-- `/hefesto.create` - Create skill from description
-- `/hefesto.extract` - Extract skill from code
-- `/hefesto.validate` - Validate skill spec compliance
-- `/hefesto.adapt` - Adapt skill for different CLI
-- `/hefesto.sync` - Synchronize skills across CLIs
+Cross-CLI Operations (P2):
+- `/hefesto.adapt` - Adapt skill for different CLI with syntax translation
+- `/hefesto.sync` - Synchronize skills across CLIs with template updates
+- `/hefesto.show` - Display skill content with formatted output
+- `/hefesto.delete` - Delete skill with confirmation and backup
 
 ---
 
