@@ -48,7 +48,10 @@
       "Bash(do echo -n \"$dir: \")",
       "Bash(ls:*)",
       "Bash(cmd /c type:*)",
-      "Bash(cmd /c dir:*)"
+      "Bash(cmd /c dir:*)",
+      "Bash(git rm:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
