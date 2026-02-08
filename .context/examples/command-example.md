@@ -1,7 +1,7 @@
 # Exemplo: Fluxo de Comando /hefesto.create
 
 > **Tier:** T3 - Ilustrativo
-> **Proposito:** Demonstrar fluxo completo do comando /hefesto.create
+> **Proposito:** Demonstrar fluxo completo do comando /hefesto.create (v2.0.0)
 
 ---
 
@@ -13,9 +13,9 @@
 
 ---
 
-## 2. Processamento (Template Processor)
+## 2. Processamento (6 fases)
 
-### 2.1. Extracao de Conceitos
+### Phase 1: Understanding
 
 ```
 Input: "Uma skill para padronizar commits seguindo conventional commits"
@@ -24,62 +24,33 @@ Conceitos Extraidos:
 - Dominio: Git/Version Control
 - Acao: Padronizar commits
 - Padrao: Conventional Commits
-- Tipo: Workflow/Automation
+- Tipo: Workflow
 ```
 
-### 2.2. Geracao de Name
+### Phase 2: Research
 
 ```
-Regras aplicadas:
-- Lowercase
-- Hyphens para espacos
-- Max 64 chars
-- Sem caracteres especiais
-
-Resultado: "conventional-commits"
+Templates carregados:
+- templates/skill-template.md
+- templates/quality-checklist.md
+- templates/cli-compatibility.md
 ```
 
-### 2.3. Geracao de Description
-
-```yaml
-description: |
-  Padroniza mensagens de commit seguindo a especificacao Conventional Commits.
-  Use quando: criar commits, revisar historico, gerar changelogs automaticos.
-```
-
-### 2.4. SKILL.md Gerado
+### Phase 3: Generation
 
 ```yaml
 ---
 name: conventional-commits
 description: |
   Padroniza mensagens de commit seguindo a especificacao Conventional Commits.
-  Use quando: criar commits, revisar historico, gerar changelogs automaticos.
-license: MIT
-compatibility: Claude Code, Gemini CLI, Codex, OpenCode, Cursor, Qwen Code, VS Code/Copilot
-metadata:
-  author: user
-  version: "1.0.0"
-  created: 2026-02-04
-  category: development
-  tags: [git, commits, conventional-commits, version-control, changelog]
+  Use when: criar commits, revisar historico, gerar changelogs automaticos.
 ---
 
 # Conventional Commits
 
-> Padroniza mensagens de commit seguindo a especificacao Conventional Commits.
+Skill para criar mensagens de commit padronizadas e semanticas.
 
-## When to Use
-
-- ✅ Criar novos commits
-- ✅ Revisar mensagens de commit existentes
-- ✅ Gerar changelogs automaticos
-- ✅ Padronizar commits de um time
-- ❌ Historico de commits ja existente (refatorar pode quebrar referencias)
-
-## Instructions
-
-### Step 1: Identificar Tipo de Mudanca
+## How to identify change type
 
 Determine o tipo da mudanca:
 
@@ -93,268 +64,105 @@ Determine o tipo da mudanca:
 | `test` | Testes |
 | `chore` | Manutencao |
 
-### Step 2: Identificar Escopo (Opcional)
-
-Escopo indica area afetada:
-- `feat(auth)`: Feature na area de autenticacao
-- `fix(api)`: Fix na API
-- `docs(readme)`: Documentacao do README
-
-### Step 3: Escrever Mensagem
+## How to write a commit message
 
 Formato:
-```
+
 <tipo>(<escopo>): <descricao>
 
 [corpo opcional]
 
 [footer opcional]
-```
 
-### Step 4: Validar
+Exemplos:
+
+feat(auth): add login with Google OAuth
+fix(api): handle null response from external service
+
+## How to validate a commit
 
 Checklist:
-- [ ] Tipo correto
+- [ ] Tipo correto (feat/fix/docs/etc.)
 - [ ] Descricao em imperativo ("add" nao "added")
 - [ ] Descricao < 72 caracteres
 - [ ] Corpo explica "por que" (se necessario)
-
-## Examples
-
-### Exemplo 1: Feature Simples
-
-```
-feat(auth): add login with Google OAuth
-
-Allows users to authenticate using their Google account.
-Closes #123
 ```
 
-### Exemplo 2: Bug Fix
+### Phase 4: Auto-Critica (13 pontos)
 
 ```
-fix(api): handle null response from external service
+CRITICAL:
+  [PASS] Frontmatter: SOMENTE name + description
+  [PASS] Name: "conventional-commits" (20 chars, conforme)
+  [PASS] Description: 130 chars, com "Use when:"
+  [PASS] Body: 45 linhas (< 500)
+  [PASS] Secoes "How to [task]"
 
-- Add null check before processing
-- Return empty array instead of error
+WARNING:
+  [PASS] Token economy (nao ensina Git basico)
+  [PASS] Sem tutorials
+  [PASS] Exemplos presentes (non-obvious patterns)
+  [PASS] Progressive disclosure (< 200 linhas)
+  [PASS] Sem anti-patterns
+  [PASS] Sem "When to Use" no body
+  [PASS] Sem README/CHANGELOG
+
+INFO:
+  [PASS] Sem credenciais, tokens, PII
+
+Resultado: PASS (13/13)
 ```
 
-### Exemplo 3: Breaking Change
+### Phase 5: Human Gate
 
 ```
-feat(api)!: change response format to JSON:API
-
-BREAKING CHANGE: All endpoints now return JSON:API format.
-Migration guide: docs/migration-v2.md
-```
-
-## References
-
-- [Conventional Commits Spec](https://www.conventionalcommits.org/) - Especificacao oficial
-- [commitlint](https://commitlint.js.org/) - Ferramenta de validacao
-
----
-
-**Gerado por:** Hefesto Skill Generator v1.0.0
-```
-
----
-
-## 3. Validacao (Validate Engine)
-
-### 3.1. Validacao de Estrutura
-
-```
-Checklist:
-✅ Arquivo SKILL.md presente
-✅ Frontmatter YAML valido
-✅ Campo 'name' presente: "conventional-commits"
-✅ Campo 'description' presente: 156 chars
-✅ SKILL.md: 98 linhas (< 500)
-✅ Sem diretorios JIT (skill simples)
-```
-
-### 3.2. Validacao de Spec
-
-```
-Agent Skills Spec:
-✅ name: 20 chars (max 64)
-✅ name: apenas lowercase e hyphens
-✅ name: nao comeca/termina com hyphen
-✅ name: sem hyphens consecutivos
-✅ description: 156 chars (max 1024)
-✅ description: nao vazio
-```
-
-### 3.3. Validacao de Qualidade
-
-```
-T1 Rules:
-✅ Markdown bem formatado
-✅ YAML frontmatter valido
-✅ Description acionavel (tem "Use quando:")
-✅ Instrucoes claras e sequenciais
-✅ Exemplos presentes
-✅ Referencias documentadas
-⚠️ Warning: Considerar adicionar scripts/ para validacao automatica
-```
-
----
-
-## 4. Human Gate
-
-### 4.1. Apresentacao ao Usuario
-
-```markdown
 ## Skill Gerada: conventional-commits
 
 ### Preview
-
 [Conteudo do SKILL.md acima]
 
-### Validacao
-
-✅ **Estrutura:** Valida
-✅ **Agent Skills Spec:** Conforme
-✅ **Qualidade:** Aprovada
-
-### Warnings
-
-⚠️ Considerar adicionar `scripts/validate-commit.sh` para validacao automatica
+### Auto-Critica: PASS (13/13)
 
 ### CLIs Detectados
-
-- ✅ Claude Code (.claude/ encontrado)
-- ✅ Gemini CLI (gemini no PATH)
+- Claude Code (.claude/ encontrado)
+- Gemini CLI (gemini no PATH)
 
 ### Opcoes
-
-- **[approve]** - Salvar skill em Claude Code e Gemini CLI
-- **[expand]** - Adicionar scripts, referencias, assets
-- **[edit]** - Modificar antes de salvar
-- **[reject]** - Cancelar operacao
-
-Sua escolha:
+- [approve] - Salvar skill em Claude Code e Gemini CLI
+- [edit] - Modificar antes de salvar
+- [reject] - Cancelar operacao
 ```
 
-### 4.2. Usuario Seleciona [approve]
-
----
-
-## 5. Multi-CLI Generator
-
-### 5.1. Deteccao de CLIs
+### Phase 6: Persistence (apos [approve])
 
 ```
-Verificando CLIs instalados...
+Salvando em CLIs detectados...
 
-✅ Claude Code
-   - Comando: claude --version → v1.2.0
-   - Diretorio: .claude/ existe
+Claude Code:
+  .claude/skills/conventional-commits/SKILL.md
 
-✅ Gemini CLI
-   - Comando: gemini --version → v0.25.0
-   - Diretorio: .gemini/ nao existe (sera criado)
+Gemini CLI:
+  .gemini/skills/conventional-commits/SKILL.md
 
-❌ OpenAI Codex
-   - Comando: codex --version → nao encontrado
-
-❌ VS Code/Copilot
-   - Diretorio: .github/ nao existe
-
-Total: 2 CLIs detectados
-```
-
-### 5.2. Geracao para Claude Code
-
-```
-Criando: .claude/skills/conventional-commits/
-
-Arquivos:
-- .claude/skills/conventional-commits/SKILL.md ✅
-
-Nenhuma adaptacao necessaria (formato nativo).
-```
-
-### 5.3. Geracao para Gemini CLI
-
-```
-Criando: .gemini/skills/conventional-commits/
-
-Adaptacoes aplicadas:
-- Nenhuma (skill nao usa $ARGUMENTS)
-
-Arquivos:
-- .gemini/skills/conventional-commits/SKILL.md ✅
+Skill criada com sucesso em 2 CLIs.
 ```
 
 ---
 
-## 6. Output Final
-
-```markdown
-## Skill Criada com Sucesso ✅
-
-### conventional-commits
-
-**Descrição:** Padroniza mensagens de commit seguindo Conventional Commits.
-
-### Locais
-
-| CLI | Caminho |
-|-----|---------|
-| Claude Code | `.claude/skills/conventional-commits/SKILL.md` |
-| Gemini CLI | `.gemini/skills/conventional-commits/SKILL.md` |
-
-### Uso
-
-```
-# Claude Code
-/conventional-commits
-
-# Gemini CLI
-/conventional-commits
-```
-
-### Proximos Passos
-
-1. Teste a skill com `/conventional-commits`
-2. Valide a skill com `/hefesto.validate conventional-commits`
-```
-
----
-
-## 7. Resumo do Fluxo
+## 3. Resumo do Fluxo
 
 ```
 /hefesto.create <descricao>
-        │
-        ▼
-┌───────────────────┐
-│ Template Processor│ → Extrai conceitos, gera SKILL.md
-└─────────┬─────────┘
-          │
-          ▼
-┌───────────────────┐
-│ Validate Engine   │ → Valida estrutura, spec, qualidade
-└─────────┬─────────┘
-          │
-          ▼
-┌───────────────────┐
-│ Human Gate        │ → Apresenta preview, aguarda decisao
-└─────────┬─────────┘
-          │ [approve]
-          ▼
-┌───────────────────┐
-│ Multi-CLI Gen     │ → Detecta CLIs, adapta, salva
-└─────────┬─────────┘
-          │
-          ▼
-┌───────────────────┐
-│ Output            │ → Reporta resultado
-└───────────────────┘
+        |
+        v
+Phase 1: Understanding  -> Extrair conceitos
+Phase 2: Research        -> Ler templates
+Phase 3: Generation      -> Gerar SKILL.md
+Phase 4: Auto-Critica    -> 13-point checklist
+Phase 5: Human Gate      -> [approve] [edit] [reject]
+Phase 6: Persistence     -> Escrever em TODOS CLIs
 ```
 
 ---
 
-**Ultima Atualizacao:** 2026-02-04
+**Ultima Atualizacao:** 2026-02-07 (v2.0.0)

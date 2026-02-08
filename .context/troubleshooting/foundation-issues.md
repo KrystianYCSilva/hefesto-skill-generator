@@ -1,551 +1,175 @@
----
-description: "Comprehensive troubleshooting guide for common Hefesto Foundation Infrastructure issues"
-category: "documentation"
-type: "troubleshooting"
-audience: "users"
-last_updated: "2026-02-04"
-version: "1.0.0"
----
+# Troubleshooting - Foundation Issues
 
-# Troubleshooting: Hefesto Foundation Issues
-
-**Audience**: Users experiencing issues with Hefesto Foundation Infrastructure  
-**Last Updated**: 2026-02-04
+> **Tier:** T2 - Informativo
+> **Proposito:** Resolver problemas de infraestrutura do Hefesto
+> **Versao:** 2.0.0
 
 ---
 
 ## Quick Diagnostics
 
-Run these commands to diagnose issues:
-
 ```bash
-# 1. Check if Hefesto initialized
+# 1. Verificar instalacao
+/hefesto.init
+
+# 2. Listar skills
 /hefesto.list
 
-# 2. Check CLI detection
-/hefesto.detect
-
-# 3. Check filesystem consistency
-/hefesto.list --check-sync
-
-# 4. Get help
-/hefesto.help
+# 3. Verificar versao
+cat .hefesto/version
 ```
 
 ---
 
 ## Common Issues
 
-### Issue 1: "Hefesto not initialized"
+### Issue 1: "Hefesto not installed"
 
-**Symptoms**:
-- Error when running `/hefesto.list` or `/hefesto.detect`
-- No MEMORY.md file in project root
+**Sintomas:**
+- Nao existe `.hefesto/` no projeto
+- Comandos `/hefesto.*` nao disponiveis
 
-**Cause**: Hefesto hasn't been initialized in this project
+**Causa:** Hefesto nao foi instalado no projeto.
 
-**Solution**:
+**Solucao:**
 ```bash
-# Run initialization
-/hefesto.init
+# Unix/macOS
+bash /caminho/para/hefesto-skill-generator/installer/install.sh
 
-# Verify
-/hefesto.list
+# Windows PowerShell
+& /caminho/para/hefesto-skill-generator/installer/install.ps1
 ```
-
-**Prevention**: Always run `/hefesto.init` first in new projects
 
 ---
 
 ### Issue 2: "No CLIs detected"
 
-**Symptoms**:
-- `/hefesto.init` reports 0 CLIs found
-- Prompted for manual specification
+**Sintomas:**
+- `/hefesto.init` reporta 0 CLIs encontrados
+- Nenhum diretorio CLI criado
 
-**Cause**: No AI CLIs installed or not in PATH
+**Causa:** Nenhum AI CLI instalado ou no PATH.
 
-**Diagnosis**:
+**Solucao:**
 ```bash
-# Check if CLI installed (Unix/macOS)
-which claude
-which gemini
-which opencode
+# Verificar CLIs (Unix/macOS)
+which claude gemini codex opencode qwen
 
 # Windows
 where.exe claude
 ```
 
-**Solution**:
-```bash
-# Option 1: Install an AI CLI
-# (Follow CLI-specific installation instructions)
-
-# Option 2: Add CLI to PATH
-export PATH=$PATH:/path/to/cli  # Unix/macOS
-# Or edit system PATH on Windows
-
-# Option 3: Use manual specification
-# When prompted during /hefesto.init, select CLI number
-```
-
-**Prevention**: Install at least one AI CLI before running Hefesto
+Se nenhum CLI encontrado, o installer cria `.claude/` como default.
 
 ---
 
-### Issue 3: Permission Denied Errors
+### Issue 3: Permission Denied
 
-**Symptoms**:
-- `❌ Permission denied: .{cli}/skills/`
-- Cannot create directories
-- Partial bootstrap success
+**Sintomas:**
+- Erro ao criar diretorios
+- Installer falha parcialmente
 
-**Cause**: Insufficient permissions to create directories
-
-**Diagnosis**:
+**Solucao:**
 ```bash
-# Check directory permissions
+# Verificar permissoes
 ls -la .
-ls -la .claude/ 2>/dev/null
 
-# Check if directory writable
-touch .test && rm .test
+# Corrigir (Unix/macOS)
+chmod +w .
 ```
-
-**Solution**:
-```bash
-# Option 1: Fix permissions
-chmod +w .  # Current directory
-chmod +w .claude/  # Specific CLI directory
-
-# Option 2: Manually create directories
-mkdir -p .claude/skills
-mkdir -p .gemini/skills
-chmod +w .claude/skills .gemini/skills
-
-# Option 3: Run with appropriate privileges (use carefully)
-sudo /hefesto.init  # Unix/macOS only
-```
-
-**Prevention**: Ensure write permissions before running Hefesto
 
 ---
 
-### Issue 4: Corrupted MEMORY.md
+### Issue 4: Templates Desatualizados
 
-**Symptoms**:
-- `⚠️ State Recovery: MEMORY.md corrupted`
-- Backup file created: `MEMORY.md.backup.{timestamp}`
-- State rebuilt from filesystem
+**Sintomas:**
+- `.hefesto/version` mostra versao antiga
+- Skills geradas com formato antigo
 
-**Cause**: Manual editing or filesystem corruption
-
-**What Hefesto Does**:
-1. Automatically backs up corrupted file
-2. Creates fresh MEMORY.md
-3. Rescans filesystem to rebuild state
-4. Continues operation
-
-**Manual Intervention** (if needed):
+**Solucao:**
 ```bash
-# Review backup
-cat MEMORY.md.backup.2026-02-04T16-00-00Z
+# Re-rodar installer (idempotente)
+bash /caminho/para/installer/install.sh
 
-# If recovery failed, restore backup and fix manually
-mv MEMORY.md.backup.2026-02-04T16-00-00Z MEMORY.md
-# Edit MEMORY.md to fix syntax errors
-
-# Or delete and re-initialize
-rm MEMORY.md
-/hefesto.init
+# Templates serao atualizados em .hefesto/templates/
 ```
-
-**Prevention**: Never manually edit MEMORY.md
 
 ---
 
-### Issue 5: Missing CONSTITUTION.md
+### Issue 5: Comandos Faltando em Algum CLI
 
-**Symptoms**:
-- `⚠️ Governance Recovery: CONSTITUTION.md missing`
-- File auto-restored from bundle
+**Sintomas:**
+- CLI detectado mas sem comandos `hefesto.*`
+- `/hefesto.list` funciona em um CLI mas nao em outro
 
-**Cause**: CONSTITUTION.md deleted or missing from project
+**Causa:** Installer pode nao ter detectado o CLI na primeira execucao.
 
-**What Hefesto Does**:
-1. Automatically restores from bundled copy
-2. Validates restored file
-3. Continues operation
-
-**Manual Intervention** (if customizations lost):
+**Solucao:**
 ```bash
-# Restore from version control
-git restore CONSTITUTION.md
-
-# Or manually restore specific version
-git show HEAD:CONSTITUTION.md > CONSTITUTION.md
+# Re-rodar installer (detecta CLIs novos)
+bash /caminho/para/installer/install.sh
 ```
-
-**Prevention**: Don't delete CONSTITUTION.md; keep in version control
 
 ---
 
-### Issue 6: Constitutional Violations
+### Issue 6: Skills Dessincronizadas Entre CLIs
 
-**Symptoms**:
-- `❌ Constitutional Violation: T0 rules missing or invalid`
-- All operations blocked
-- Missing T0 rules listed
+**Sintomas:**
+- Skill existe em `.claude/skills/` mas nao em `.gemini/skills/`
+- Versoes diferentes entre CLIs
 
-**Cause**: CONSTITUTION.md manually modified or corrupted
+**Causa:** Skill criada/modificada manualmente em apenas um CLI.
 
-**Solution**:
+**Solucao:**
 ```bash
-# Option 1: Restore from version control
-git restore CONSTITUTION.md
+# Re-criar skill (gera para todos CLIs)
+/hefesto.create "descricao da skill"
 
-# Option 2: Force restore from bundle
-/hefesto.restore-constitution --force
-
-# Option 3: Check diff and fix manually
-git diff CONSTITUTION.md
-# Fix any removed or modified T0 rules
-
-# Verify fix worked
-/hefesto.list
+# Ou validar (fix-auto sincroniza)
+/hefesto.validate skill-name
 ```
-
-**Prevention**: Don't manually edit CONSTITUTION.md; treat as read-only
-
----
-
-### Issue 7: CLI Detected but Not in PATH
-
-**Symptoms**:
-- `⚠️ Config found but not in PATH`
-- Warning (non-blocking)
-- Skills may not work
-
-**Cause**: CLI config directory exists but executable not in PATH
-
-**Diagnosis**:
-```bash
-# Check config exists
-ls -la ~/.claude/  # or appropriate config dir
-
-# Check PATH
-echo $PATH | grep claude  # Should show nothing
-which claude  # Should return nothing
-```
-
-**Solution**:
-```bash
-# Option 1: Reinstall CLI properly
-# (Follow CLI installation instructions)
-
-# Option 2: Add CLI to PATH
-export PATH=$PATH:/path/to/cli/bin
-# Add to ~/.bashrc or ~/.zshrc for persistence
-
-# Verify
-which claude  # Should now show path
-
-# Update Hefesto
-/hefesto.detect
-```
-
-**Prevention**: Install CLIs properly with PATH configuration
-
----
-
-### Issue 8: Filesystem Inconsistencies
-
-**Symptoms**:
-- `⚠️ Filesystem inconsistencies detected`
-- Orphaned or missing skills reported
-
-**Cause**: Manual file operations or failed operations
-
-**Diagnosis**:
-```bash
-# Run sync check
-/hefesto.list --check-sync
-```
-
-**Solution**:
-```bash
-# For orphaned skills (in filesystem, not tracked):
-# Option 1: Keep skill - manually add to MEMORY.md
-# Option 2: Remove skill
-rm -rf .claude/skills/orphaned-skill/
-
-# For missing skills (tracked but not in filesystem):
-# Option 1: Regenerate skill
-/hefesto.create  # Future command
-
-# Option 2: Remove from tracking
-# Edit MEMORY.md and remove skill entry (careful!)
-
-# Option 3: Wait for /hefesto.sync command (future)
-
-# Verify fix
-/hefesto.list --check-sync
-```
-
-**Prevention**: Use Hefesto commands instead of manual file operations
-
----
-
-### Issue 9: Already Initialized
-
-**Symptoms**:
-- `ℹ️ Hefesto already initialized`
-- `/hefesto.init` exits without doing anything
-
-**Cause**: MEMORY.md already exists (expected behavior)
-
-**Solution**:
-```bash
-# If you want to re-initialize
-/hefesto.init --force
-
-# Or just list current state
-/hefesto.list
-```
-
-**Note**: This is not an error - idempotency working correctly
-
----
-
-### Issue 10: Slow Performance
-
-**Symptoms**:
-- Bootstrap takes > 10 seconds
-- Detection takes > 5 seconds
-- Listing takes > 500ms
-
-**Diagnosis**:
-```bash
-# Run with verbose timing (future enhancement)
-/hefesto.init --verbose
-
-# Check system resources
-# Unix/macOS
-time /hefesto.init
-df -h .
-
-# Windows
-Measure-Command { /hefesto.init }
-```
-
-**Common Causes**:
-- Slow filesystem (network drives)
-- Many CLIs to check
-- Large number of existing skills
-- Disk I/O contention
-
-**Solution**:
-```bash
-# Option 1: Use local filesystem (not network drive)
-# Move project to local disk
-
-# Option 2: Reduce CLI checks
-# Install only needed CLIs
-
-# Option 3: Check disk health
-# Verify no disk errors or fragmentation
-```
-
-**Expected Performance**:
-- Bootstrap: 2-4 seconds
-- Detection: 1-2 seconds
-- Listing: 40-70ms
 
 ---
 
 ## Platform-Specific Issues
 
-### Windows Issues
+### Windows
 
-**Issue**: PowerShell execution policy
+**Issue:** PowerShell execution policy
 
-**Error**: `Scripts disabled on this system`
-
-**Solution**:
 ```powershell
-# Check current policy
+# Verificar
 Get-ExecutionPolicy
 
-# Set policy for current session
+# Corrigir (sessao atual)
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
-# Or for current user
+# Ou para usuario
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
----
+### macOS
 
-**Issue**: Path separators
+**Issue:** CLI instalado via Homebrew nao detectado
 
-**Symptoms**: Paths shown with forward slashes on Windows
-
-**Note**: This is expected - Hefesto normalizes to forward slashes internally
-
----
-
-### macOS Issues
-
-**Issue**: CLI installed via Homebrew not detected
-
-**Diagnosis**:
 ```bash
-# Check Homebrew path
-which brew
+# Verificar Homebrew path
+echo $PATH | grep homebrew
 
-# Check if CLI in Homebrew
-ls /opt/homebrew/bin/ | grep claude
-ls /usr/local/bin/ | grep claude
-```
-
-**Solution**:
-```bash
-# Add Homebrew to PATH (if not already)
+# Adicionar se necessario
 export PATH="/opt/homebrew/bin:$PATH"  # Apple Silicon
-export PATH="/usr/local/bin:$PATH"     # Intel
-
-# Add to ~/.zshrc for persistence
-echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.zshrc
-
-# Verify
-which claude
-
-# Re-detect
-/hefesto.detect
-```
-
----
-
-### Linux Issues
-
-**Issue**: Snap or Flatpak CLI not detected
-
-**Diagnosis**:
-```bash
-# Check snap binaries
-ls /snap/bin/
-
-# Check flatpak
-flatpak list
-```
-
-**Solution**:
-```bash
-# Add snap to PATH
-export PATH="/snap/bin:$PATH"
-
-# Or create symlink
-sudo ln -s /snap/bin/claude /usr/local/bin/claude
-
-# Verify
-which claude
-
-# Re-detect
-/hefesto.detect
-```
-
----
-
-## Advanced Troubleshooting
-
-### Enable Debug Mode (Future)
-
-```bash
-# Export debug flag
-export HEFESTO_DEBUG=1
-
-# Run command
-/hefesto.init
-
-# Check logs
-cat .hefesto/debug.log
-```
-
-### Check File Integrity
-
-```bash
-# Verify CONSTITUTION.md
-cat CONSTITUTION.md | head -20
-
-# Verify MEMORY.md
-cat MEMORY.md
-
-# Check for required sections
-grep "T0-HEFESTO-" CONSTITUTION.md  # Should show 11 rules
-grep "## Detected CLIs" MEMORY.md
-```
-
-### Manual State Reset
-
-**Warning**: This deletes all Hefesto state
-
-```bash
-# Backup first
-cp MEMORY.md MEMORY.md.manual-backup
-cp CONSTITUTION.md CONSTITUTION.md.manual-backup
-
-# Remove state
-rm MEMORY.md
-
-# Remove CLI directories (careful!)
-rm -rf .claude/ .gemini/ .opencode/ .cursor/ .codex/ .github/ .qwen/
-
-# Re-initialize
-/hefesto.init
-```
-
----
-
-## Getting Help
-
-### Information to Provide
-
-When reporting issues, include:
-
-1. Error message (full text)
-2. Command that failed
-3. Operating system and version
-4. Hefesto version: Check `MEMORY.md` frontmatter
-5. Installed CLIs: `which claude gemini opencode`
-6. File permissions: `ls -la .`
-7. Disk space: `df -h .`
-
-### Diagnostic Report (Future)
-
-```bash
-# Generate diagnostic report
-/hefesto.diagnose > hefesto-diagnostic.txt
-
-# Share report when asking for help
 ```
 
 ---
 
 ## Prevention Best Practices
 
-1. **Always initialize first**: Run `/hefesto.init` in new projects
-2. **Don't edit state files**: Use commands, never manual edits
-3. **Use version control**: Track MEMORY.md and CONSTITUTION.md
-4. **Check permissions**: Ensure write access before running
-5. **Install CLIs properly**: Add to PATH, verify with `which`
-6. **Keep disk space**: Maintain at least 100MB free
-7. **Read error messages**: They contain resolution steps
-8. **Use --force carefully**: Only when you understand the impact
+1. **Sempre usar installer:** `install.sh` ou `install.ps1` ao inves de criar diretorios manualmente
+2. **Usar comandos Hefesto:** Nao editar skills manualmente, usar `/hefesto.create` e `/hefesto.validate`
+3. **Verificar instalacao:** Rodar `/hefesto.init` periodicamente
+4. **Manter CLIs no PATH:** Garante deteccao automatica
+5. **Nao editar `.hefesto/`:** Diretorio gerenciado pelo installer
 
 ---
 
-## References
-
-- **Error Codes**: commands/helpers/error-codes.md
-- **Commands**: commands/*.md
-- **Help**: `/hefesto.help`
-- **AGENTS.md**: Complete documentation
+**Ultima Atualizacao:** 2026-02-07 (v2.0.0)

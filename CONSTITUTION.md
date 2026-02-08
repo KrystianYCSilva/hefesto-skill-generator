@@ -177,12 +177,12 @@ INCORRETO:
 
 ### T0-HEFESTO-10: Citacao de Fontes
 
-**Regra:** Skills tecnicas DEVEM citar fontes.
+**Regra:** Skills tecnicas PODEM citar fontes quando relevante.
 
-**Obrigatorio:**
-- Minimo 2 fontes para skills tecnicas
-- Links para documentacao oficial
-- Hierarquia: Docs oficiais > Academicas > Consolidadas (Baeldung, MDN)
+**Diretrizes:**
+- Citar documentacao oficial quando referenciada diretamente no conteudo
+- Nao incluir URLs well-known obvias (MDN, Oracle docs, etc.)
+- Fontes em references/ para skills extensas, nao no SKILL.md principal
 
 ---
 
@@ -244,7 +244,7 @@ description: |
 
 ### T1-HEFESTO-02: Exemplos em Skills
 
-**Regra:** Skills DEVEM incluir pelo menos 1 exemplo concreto input/output.
+**Regra:** Skills DEVEM incluir exemplos apenas para padroes nao-obvios ou project-specific. Nao e obrigatorio para conceitos que o AI agent ja conhece.
 
 ---
 

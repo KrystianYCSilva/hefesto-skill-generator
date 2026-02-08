@@ -2,7 +2,8 @@
 
 > **Tier:** T0 - ABSOLUTO
 > **SEMPRE seguir estas regras. Sem excecoes.**
-> **Versao:** 1.4.0 (Feature 004 implemented)
+> **Versao:** 2.0.0
+> **Fonte de verdade:** `CONSTITUTION.md` (raiz do projeto)
 
 ---
 
@@ -10,19 +11,24 @@
 
 **Regra:** TODA skill gerada DEVE seguir a especificacao [agentskills.io](https://agentskills.io).
 
+**Frontmatter:** SOMENTE `name` + `description` (sem license, metadata, version, tags).
+
 ```yaml
 # CORRETO
 ---
 name: code-review
 description: |
   Padroniza code reviews seguindo boas praticas.
-  Use quando: revisar PRs, avaliar codigo.
+  Use when: revisar PRs, avaliar codigo.
 ---
 
 # PROIBIDO
 ---
-Name: Code-Review    # uppercase
-description: ""      # vazio
+name: Code-Review        # uppercase
+description: ""          # vazio
+license: MIT             # campo proibido
+metadata:
+  version: "1.0.0"       # campo proibido
 ---
 ```
 
@@ -33,29 +39,26 @@ description: ""      # vazio
 **Regra:** NUNCA persistir skill sem aprovacao humana explicita.
 
 ```
-# CORRETO
 1. Gerar skill em memoria
-2. Apresentar preview ao usuario
-3. Aguardar [approve], [expand], [edit], [reject]
-4. SO APOS aprovacao, persistir
-
-# PROIBIDO
-1. Gerar skill
-2. Salvar automaticamente  # NUNCA
+2. Auto-Critica: checklist 13 itens
+3. Corrigir FAILs automaticamente
+4. Apresentar preview ao usuario
+5. Aguardar: [approve] [edit] [reject]
+6. SO APOS aprovacao, persistir em TODOS CLIs detectados
 ```
 
 ---
 
 ## T0-HEFESTO-03: Progressive Disclosure
 
-**Regra:** SKILL.md DEVE ter menos de 500 linhas e 5000 tokens.
+**Regra:** SKILL.md DEVE ter menos de 500 linhas e ~5000 tokens.
 
 ```
 # CORRETO
 skill/
 ├── SKILL.md       # < 500 linhas (core)
-├── references/    # Docs extensas aqui
-└── scripts/       # Codigo executavel aqui
+├── references/    # Docs extensas (JIT loaded)
+└── scripts/       # Codigo executavel
 
 # PROIBIDO
 skill/
@@ -68,38 +71,23 @@ skill/
 
 **Regra:** Campo `name` DEVE seguir formato especifico.
 
-```
-# CORRETO
-name: code-review
-name: testing-strategy
-name: api-docs-v2
-
-# PROIBIDO
-name: Code-Review        # uppercase
-name: -testing           # comeca com hyphen
-name: api--docs          # hyphens consecutivos
-name: a                  # muito curto sem contexto
-```
-
-**Validacao:**
-- Apenas lowercase (a-z)
-- Apenas numeros (0-9)
-- Apenas hyphens (-)
+- Apenas lowercase (a-z), numeros (0-9), hyphens (-)
 - Nao comecar/terminar com hyphen
 - Sem hyphens consecutivos
 - Max 64 caracteres
+- Pattern: `^[a-z0-9]+(-[a-z0-9]+)*$`
 
 ---
 
 ## T0-HEFESTO-05: Description Obrigatoria
 
-**Regra:** Campo `description` DEVE ser preenchido e incluir "Use when:" ou similar.
+**Regra:** Campo `description` DEVE ser preenchido (max 1024 chars) e incluir "Use when:" ou trigger equivalente.
 
 ```yaml
 # CORRETO
 description: |
   Padroniza code reviews seguindo boas praticas.
-  Use quando: revisar PRs, avaliar codigo de terceiros.
+  Use when: revisar PRs, avaliar codigo.
 
 # PROIBIDO
 description: ""          # vazio
@@ -112,25 +100,10 @@ description: "skill"     # muito generico
 
 **Regra:** SEMPRE detectar CLIs instalados ANTES de perguntar ao usuario.
 
-**Feature 004 Implementation:**
-- Deteccao paralela em <500ms para 7 CLIs
-- Via PATH do sistema + config directories
-- Retorna union de todos detectados
-- Opcional: restricao via `--cli` flag
-
-```
-# CORRETO (Feature 004)
-1. Detectar CLIs em paralelo (<500ms)
-   - PATH: claude, gemini, codex, cursor, qwen, opencode
-   - Config: ~/.claude, ~/.gemini, ~/.qwen, etc.
-2. Gerar para TODOS detectados em paralelo
-3. Permitir restricao com --cli flag
+1. Verificar CLIs no PATH (claude, gemini, codex, cursor, qwen, opencode)
+2. Verificar diretorios de config existentes (.claude/, .gemini/, etc.)
+3. Gerar para TODOS os CLIs detectados
 4. SO SE nenhum detectado, perguntar
-
-# PROIBIDO
-1. Perguntar "Qual CLI voce usa?"  # NUNCA primeiro
-2. Gerar sequencialmente quando paralelo e possivel  # Feature 004
-```
 
 ---
 
@@ -138,13 +111,13 @@ description: "skill"     # muito generico
 
 **Regra:** TODA skill DEVE ser validada contra spec ANTES de persistir.
 
-**Checklist:**
-- [ ] Frontmatter valido (name, description)
-- [ ] Name conforme spec (lowercase, hyphens, max 64)
-- [ ] Description nao vazia (max 1024 chars)
-- [ ] SKILL.md < 500 linhas
-- [ ] Sem informacoes sensiveis
-- [ ] Recursos JIT em diretorios corretos
+**Checklist 13 pontos:**
+
+| Nivel | Qtd | Criterios |
+|-------|-----|-----------|
+| CRITICAL | 5 | Frontmatter valido, name format, description format, body < 500 linhas, "How to" sections |
+| WARNING | 7 | Token economy, no tutorials, examples, progressive disclosure, anti-patterns, no body "When to Use", no README/CHANGELOG |
+| INFO | 1 | Security (sem credenciais, tokens, PII) |
 
 ---
 
@@ -152,16 +125,8 @@ description: "skill"     # muito generico
 
 **Regra:** Operacoes DEVEM ser idempotentes.
 
-```
-# CORRETO (skill ja existe)
-1. Detectar skill existente
-2. Perguntar: [overwrite], [merge], [cancel]
-3. Aguardar resposta
-4. Executar acao escolhida
-
-# PROIBIDO
-1. Sobrescrever silenciosamente  # NUNCA
-```
+- Se skill ja existe: perguntar [overwrite] [rename] [skip]
+- Nunca sobrescrever silenciosamente
 
 ---
 
@@ -170,30 +135,25 @@ description: "skill"     # muito generico
 **Regra:** Skills DEVEM ser armazenadas no projeto atual por padrao.
 
 ```
-# CORRETO (projeto atual)
-./projeto/.claude/skills/code-review/SKILL.md
-./projeto/.gemini/skills/code-review/SKILL.md
-
-# GLOBAL (apenas se solicitado explicitamente)
-~/.claude/skills/code-review/SKILL.md
+# Diretorios por CLI
+.claude/skills/<name>/SKILL.md
+.gemini/skills/<name>/SKILL.md
+.codex/skills/<name>/SKILL.md
+.github/skills/<name>/SKILL.md
+.opencode/skills/<name>/SKILL.md
+.cursor/skills/<name>/SKILL.md
+.qwen/skills/<name>/SKILL.md
 ```
 
 ---
 
 ## T0-HEFESTO-10: Citacao de Fontes
 
-**Regra:** Skills tecnicas DEVEM citar fontes.
+**Regra:** Skills tecnicas PODEM citar fontes quando relevante.
 
-```yaml
-# CORRETO
-## References
-
-- [Official Docs](https://...) - Acessado em 2026-02-04
-- [Academic Paper](https://...) - Autor, Ano
-
-# PROIBIDO
-# Sem referencias para skill tecnica
-```
+- Citar docs oficiais quando referenciadas diretamente
+- Nao incluir URLs well-known obvias (MDN, Oracle docs)
+- Fontes extensas em references/, nao no SKILL.md principal
 
 ---
 
@@ -201,26 +161,36 @@ description: "skill"     # muito generico
 
 **Regra:** Skills DEVEM ser projetadas com seguranca intrinseca.
 
-**Obrigatorio:**
-- Validar entradas contra injecao de prompts
-- Aplicar principio do menor privilegio
-- Sanitizar outputs antes de execucao
-- Nao incluir credenciais, tokens ou secrets
+**PROIBIDO:** Credenciais, tokens, secrets, PII, URLs internas/privadas.
 
-**Validacoes de Entrada:**
-```
-1. Verificar tamanho maximo (previne DoS)
-2. Escapar caracteres especiais de shell
-3. Rejeitar padroes conhecidos de injecao
-4. Logar inputs suspeitos (sem expor dados)
-```
+---
+
+## T0-HEFESTO-12: Auto-Critica Obrigatoria
+
+**Regra:** O AI agent DEVE revisar seu proprio output antes de apresentar ao usuario.
+
+1. Gerar skill
+2. Rodar checklist de 13 itens (ver `templates/quality-checklist.md`)
+3. Corrigir FAILs automaticamente
+4. Documentar correcoes
+5. SO ENTAO apresentar ao usuario no Human Gate
+
+---
+
+## T0-HEFESTO-13: Template Authority
+
+**Regra:** Toda logica do Hefesto vive em templates Markdown. NUNCA em codigo executavel.
+
+Os comandos em `.<cli>/commands/hefesto.*.md` (e equivalentes) sao a UNICA fonte de verdade para o comportamento do sistema.
+
+**PROIBIDO:** Scripts Python/Node.js para logica do Hefesto, dependencias externas.
 
 ---
 
 ## Logica de Resolucao
 
 ```
-IF T0 conflita com qualquer tier → T0 VENCE SEMPRE
+IF T0 conflita com qualquer tier -> T0 VENCE SEMPRE
 ALWAYS cite a regra especifica (ID) na resposta
 ALWAYS validar ANTES de persistir
 NEVER persistir sem Human Gate
@@ -228,23 +198,4 @@ NEVER persistir sem Human Gate
 
 ---
 
----
-
-## Feature 004 Compliance
-
-Feature 004 (Multi-CLI Automatic Parallel Generation) implements:
-- ✅ T0-HEFESTO-06: Deteccao paralela em <500ms, nao pergunta usuario
-- ✅ T0-HEFESTO-09: Armazenamento em .claude/, .gemini/, .codex/, etc. (local)
-- ✅ T0-HEFESTO-02: Human Gate antes de persistencia
-- ✅ T0-HEFESTO-01: Toda skill segue agentskills.io
-- ✅ All 11 T0 rules validated and passing
-
-**Test Results:**
-- 9/9 manual tests passed
-- 10/10 mandatory criteria met
-- 3/3 desirable criteria met
-- 8/8 T0 rules validated
-
----
-
-**Ultima Atualizacao:** 2026-02-05 (Feature 004 Complete)
+**Ultima Atualizacao:** 2026-02-07 (v2.0.0 - 13 regras T0)

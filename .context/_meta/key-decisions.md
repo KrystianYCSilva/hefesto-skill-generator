@@ -1,8 +1,7 @@
 # Key Decisions - Hefesto Skill Generator
 
 > **Tier:** T2 - Informativo
-> **Versao:** 1.0.0-LTS (Production Ready)
-> **Status:** ✅ LTS Release
+> **Versao:** 2.0.0
 
 ---
 
@@ -13,11 +12,7 @@
 **Status:** Aceito
 **Data:** 2026-02-04
 
-**Contexto:**
-Existem multiplos formatos de skills/comandos entre diferentes CLIs de IA. Precisavamos escolher um padrao para o Hefesto.
-
-**Decisao:**
-Adotar [agentskills.io](https://agentskills.io) como formato primario.
+**Decisao:** Adotar [agentskills.io](https://agentskills.io) como formato primario de skills.
 
 **Consequencias:**
 - Positivas: Padrao aberto, suportado por multiplos CLIs, bem documentado
@@ -30,11 +25,7 @@ Adotar [agentskills.io](https://agentskills.io) como formato primario.
 **Status:** Aceito
 **Data:** 2026-02-04
 
-**Contexto:**
-Skills podem ter impacto significativo no workflow do desenvolvedor. Geracao automatica sem revisao pode criar problemas.
-
-**Decisao:**
-Implementar Human Gate obrigatorio para todas as operacoes de escrita.
+**Decisao:** Implementar Human Gate obrigatorio para todas as operacoes de escrita.
 
 **Consequencias:**
 - Positivas: Controle de qualidade, usuario sempre no controle
@@ -42,33 +33,12 @@ Implementar Human Gate obrigatorio para todas as operacoes de escrita.
 
 ---
 
-### ADR-003: Template-First com Wizard Expansivel
+### ADR-003: Deteccao Automatica de CLIs
 
 **Status:** Aceito
 **Data:** 2026-02-04
 
-**Contexto:**
-Criar skills pode ser simples ou complexo. Precisavamos de uma abordagem que atendesse ambos os casos.
-
-**Decisao:**
-Iniciar com template basico, expandir via wizard interativo quando necessario.
-
-**Consequencias:**
-- Positivas: Rapido para casos simples, completo para casos complexos
-- Negativas: Duas "modes" de operacao para documentar
-
----
-
-### ADR-004: Deteccao Automatica de CLIs
-
-**Status:** Aceito
-**Data:** 2026-02-04
-
-**Contexto:**
-Usuario pode ter multiplos CLIs instalados. Perguntar "qual CLI?" a cada vez e tedioso.
-
-**Decisao:**
-Detectar CLIs instalados automaticamente e gerar para todos.
+**Decisao:** Detectar CLIs instalados automaticamente e gerar para todos.
 
 **Consequencias:**
 - Positivas: Experiencia fluida, menos perguntas
@@ -76,20 +46,29 @@ Detectar CLIs instalados automaticamente e gerar para todos.
 
 ---
 
-### ADR-005: Armazenamento no Projeto por Padrao
+### ADR-004: Armazenamento no Projeto por Padrao
 
 **Status:** Aceito
 **Data:** 2026-02-04
 
-**Contexto:**
-Skills podem ser pessoais (global) ou de projeto (local). Precisavamos definir um padrao.
-
-**Decisao:**
-Armazenar no projeto atual por padrao, global apenas se explicitamente solicitado.
+**Decisao:** Armazenar no projeto atual por padrao, global apenas se explicitamente solicitado.
 
 **Consequencias:**
 - Positivas: Skills versionadas com o projeto, facil compartilhamento via Git
 - Negativas: Skills pessoais requerem flag explicita
+
+---
+
+### ADR-005: Progressive Disclosure para Skills
+
+**Status:** Aceito
+**Data:** 2026-02-04
+
+**Decisao:** SKILL.md < 500 linhas, recursos adicionais em scripts/, references/, assets/.
+
+**Consequencias:**
+- Positivas: Otimizacao de contexto, carregamento JIT
+- Negativas: Estrutura de diretorio mais complexa
 
 ---
 
@@ -98,11 +77,7 @@ Armazenar no projeto atual por padrao, global apenas se explicitamente solicitad
 **Status:** Aceito
 **Data:** 2026-02-04
 
-**Contexto:**
-Desenvolvedores ja tem padroes em seu codigo que poderiam virar skills.
-
-**Decisao:**
-Implementar `/hefesto.extract` para criar skills a partir de codigo existente.
+**Decisao:** Implementar `/hefesto.extract` para criar skills a partir de codigo existente.
 
 **Consequencias:**
 - Positivas: Reutilizacao de conhecimento existente
@@ -110,60 +85,78 @@ Implementar `/hefesto.extract` para criar skills a partir de codigo existente.
 
 ---
 
-### ADR-007: Progressive Disclosure para Skills
+### ADR-007: Template-Driven (Zero Dependencies)
 
 **Status:** Aceito
-**Data:** 2026-02-04
+**Data:** 2026-02-07
 
-**Contexto:**
-Skills podem ter muita informacao. Carregar tudo de uma vez consome contexto desnecessariamente.
-
-**Decisao:**
-SKILL.md < 500 linhas, recursos adicionais em scripts/, references/, assets/.
+**Decisao:** Toda logica do Hefesto vive em Markdown templates que o AI agent interpreta. Zero Python, zero Node.js, zero dependencias externas.
 
 **Consequencias:**
-- Positivas: Otimizacao de contexto, carregamento JIT
-- Negativas: Estrutura de diretorio mais complexa
+- Positivas: Portabilidade universal, zero setup, funciona com qualquer AI CLI
+- Negativas: Sem automacao "tradicional" (scripts, CLI executavel)
 
 ---
 
-### ADR-008: Geracao Paralela Atomica para Multi-CLI (Feature 004)
+### ADR-008: Frontmatter Minimo (ONLY name + description)
 
-**Status:** Aceito e Implementado
-**Data:** 2026-02-05
+**Status:** Aceito
+**Data:** 2026-02-07
 
-**Contexto:**
-Gerar skills sequencialmente para 7 CLIs e lento (~6s). ALem disso, se falha no meio da geracao, fica com estado inconsistente (alguns CLIs com skill, outros sem).
+**Decisao:** Frontmatter de skills deve conter SOMENTE `name` e `description`. Nenhum outro campo (license, metadata, version, tags, compatibility).
 
-**Decisao:**
-Implementar geracao paralela com atomicidade garantida:
-1. Detectar todos CLIs em <500ms (nao perguntar usuario)
-2. Gerar em paralelo para todos CLIs simultaneamente
-3. Guarantir all-or-nothing semantics (rollback atomico se qualquer falha)
-4. Permitir restricao com `--cli` flag se usuario preferir
-
-**Arquitetura Feature 004:**
-- **CLI Detector**: Deteccao rapida de 7 CLIs via PATH + config dirs
-- **CLI Adapter**: 7 adapters especificos com transformacoes (ex: Gemini `$ARGUMENTS` → `{{args}}`)
-- **Parallel Generator**: Execucao paralela com bash/PowerShell
-- **Rollback Handler**: Cleanup garantido em caso de falha
+**Justificativa:** Token economy - campos extras nao agregam valor para o AI agent e consomem contexto. Toda informacao de trigger/discovery fica na description.
 
 **Consequencias:**
-- Positivas: 
-  - 3x performance improvement (2s vs 6s)
-  - Zero estado inconsistente
-  - Experiencia fluida sem perguntas
-  - Professional-grade reliability
-- Negativas: 
-  - Complexidade adicional de implementacao
-  - Necessario suporte a deteccao de 7 CLIs
-  - Rollback Handler necessario
+- Positivas: Skills mais leves, menos ruido, focadas no essencial
+- Negativas: Perde metadados como tags e versao (trade-off aceito)
 
-**Implementacao Status:**
-- ✅ 5 helpers implementados (cli-detector, cli-adapter, parallel-generator, rollback-handler, multi-cli-integration)
-- ✅ 2 templates criados (detection-report, generation-report)
-- ✅ 9/9 testes manuais passando
-- ✅ Spec compliance: 10/10 mandatory + 3/3 desirable + 8/8 T0 rules
+---
+
+### ADR-009: Body Pattern "How to [task]"
+
+**Status:** Aceito
+**Data:** 2026-02-07
+
+**Decisao:** O body de skills deve usar secoes "How to [task]" ao inves de "Instructions > Step N".
+
+**Justificativa:** Padrao mais natural, orientado a tarefas. Cada secao e auto-contida e pode ser carregada JIT.
+
+**Consequencias:**
+- Positivas: Skills mais intuitivas, faceis de navegar
+- Negativas: Requer refatoracao de skills existentes com padrao antigo
+
+---
+
+### ADR-010: Installer Portatil (Bash + PowerShell)
+
+**Status:** Aceito
+**Data:** 2026-02-07
+
+**Decisao:** Criar scripts de bootstrap portaveis (`install.sh` para Unix, `install.ps1` para Windows) que instalam Hefesto em qualquer projeto.
+
+**O que o installer faz:**
+1. Detecta CLIs instalados (PATH + diretorios)
+2. Cria `.hefesto/` com templates e versao
+3. Copia comandos `hefesto.*` para cada CLI detectado
+4. Cria diretorios `skills/`
+
+**Consequencias:**
+- Positivas: Instalacao facil, cross-platform, idempotente
+- Negativas: Dois scripts para manter (bash + PowerShell)
+
+---
+
+### ADR-011: Auto-Critica 13 Pontos
+
+**Status:** Aceito
+**Data:** 2026-02-07
+
+**Decisao:** Toda skill gerada deve passar por auto-critica de 13 pontos (5 CRITICAL + 7 WARNING + 1 INFO) antes de ser apresentada ao usuario.
+
+**Consequencias:**
+- Positivas: Qualidade consistente, menos erros chegam ao Human Gate
+- Negativas: Geracao ligeiramente mais lenta
 
 ---
 
@@ -173,57 +166,16 @@ Implementar geracao paralela com atomicidade garantida:
 |-----------|------------|
 | Seguir Agent Skills spec | ADR-001 |
 | Nunca persistir sem aprovacao | ADR-002 |
-| Simples por padrao, complexo sob demanda | ADR-003 |
-| Detectar antes de perguntar | ADR-004 |
-| Projeto-first, global-opcional | ADR-005 |
+| Detectar antes de perguntar | ADR-003 |
+| Projeto-first, global-opcional | ADR-004 |
+| Otimizar uso de contexto | ADR-005 |
 | Reutilizar conhecimento existente | ADR-006 |
-| Otimizar uso de contexto | ADR-007 |
-| **Paralelo + Atomico para multi-CLI** | **ADR-008 (Feature 004)** |
+| Template-driven, zero dependencies | ADR-007 |
+| Frontmatter minimo | ADR-008 |
+| Secoes "How to [task]" | ADR-009 |
+| Installer portatil | ADR-010 |
+| Auto-critica obrigatoria | ADR-011 |
 
 ---
 
----
-
-### ADR-009: LTS v1.0.0 Release with 97.4% Completion
-
-**Status:** Aceito
-**Data:** 2026-02-05
-
-**Contexto:**
-Projeto atingiu 97.4% de completude (222/228 tasks) com todas as features P1 (prioridade 1) entregues. Itens pendentes sao nao-bloqueantes: testes manuais (T037), exemplos de comandos adicionais, e implementacao do shared skill pool (diferido para v1.1.0).
-
-**Decisao:**
-Marcar Hefesto como production-ready com status LTS v1.0.0, permitindo uso em producao com recomendacao de testes manuais antes de workflows criticos.
-
-**Entregas LTS v1.0.0:**
-- ✅ 9 comandos operacionais (100%)
-- ✅ 9 skills demonstrativas em 5 dominios
-- ✅ 5 CARDs completos (001-005)
-- ✅ Multi-CLI parallel generation (3x performance)
-- ✅ Human Gate workflow (89% completo, core operacional)
-- ✅ Todas as 11 regras T0 validadas
-- ✅ Agent Skills spec compliance
-
-**Itens Pendentes (Nao-Bloqueantes):**
-- Manual testing Feature 005 (T037) - recomendado antes de uso critico
-- Exemplos adicionais de comandos (CARD-006) - nice-to-have
-- Shared skill pool (CARD-008) - diferido para v1.1.0
-
-**Consequencias:**
-- Positivas:
-  - Release formal marca maturidade do projeto
-  - Usuarios podem usar com confianca em producao
-  - LTS garante suporte de longo prazo
-  - 9 skills demonstram qualidade e capacidade
-  - 97.4% completion profissional
-- Negativas:
-  - 2.6% de tasks pendentes (6 tasks)
-  - Testes manuais ainda recomendados
-  - CARD-008 diferido para proxima versao
-
-**Justificativa:**
-Com todas as features P1 entregues, 9 skills validadas, e 97.4% de completude, o projeto demonstrou maturidade para producao. Itens pendentes sao incrementais e nao-bloqueantes.
-
----
-
-**Ultima Atualizacao:** 2026-02-05 (LTS v1.0.0 Release - ADR-009 added)
+**Ultima Atualizacao:** 2026-02-07 (v2.0.0)

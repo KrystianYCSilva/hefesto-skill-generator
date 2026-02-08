@@ -191,15 +191,19 @@ hefesto-skill-generator/
 │   ├── skill-template.md        # Canonical skill structure
 │   ├── quality-checklist.md     # 13-point auto-critica checklist
 │   └── cli-compatibility.md     # Multi-CLI adaptation rules
-├── .claude/commands/             # 5 hefesto + speckit commands
+├── .claude/commands/             # hefesto + speckit commands
 ├── .gemini/commands/             # Mirrored for Gemini (TOML)
 ├── .codex/prompts/               # Mirrored for Codex
 ├── .github/agents+prompts/       # Mirrored for Copilot
 ├── .opencode/command/            # Mirrored for OpenCode
 ├── .cursor/commands/             # Mirrored for Cursor
 ├── .qwen/commands/               # Mirrored for Qwen
-├── .context/                     # Project context files
-└── docs/                         # Documentation, decisions
+├── .agents/                      # Internal agent skills (skill-creator)
+├── .specify/                     # Spec-kit infrastructure (templates, scripts)
+├── .context/                     # AI context hub (rules, patterns, examples)
+├── knowledge/                    # Best practices and research references
+├── specs/                        # Feature specifications (spec-kit artifacts)
+└── docs/                         # Documentation, ADRs, guides
 ```
 
 ### User Project (after install)
@@ -228,11 +232,16 @@ my-project/
 
 ---
 
+## Also in This Repo
+
+- **Spec-kit** (`speckit.*` commands): Feature specification workflow (specify, plan, tasks, implement)
+- **Skill Creator** (`.agents/skills/skill-creator/`): Reference implementation for agentskills.io
+
 ## Contributing & Governance
 
 - See `CONTRIBUTING.md` for how to contribute
 - See `CODE_OF_CONDUCT.md` for community behavior expectations
-- See `CONSTITUTION.md` for T0 governance rules
+- See `CONSTITUTION.md` for T0 governance rules (13 rules)
 - Licensed under MIT - see `LICENSE`
 
 ---
