@@ -1,262 +1,240 @@
 # Hefesto Skill Generator
 
-> **Sistema de geracao de Agent Skills para multiplos CLIs de IA**
+> **Template-driven Agent Skill generator for 7 AI CLIs**
 
-[![Version](https://img.shields.io/badge/version-1.4.0-blue)]()
+[![Version](https://img.shields.io/badge/version-2.0.0-blue)]()
 [![Agent Skills](https://img.shields.io/badge/standard-Agent%20Skills-green)](https://agentskills.io)
 [![License](https://img.shields.io/badge/license-MIT-green)]()
+[![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)]()
 
 ---
 
-## O que e o Hefesto?
+## What is Hefesto?
 
-**Hefesto** e um gerador de skills que cria **Agent Skills** padronizadas para multiplos CLIs de IA, seguindo o padrao aberto [agentskills.io](https://agentskills.io) e as melhores praticas academicamente consolidadas.
+**Hefesto** generates [Agent Skills](https://agentskills.io) for 7 AI CLI tools from natural language descriptions. It's a **spec-kit**: Markdown templates that the AI interprets - zero Python, zero dependencies.
 
-### Por que Hefesto?
-
-Na mitologia grega, **Hefesto** era o deus ferreiro que forjava ferramentas divinas. Assim como ele, este projeto forja "ferramentas" (skills) que empoderam agentes de IA a realizar tarefas especializadas.
+Named after the Greek god of the forge, Hefesto crafts specialized tools (skills) that empower AI agents.
 
 ---
 
-## Funcionalidades
+## Architecture
 
-- **Padrao Agent Skills**: Segue a especificacao aberta agentskills.io
-- **Multi-CLI Automatic Detection** (Feature 004): Detecta 7 CLIs e gera skills em paralelo (3x mais rapido)
-- **Gera para todos CLIs**: Claude Code, Gemini CLI, Codex, OpenCode, Cursor, Qwen Code, VS Code/Copilot
-- **Adaptacoes CLI-Especificas**: Transformacoes automaticas para compatibilidade (ex: Gemini `$ARGUMENTS` → `{{args}}`)
-- **Template-First**: Inicia com templates, expande sob demanda
-- **Human Gate**: Validacao humana antes de persistir
-- **Wizard Interativo**: Expansao guiada para skills complexas
-- **Extracao de Codigo**: Cria skills a partir de codigo/docs existentes
-- **JIT Loading**: Recursos adicionais em sub-arquivos para otimizacao de contexto
-- **Rollback Atomico**: All-or-nothing guarantee na geracao paralela
+```
+MARKDOWN TEMPLATES  →  AI AGENT  →  SKILLS (output)
+                         ↑
+                    skill-template.md
+                    quality-checklist.md
+                    cli-compatibility.md
+```
 
----
-
-## CLIs Suportados
-
-| CLI | Suporte Nativo | Diretorio |
-|-----|----------------|-----------|
-| Claude Code | ✅ | `.claude/skills/<name>/` |
-| Gemini CLI | ✅ | `.gemini/skills/<name>/` |
-| OpenAI Codex | ✅ | `.codex/skills/<name>/` |
-| VS Code/Copilot | ✅ | `.github/skills/<name>/` |
-| OpenCode | ✅ | `.opencode/skills/<name>/` |
-| Cursor | ✅ | `.cursor/skills/<name>/` |
-| Qwen Code | ✅ | `.qwen/skills/<name>/` |
+- **No code**: All logic lives in Markdown templates
+- **No dependencies**: No Python, Node.js, pip, or npm
+- **Multi-CLI**: Generates for all detected CLIs simultaneously
+- **Self-reviewing**: Auto-critica checklist before human approval
 
 ---
 
-## Comandos
+## Supported CLIs
 
-| Comando | Descricao |
-|---------|-----------|
-| `/hefesto.create` | Cria skill a partir de descricao natural |
-| `/hefesto.extract` | Extrai skill de codigo/docs existente |
-| `/hefesto.validate` | Valida skill contra Agent Skills spec |
-| `/hefesto.adapt` | Adapta skill para outro CLI |
-| `/hefesto.sync` | Sincroniza skill entre CLIs |
-| `/hefesto.list` | Lista skills do projeto |
+| CLI | Skills Directory | Variable Syntax |
+|-----|------------------|-----------------|
+| Claude Code | `.claude/skills/` | `$ARGUMENTS` |
+| Gemini CLI | `.gemini/skills/` | `{{args}}` |
+| OpenAI Codex | `.codex/skills/` | `$ARGUMENTS` |
+| VS Code/Copilot | `.github/skills/` | `$ARGUMENTS` |
+| OpenCode | `.opencode/skills/` | `$ARGUMENTS` |
+| Cursor | `.cursor/skills/` | `$ARGUMENTS` |
+| Qwen Code | `.qwen/skills/` | `{{args}}` |
 
-### Uso Basico
+---
+
+## Commands
+
+| Command | Description | Human Gate |
+|---------|-------------|------------|
+| `/hefesto.create` | Create skill from description | Yes |
+| `/hefesto.validate` | Validate & fix skill against spec | Yes (fix-auto) |
+| `/hefesto.extract` | Extract skill from code/docs | Yes |
+| `/hefesto.init` | Bootstrap: detect CLIs, create dirs | No |
+| `/hefesto.list` | List installed skills | No (read-only) |
+
+---
+
+## Quick Start
 
 ```bash
-# Criar nova skill via descricao (gera para todos CLIs detectados)
-/hefesto.create Uma skill para padronizar code reviews seguindo boas praticas
+# 1. Initialize (detects CLIs, creates directories)
+/hefesto.init
 
-# Criar skill para CLIs especificos
-/hefesto.create "Code review skill" --cli claude,gemini
+# 2. Create your first skill
+/hefesto.create "Validate email addresses using RFC 5322 regex patterns"
 
-# Detectar CLIs instalados
-/hefesto.detect
+# 3. Validate the generated skill
+/hefesto.validate validate-email
 
-# Extrair skill de codigo existente
-/hefesto.extract @src/utils/validation.ts
-
-# Validar skill existente
-/hefesto.validate code-review
-
-# Listar skills do projeto
+# 4. List all skills
 /hefesto.list
-```
 
-### Multi-CLI Parallel Generation
-
-Hefesto automaticamente detecta todos os CLIs de IA instalados e gera skills para todos simultaneamente (3x mais rapido que sequencial):
-
-```bash
-# Deteccao automatica + geracao paralela para todos CLIs
-/hefesto.create "Skill para validar codigo TypeScript"
-# ✓ Detecta: claude, gemini, opencode (3 CLIs)
-# ✓ Gera em paralelo para os 3 CLIs
-# ✓ Completa em ~2s vs ~6s (sequencial)
-
-# Gerar apenas para CLIs especificos
-/hefesto.create "Skill de refactoring" --cli claude,cursor
-
-# Re-detectar CLIs apos instalar novos
-/hefesto.detect
+# 5. Extract skill from existing code
+/hefesto.extract src/utils/date-formatter.ts
 ```
 
 ---
 
-## Estrutura de uma Skill Gerada
+## How `/hefesto.create` Works
+
+```
+Phase 1: Understanding    → Parse description, extract concepts
+Phase 2: Research          → Read templates, exemplar skills, official docs
+Phase 3: Generation        → Generate SKILL.md following agentskills.io spec
+Phase 4: Auto-Critica      → Self-review against 13-point checklist
+Phase 5: Human Gate        → Present to user for [approve] [edit] [reject]
+Phase 6: Persistence       → Write to all detected CLI directories
+```
+
+---
+
+## Installation
+
+### Option 1: Installer Script (Recommended)
+
+```bash
+# Unix/macOS
+git clone https://github.com/<org>/hefesto-skill-generator.git
+cd my-project
+bash hefesto-skill-generator/installer/install.sh
+```
+
+```powershell
+# Windows PowerShell
+git clone https://github.com/<org>/hefesto-skill-generator.git
+cd my-project
+& hefesto-skill-generator\installer\install.ps1
+```
+
+The installer automatically:
+- Detects installed AI CLIs (Claude, Gemini, Codex, Copilot, OpenCode, Cursor, Qwen)
+- Creates `.hefesto/` with templates and version
+- Installs `hefesto.*` commands for each detected CLI
+- Creates `skills/` directories
+
+### Option 2: GitHub Release
+
+```bash
+# Unix/macOS
+curl -fsSL https://github.com/<org>/hefesto-skill-generator/releases/latest/download/hefesto-latest.tar.gz | tar xz
+cd installer && bash install.sh
+```
+
+```powershell
+# Windows
+Invoke-WebRequest -Uri "https://github.com/<org>/hefesto-skill-generator/releases/latest/download/hefesto-latest.zip" -OutFile hefesto.zip
+Expand-Archive hefesto.zip; cd installer; .\install.ps1
+```
+
+### Verify Installation
+
+```bash
+/hefesto.init  # Check installation status
+```
+
+---
+
+## Skill Structure
 
 ```
 skill-name/
-├── SKILL.md              # Core (<500 linhas, <5000 tokens)
-├── scripts/              # Codigo executavel
-│   ├── validate.py
-│   └── execute.sh
-├── references/           # Documentacao detalhada
-│   ├── REFERENCE.md
-│   └── EXAMPLES.md
-└── assets/               # Recursos estaticos
-    ├── templates/
-    └── schemas/
+├── SKILL.md              # Core (required, <500 lines, <5000 tokens)
+├── references/           # Deep-dive docs (optional, JIT loaded)
+├── scripts/              # Executable helpers (optional)
+└── assets/               # Static resources (optional)
 ```
 
----
-
-## Template de Skill (Agent Skills Standard)
+### Skill Template
 
 ```yaml
 ---
 name: skill-id
 description: |
-  Descricao de 1-3 linhas sobre o que a skill faz.
-  Use quando: casos de uso especificos.
-license: MIT
-compatibility: Claude Code, Gemini CLI, Codex, OpenCode, Cursor, Qwen Code, VS Code/Copilot
-metadata:
-  author: seu-nome
-  version: "1.0.0"
-  category: development
-  tags: [tag1, tag2]
+  Action verb describing what the skill does.
+  Use when: specific trigger condition.
 ---
 
-# Skill Name
+# Skill Title
 
-> One-liner description
+Brief introduction.
 
-## When to Use
+## How to <first capability>
 
-- ✅ Cenario 1
-- ✅ Cenario 2
-- ❌ Quando NAO usar
+Task-oriented instructions.
 
-## Instructions
+## How to <second capability>
 
-[Instrucoes detalhadas...]
+More task-oriented instructions.
+```
 
-## References
+**Frontmatter:** ONLY `name` + `description` (no license, metadata, version)
 
-- [Detailed Reference](references/REFERENCE.md)
-- [Examples](references/EXAMPLES.md)
+---
+
+## Project Structure
+
+```
+hefesto-skill-generator/
+├── installer/
+│   ├── install.sh               # Bash installer (Unix/macOS)
+│   ├── install.ps1              # PowerShell installer (Windows)
+│   └── payload/                 # Distributable package
+│       ├── hefesto/templates/   # Templates shipped to .hefesto/
+│       └── commands/            # Commands per CLI
+├── templates/
+│   ├── skill-template.md        # Canonical skill structure
+│   ├── quality-checklist.md     # 13-point auto-critica checklist
+│   └── cli-compatibility.md     # Multi-CLI adaptation rules
+├── .claude/commands/             # 5 hefesto + speckit commands
+├── .gemini/commands/             # Mirrored for Gemini (TOML)
+├── .codex/prompts/               # Mirrored for Codex
+├── .github/agents+prompts/       # Mirrored for Copilot
+├── .opencode/command/            # Mirrored for OpenCode
+├── .cursor/commands/             # Mirrored for Cursor
+├── .qwen/commands/               # Mirrored for Qwen
+├── .context/                     # Project context files
+└── docs/                         # Documentation, decisions
+```
+
+### User Project (after install)
+
+```
+my-project/
+├── .hefesto/
+│   ├── version                  # Installed version ("2.0.0")
+│   └── templates/               # Skill template, checklist, CLI rules
+├── .claude/commands/hefesto.*   # Commands (per detected CLI)
+├── .claude/skills/              # Skills directory (per detected CLI)
+└── ...
 ```
 
 ---
 
-## Arquitetura
+## Links
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    /hefesto.create <descricao>                   │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  FASE 1: TEMPLATE-FIRST                                         │
-│  ├── Carregar skill-template.md                                 │
-│  ├── Extrair conceitos-chave da descricao                       │
-│  └── Gerar SKILL.md inicial                                     │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  FASE 2: HUMAN GATE (Validacao)                                 │
-│  ├── Apresentar skill gerada                                    │
-│  ├── Validar contra Agent Skills spec                           │
-│  └── Opcoes: [approve] [expand] [edit] [reject]                 │
-└─────────────────────────────────────────────────────────────────┘
-                              │
-            ┌─────────────────┼─────────────────┐
-            ▼                 ▼                 ▼
-      [approve]          [expand]           [reject]
-            │                 │                 │
-            │                 ▼                 │
-            │  ┌──────────────────────────────┐ │
-            │  │ FASE 3: WIZARD INTERATIVO   │ │
-            │  │ ├── Perguntar sobre scripts │ │
-            │  │ ├── Perguntar sobre refs    │ │
-            │  │ └── Perguntar sobre CLIs    │ │
-            │  └──────────────────────────────┘ │
-            │                 │                 │
-            ▼                 ▼                 ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  FASE 4: GERACAO MULTI-CLI                                      │
-│  ├── Detectar CLIs instalados                                   │
-│  ├── Gerar estrutura para cada CLI                              │
-│  └── Criar sub-arquivos JIT                                     │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## Documentacao
-
-| Documento | Descricao |
-|-----------|-----------|
-| [CONSTITUTION.md](./CONSTITUTION.md) | Regras invioaveis do sistema |
-| [.context/](./. context/) | Contexto para IAs |
-| [docs/](./docs/) | Documentacao para humanos |
-| [docs/cards/](./docs/cards/) | CARDs de implementacao |
-
----
-
-## Links Uteis
-
-### Documentacao dos CLIs
-
-| CLI | Documentacao |
-|-----|--------------|
+| Resource | URL |
+|----------|-----|
 | Agent Skills Spec | https://agentskills.io |
-| Claude Code | https://docs.anthropic.com/en/docs/claude-code/skills |
+| Claude Code Skills | https://docs.anthropic.com/en/docs/claude-code/skills |
 | Gemini CLI | https://geminicli.com |
 | OpenAI Codex | https://developers.openai.com/codex |
-| VS Code/Copilot | https://code.visualstudio.com/docs/copilot/customization/agent-skills |
-| OpenCode | https://opencode.ai |
-| Cursor | https://docs.cursor.com |
-| Qwen Code | https://github.com/QwenLM/qwen-code |
-
----
-
-## Contribuindo
-
-1. Leia o [CONSTITUTION.md](./CONSTITUTION.md)
-2. Siga as regras T0 em `.context/standards/architectural-rules.md`
-3. Crie um CARD em `docs/cards/` antes de implementar
-4. Valide contra a spec Agent Skills
-
----
-
-## Licenca
-
-MIT License - veja [LICENSE](./LICENSE) para detalhes.
-
----
-
-**Hefesto Skill Generator** | Forjando ferramentas para agentes de IA | 2026
+| VS Code/Copilot Skills | https://code.visualstudio.com/docs/copilot/customization/agent-skills |
 
 ---
 
 ## Contributing & Governance
 
-- See `CONTRIBUTING.md` for how to contribute (issues, PRs, tests, coding standards).
-- See `CODE_OF_CONDUCT.md` for community behavior expectations (Contributor Covenant).
-- This repository is licensed under the `LICENSE` file (MIT).
-- Issue and PR templates are available under `.github/` to help contributors provide the information maintainers need.
-- CI: Basic GitHub Actions workflow is configured to run test jobs on PRs and pushes to `main` (.github/workflows/ci.yml).
-- Use Conventional Commits (`feat:`, `fix:`, `docs:`) — see `CONTRIBUTING.md` for details.
+- See `CONTRIBUTING.md` for how to contribute
+- See `CODE_OF_CONDUCT.md` for community behavior expectations
+- See `CONSTITUTION.md` for T0 governance rules
+- Licensed under MIT - see `LICENSE`
 
-We welcome contributions — please read `CONTRIBUTING.md` and follow the T0 rules in `CONSTITUTION.md` before submitting changes.
+---
+
+**Hefesto Skill Generator** | Forging tools for AI agents | 2026

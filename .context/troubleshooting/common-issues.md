@@ -176,7 +176,7 @@ mkdir -p .gemini/skills
 
 **Solucao:**
 - Escolher outro nome
-- Usar `/hefesto.edit code-review` para editar existente
+- Usar `/hefesto.validate code-review` para validar e corrigir
 - Selecionar [overwrite] no Human Gate se quiser substituir
 
 ---
@@ -195,13 +195,7 @@ mkdir -p .gemini/skills
 **Causa:** Skills desatualizadas em alguns CLIs.
 
 **Solucao:**
-```
-/hefesto.sync code-review
-```
-Isso ira:
-1. Identificar versao mais recente
-2. Perguntar qual versao usar como base
-3. Sincronizar para todos os CLIs
+Re-criar a skill com `/hefesto.create` ou `/hefesto.validate` com fix-auto para atualizar em todos os CLIs.
 
 ---
 

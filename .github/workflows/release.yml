@@ -1,0 +1,112 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Build distributable package
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+
+          # Create staging directory
+          mkdir -p staging/installer/payload
+
+          # Copy installer scripts
+          cp installer/install.sh staging/installer/
+          cp installer/install.ps1 staging/installer/
+          chmod +x staging/installer/install.sh
+
+          # Copy payload: hefesto templates
+          mkdir -p staging/installer/payload/hefesto/templates
+          cp templates/skill-template.md staging/installer/payload/hefesto/templates/
+          cp templates/quality-checklist.md staging/installer/payload/hefesto/templates/
+          cp templates/cli-compatibility.md staging/installer/payload/hefesto/templates/
+
+          # Copy payload: commands per CLI
+          # Claude
+          mkdir -p staging/installer/payload/commands/claude
+          cp .claude/commands/hefesto.*.md staging/installer/payload/commands/claude/
+
+          # Gemini
+          mkdir -p staging/installer/payload/commands/gemini
+          cp .gemini/commands/hefesto.*.toml staging/installer/payload/commands/gemini/
+
+          # Codex
+          mkdir -p staging/installer/payload/commands/codex
+          cp .codex/prompts/hefesto.*.md staging/installer/payload/commands/codex/
+
+          # Copilot (GitHub)
+          mkdir -p staging/installer/payload/commands/github/agents
+          mkdir -p staging/installer/payload/commands/github/prompts
+          cp .github/agents/hefesto.*.agent.md staging/installer/payload/commands/github/agents/
+          cp .github/prompts/hefesto.*.prompt.md staging/installer/payload/commands/github/prompts/
+
+          # OpenCode
+          mkdir -p staging/installer/payload/commands/opencode
+          cp .opencode/command/hefesto.*.md staging/installer/payload/commands/opencode/
+
+          # Cursor
+          mkdir -p staging/installer/payload/commands/cursor
+          cp .cursor/commands/hefesto.*.md staging/installer/payload/commands/cursor/
+
+          # Qwen
+          mkdir -p staging/installer/payload/commands/qwen
+          cp .qwen/commands/hefesto.*.md staging/installer/payload/commands/qwen/
+
+      - name: Create archives
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          cd staging
+
+          # Unix tar.gz
+          tar -czf "../hefesto-${VERSION}.tar.gz" installer/
+
+          # Windows zip
+          zip -r "../hefesto-${VERSION}.zip" installer/
+
+          cd ..
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Hefesto v${{ steps.version.outputs.VERSION }}"
+          body: |
+            ## Installation
+
+            ### Unix/macOS
+            ```bash
+            curl -fsSL https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.VERSION }}/hefesto-${{ steps.version.outputs.VERSION }}.tar.gz | tar xz
+            cd installer && bash install.sh
+            ```
+
+            ### Windows (PowerShell)
+            ```powershell
+            Invoke-WebRequest -Uri "https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.VERSION }}/hefesto-${{ steps.version.outputs.VERSION }}.zip" -OutFile hefesto.zip
+            Expand-Archive hefesto.zip -DestinationPath .
+            cd installer; .\install.ps1
+            ```
+
+            ### What's included
+            - Hefesto commands for 7 AI CLIs (Claude, Gemini, Codex, Copilot, OpenCode, Cursor, Qwen)
+            - Quality templates (skill-template, quality-checklist, cli-compatibility)
+            - Installer scripts (bash + PowerShell)
+          files: |
+            hefesto-${{ steps.version.outputs.VERSION }}.tar.gz
+            hefesto-${{ steps.version.outputs.VERSION }}.zip
+            installer/install.sh
+            installer/install.ps1

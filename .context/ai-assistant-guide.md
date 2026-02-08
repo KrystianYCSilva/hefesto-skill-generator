@@ -1,7 +1,6 @@
 # AI Assistant Guide - Hefesto Skill Generator
 
-> **Versao:** 1.0.0
-> **Tier:** T0
+> **Versao:** 2.0.0
 > **Para:** Todas as IAs (Claude, Copilot, Gemini, Cursor, etc.)
 
 ---
@@ -10,212 +9,141 @@
 
 ```
 STEP 1: Carregar este arquivo
-STEP 2: Carregar CONSTITUTION.md (raiz do projeto)
-STEP 3: Carregar standards/architectural-rules.md
-STEP 4: Verificar MEMORY.md para estado atual
-STEP 5: Carregar contexto adicional conforme necessidade (JIT)
+STEP 2: Carregar templates/ (skill-template, quality-checklist, cli-compatibility)
+STEP 3: Verificar .hefesto/version para instalacao
+STEP 4: Carregar contexto adicional conforme necessidade (JIT)
 ```
 
 ---
 
-## 2. Tier System (OBRIGATORIO)
-
-| Tier | Tipo | Autoridade | Arquivos |
-|------|------|------------|----------|
-| **T0** | Enforcement | ABSOLUTA | `CONSTITUTION.md`, `standards/architectural-rules.md` |
-| **T1** | Standards | NORMATIVA | `standards/*.md`, `patterns/*.md` |
-| **T2** | Context | INFORMATIVA | `_meta/*.md` |
-| **T3** | Examples | ILUSTRATIVA | `examples/*.md` |
-
-### Resolucao de Conflitos
-
-```
-IF T0 conflita com qualquer tier → T0 VENCE SEMPRE
-IF T1 conflita com T2 ou T3 → T1 VENCE
-IF T2 conflita com T3 → T2 VENCE
-```
-
----
-
-## 3. Request Classification
+## 2. Request Classification
 
 | Tipo de Request | Arquivos para Carregar | Acao |
 |-----------------|------------------------|------|
-| `/hefesto.create` | CONSTITUTION.md, templates/, knowledge/ | Gerar skill + Human Gate |
-| `/hefesto.extract` | CONSTITUTION.md, codigo alvo | Analisar + Gerar + Human Gate |
-| `/hefesto.validate` | CONSTITUTION.md, knowledge/validation-rules.md | Validar skill |
-| `/hefesto.adapt` | CONSTITUTION.md, templates/adapters/ | Adaptar + Human Gate |
-| `/hefesto.sync` | CONSTITUTION.md, skills existentes | Sincronizar CLIs |
-| `/hefesto.list` | INDEX.md | Listar skills |
+| `/hefesto.create` | templates/, skills exemplares | Gerar skill + Human Gate |
+| `/hefesto.extract` | templates/, codigo alvo | Analisar + Gerar + Human Gate |
+| `/hefesto.validate` | templates/quality-checklist.md | Validar + corrigir (fix-auto) |
+| `/hefesto.init` | .hefesto/version | Verificar/bootstrap instalacao |
+| `/hefesto.list` | .<cli>/skills/ | Listar skills |
 
 ---
 
-## 4. Human Gate Protocol
+## 3. Human Gate Protocol
 
-**REGRA T0:** NUNCA persistir sem aprovacao humana.
+**REGRA:** NUNCA persistir sem aprovacao humana.
 
 ### Fluxo
 
 ```
 1. Gerar conteudo em memoria
 2. Apresentar ao usuario com preview
-3. Mostrar opcoes: [approve] [expand] [edit] [reject]
+3. Mostrar opcoes: [approve] [edit] [reject]
 4. Aguardar resposta explicita
-5. SO APOS aprovacao, persistir
+5. SO APOS aprovacao, persistir em TODOS os CLIs detectados
 ```
 
-### Formato de Apresentacao
+---
+
+## 4. Agent Skills Spec (Referencia Rapida)
+
+### Frontmatter
+
+```yaml
+---
+name: skill-id          # max 64 chars, lowercase, hyphens, regex: ^[a-z0-9]+(-[a-z0-9]+)*$
+description: |          # max 1024 chars, nao vazio
+  Action verb describing what the skill does.
+  Use when: specific trigger condition.
+---
+```
+
+**SOMENTE `name` + `description`** - sem license, metadata, version, tags.
+
+### Body Pattern
 
 ```markdown
-## Skill Gerada: {name}
+# Skill Title
 
-### Preview
+Brief introduction.
 
-{conteudo da skill}
+## How to <first capability>
 
-### Validacao
+Task-oriented instructions.
 
-- [x] Frontmatter valido
-- [x] Name conforme spec
-- [x] Description presente
-- [ ] Scripts incluidos
+## How to <second capability>
 
-### Opcoes
-
-- **[approve]** - Salvar skill nos CLIs detectados
-- **[expand]** - Adicionar scripts, referencias, assets
-- **[edit]** - Modificar antes de salvar
-- **[reject]** - Cancelar operacao
+More instructions.
 ```
+
+**Secoes "How to [task]"** - nao "Instructions > Step N" ou "When to Use".
+
+### Quality Rules
+
+- **Frontmatter strict**: ONLY name + description
+- **Token Economy**: basic concepts = 1 sentence; advanced = full section
+- **No tutorials**: don't teach what the AI already knows
+- **No body "When to Use"**: trigger info lives in description only
+- **Progressive Disclosure**: references/ if SKILL.md > 200 lines
+- **Anti-patterns**: compatibility tables, version footers, license footers
+- **Size limit**: < 500 lines, < ~5000 tokens
 
 ---
 
-## 5. Agent Skills Spec (Referencia Rapida)
-
-### Frontmatter Obrigatorio
-
-```yaml
----
-name: skill-id          # max 64 chars, lowercase, hyphens
-description: |          # max 1024 chars, nao vazio
-  Descricao da skill.
-  Use quando: casos de uso.
----
-```
-
-### Frontmatter Opcional
-
-```yaml
----
-license: MIT
-compatibility: "Descricao de ambiente"
-metadata:
-  author: nome
-  version: "1.0.0"
-  category: development
-  tags: [tag1, tag2]
-allowed-tools: Read Grep Glob
----
-```
-
-### Validacao de `name`
-
-```
-VALIDO:
-- code-review
-- testing-strategy
-- api-docs-v2
-
-INVALIDO:
-- Code-Review (uppercase)
-- -testing (comeca com hyphen)
-- api--docs (hyphens consecutivos)
-- skill-name-that-is-way-too-long-and-exceeds-sixty-four-characters
-```
-
----
-
-## 6. Deteccao de CLIs
-
-### Ordem de Deteccao
-
-```
-1. Verificar comando no PATH:
-   - claude --version
-   - gemini --version
-   - codex --version
-   - code --version (VS Code)
-   - cursor --version
-   - qwen --version
-   - opencode --version
-
-2. Verificar diretorios existentes:
-   - .claude/
-   - .gemini/
-   - .codex/
-   - .github/ (Copilot)
-   - .cursor/
-   - .qwen/
-   - .opencode/
-
-3. Gerar para TODOS detectados
-```
+## 5. Deteccao de CLIs
 
 ### Diretorios por CLI
 
-| CLI | Diretorio de Skills |
-|-----|---------------------|
-| Claude Code | `.claude/skills/<name>/` |
-| Gemini CLI | `.gemini/skills/<name>/` |
-| OpenAI Codex | `.codex/skills/<name>/` |
-| VS Code/Copilot | `.github/skills/<name>/` |
-| OpenCode | `.opencode/skills/<name>/` |
-| Cursor | `.cursor/skills/<name>/` |
-| Qwen Code | `.qwen/skills/<name>/` |
+| CLI | Skills Dir | Commands Dir | Variable Syntax |
+|-----|-----------|-------------|-----------------|
+| Claude Code | `.claude/skills/` | `.claude/commands/` | `$ARGUMENTS` |
+| Gemini CLI | `.gemini/skills/` | `.gemini/commands/` | `{{args}}` |
+| OpenAI Codex | `.codex/skills/` | `.codex/prompts/` | `$ARGUMENTS` |
+| VS Code/Copilot | `.github/skills/` | `.github/agents/` + `prompts/` | `$ARGUMENTS` |
+| OpenCode | `.opencode/skills/` | `.opencode/command/` | `$ARGUMENTS` |
+| Cursor | `.cursor/skills/` | `.cursor/commands/` | `$ARGUMENTS` |
+| Qwen Code | `.qwen/skills/` | `.qwen/commands/` | `{{args}}` |
+
+### Deteccao `.github/` (Copilot)
+
+So tratar como Copilot se:
+- `github-copilot` no PATH, OU
+- `.github/copilot-instructions.md` existir, OU
+- `.github/agents/` existir
 
 ---
 
-## 7. Adaptacoes por CLI
+## 6. Checklist de Qualidade (13 pontos)
 
-### Placeholder de Argumentos
-
-| CLI | Placeholder |
-|-----|-------------|
-| Claude, Codex, Copilot, OpenCode, Cursor | `$ARGUMENTS` |
-| Gemini, Qwen | `{{args}}` |
-
-### Formato Alternativo (TOML)
-
-Gemini e Qwen suportam formato TOML:
-
-```toml
-description = "Descricao da skill"
-
-prompt = """
-Instrucoes da skill com {{args}}
-"""
-```
+| Nivel | Criterios |
+|-------|-----------|
+| **CRITICAL** (5) | Frontmatter valido, name format, description format, body < 500 lines, "How to" sections |
+| **WARNING** (7) | Token economy, no tutorials, examples, progressive disclosure, anti-patterns, no body "When to Use", no README/CHANGELOG |
+| **INFO** (1) | Security (sem credenciais, tokens, PII) |
 
 ---
 
-## 8. Definition of Done
+## 7. Definition of Done
 
 ### Para Skills Geradas
 
-- [ ] Frontmatter valido (name, description)
+- [ ] Frontmatter: SOMENTE name + description
 - [ ] SKILL.md < 500 linhas
-- [ ] Validado contra Agent Skills spec
+- [ ] Secoes "How to [task]"
+- [ ] Auto-critica 13 pontos PASS
 - [ ] Human Gate aprovado
-- [ ] Persistido nos CLIs detectados
-- [ ] INDEX.md atualizado (se existir)
+- [ ] Persistido em TODOS os CLIs detectados
 
-### Para Comandos do Hefesto
+---
 
-- [ ] Segue fluxo documentado
-- [ ] Respeita Human Gate
-- [ ] Detecta CLIs automaticamente
-- [ ] Valida antes de persistir
-- [ ] Reporta resultado ao usuario
+## 8. Comandos Disponiveis
+
+| Comando | Descricao | Human Gate |
+|---------|-----------|------------|
+| `/hefesto.create "desc"` | Criar skill de descricao | Sim |
+| `/hefesto.extract arquivo` | Extrair skill de codigo | Sim |
+| `/hefesto.validate skill-name` | Validar + corrigir skill | Sim (fix-auto) |
+| `/hefesto.init` | Bootstrap/verificar instalacao | Nao |
+| `/hefesto.list` | Listar skills | Nao |
 
 ---
 
@@ -230,18 +158,4 @@ Instrucoes da skill com {{args}}
 
 ---
 
-## 10. Comandos Disponiveis
-
-| Comando | Descricao | Human Gate |
-|---------|-----------|------------|
-| `/hefesto.create <desc>` | Criar skill de descricao | Sim |
-| `/hefesto.extract @file` | Extrair skill de codigo | Sim |
-| `/hefesto.validate <name>` | Validar skill existente | Nao |
-| `/hefesto.adapt <name> --target <cli>` | Adaptar para CLI | Sim |
-| `/hefesto.sync <name>` | Sincronizar entre CLIs | Sim |
-| `/hefesto.list` | Listar skills | Nao |
-| `/hefesto.help` | Mostrar ajuda | Nao |
-
----
-
-**AI Assistant Guide** | Hefesto Skill Generator | 2026-02-04
+**AI Assistant Guide** | Hefesto Skill Generator v2.0.0 | 2026-02-07
