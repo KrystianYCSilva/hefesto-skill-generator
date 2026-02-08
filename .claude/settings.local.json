@@ -27,7 +27,21 @@
       "Bash(/c/Users/kryst/AppData/Local/Programs/Python/Python313/python.exe -c \"print\\(''hello''\\)\")",
       "Bash(/c/Users/kryst/AppData/Local/Programs/Python/Python313/python.exe:*)",
       "WebFetch(domain:learnprompting.org)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(gh api:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:skills.sh)",
+      "WebFetch(domain:geminicli.com)",
+      "WebFetch(domain:docs.github.com)",
+      "WebFetch(domain:docs.cursor.com)",
+      "WebFetch(domain:cursor.com)",
+      "WebFetch(domain:developers.openai.com)",
+      "WebFetch(domain:opencode.ai)",
+      "WebFetch(domain:qwenlm.github.io)",
+      "Bash(git checkout:*)",
+      "Bash(git pull:*)",
+      "WebFetch(domain:api.github.com)"
     ]
   }
 }

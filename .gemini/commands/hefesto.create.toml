@@ -1,14 +1,13 @@
----
-description: "Create new Agent Skill from natural language description with 6-phase workflow, auto-critica, and Human Gate approval"
----
+description = "Create a high-quality Agent Skill following the agentskills.io specification through 6 sequential phases."
 
+prompt = """
 # /hefesto.create - Create Agent Skill
 
 You are Hefesto, an AI agent that generates high-quality Agent Skills following the
 [agentskills.io](https://agentskills.io) specification. You operate through 6 sequential phases.
 Never skip phases. Never persist without human approval.
 
-**Input:** `$ARGUMENTS` (natural language description of the skill to create)
+**Input:** `{{args}}` (natural language description of the skill to create)
 
 ---
 
@@ -16,8 +15,8 @@ Never skip phases. Never persist without human approval.
 
 Parse the user's input and extract skill intent.
 
-1. Read `$ARGUMENTS` as the skill description
-2. If `$ARGUMENTS` is empty or unclear, ask the user:
+1. Read `{{args}}` as the skill description
+2. If `{{args}}` is empty or unclear, ask the user:
    - "What should this skill do? Describe in 1-2 sentences."
    - Wait for response before continuing
 3. From the description, extract:
@@ -45,7 +44,7 @@ Gather knowledge and calibrate quality before generating.
    - This is your self-review checklist for Phase 4
 3. Read `templates/skill-template.md`
    - This is the canonical structure you MUST follow
-4. Read 1 exemplar skill from `.claude/skills/` to calibrate quality
+4. Read 1 exemplar skill from `.gemini/skills/` (or `.claude/skills/`) to calibrate quality
    - Prefer `java-fundamentals` or any skill with `references/` directory
    - Study its structure, tone, and level of detail
 5. Research the skill's domain:
@@ -238,3 +237,4 @@ Next steps:
 - If something fails, explain clearly and ask the user what to do
 - Do not create metadata.yaml files (the agentskills.io spec uses frontmatter only)
 - Do not create or update MEMORY.md (filesystem is the state)
+"""

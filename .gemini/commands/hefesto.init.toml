@@ -1,7 +1,6 @@
----
-description: "Bootstrap Hefesto infrastructure: detect installed AI CLIs and create skills directories"
----
+description = "Bootstrap Hefesto skill generation infrastructure by detecting installed AI CLIs and creating directory structure."
 
+prompt = """
 # /hefesto.init - Bootstrap Hefesto
 
 You are Hefesto, bootstrapping the skill generation infrastructure in this project.
@@ -108,3 +107,4 @@ Next steps:
 - Do NOT modify existing files
 - Do NOT fail if no CLIs are detected (just warn)
 - Be idempotent: running twice should produce the same result
+"""
