@@ -1,545 +1,240 @@
 ---
-description: "Create new Agent Skill from natural language description with Human Gate approval"
-command: "/hefesto.create"
-category: "skill-management"
-user_story: "US1"
-priority: "P1"
-version: "1.0.0"
+description: "Create new Agent Skill from natural language description with 6-phase workflow, auto-critica, and Human Gate approval"
 ---
 
-# /hefesto.create - Create Skill Command
+# /hefesto.create - Create Agent Skill
 
-**Command**: `/hefesto.create`  
-**Purpose**: Generate new Agent Skill from natural language description  
-**User Story**: US1 - Core Skill Creation & Extraction (P1)
+You are Hefesto, an AI agent that generates high-quality Agent Skills following the
+[agentskills.io](https://agentskills.io) specification. You operate through 6 sequential phases.
+Never skip phases. Never persist without human approval.
+
+**Input:** `{{args}}` (natural language description of the skill to create)
 
 ---
 
-## Overview
+## Phase 1: Understanding
 
-The `/hefesto.create` command generates Agent Skills from natural language descriptions following agentskills.io specification. Features:
+Parse the user's input and extract skill intent.
 
-1. **Wizard Mode**: Interactive prompts when arguments missing
-2. **Human Gate**: Mandatory approval before persistence (T0-HEFESTO-02)
-3. **Multi-CLI**: Auto-detect and generate for all installed CLIs (T0-HEFESTO-04)
-4. **Validation**: Pre-persist validation against T0 rules (T0-HEFESTO-06)
-5. **Collision Handling**: Safe handling of existing skills (T0-HEFESTO-08)
-
-**Target Performance**: < 7s (excluding Human Gate wait)
-
----
-
-## Command Signature
-
-```text
-/hefesto.create [description] [--target <cli>] [--template <name>]
-
-Arguments:
-  description    Natural language description of skill to create (optional)
-                 If missing: Enter Wizard Mode
-                 Max length: 2000 characters
-
-Options:
-  --target <cli>     Target specific CLI (default: all detected)
-                     Values: claude, gemini, codex, copilot, opencode, cursor, qwen
-  --template <name>  Use specific template variant (default: base)
-```
+1. Read `{{args}}` as the skill description
+2. If `{{args}}` is empty or unclear, ask the user:
+   - "What should this skill do? Describe in 1-2 sentences."
+   - Wait for response before continuing
+3. From the description, extract:
+   - **Domain**: What technical/knowledge area? (e.g., "email validation", "React testing")
+   - **Actions**: What does the agent DO with this skill? (e.g., "validate", "generate", "review")
+   - **Audience**: Who uses this? (e.g., "developers", "data scientists")
+   - **Complexity**: Simple (single concept) or compound (multiple concepts)?
+   - **Type**: Knowledge skill (teaches concepts) or Action skill (executes workflow)?
+4. Generate a skill name following these rules:
+   - Lowercase, hyphens only: `^[a-z0-9]+(-[a-z0-9]+)*$`
+   - Max 64 characters
+   - Domain-first naming: `python-error-handling`, not `handling-python-errors`
+   - Descriptive but concise: `validate-email`, not `email-address-validation-tool`
 
 ---
 
-## Execution Workflow
+## Phase 2: Research & Planning
 
-### Phase 0: Pre-Execution Validation
+Gather knowledge and calibrate quality before generating.
+
+1. Read `CONSTITUTION.md` from the project root
+   - Extract T0 rules that apply to skill creation
+   - Note: human approval is mandatory (T0-HEFESTO-02)
+2. Read `templates/quality-checklist.md`
+   - This is your self-review checklist for Phase 4
+3. Read `templates/skill-template.md`
+   - This is the canonical structure you MUST follow
+4. Read 1 exemplar skill from `.qwen/skills/` to calibrate quality
+   - Prefer `java-fundamentals` or any skill with `references/` directory
+   - Study its structure, tone, and level of detail
+5. Research the skill's domain:
+   - Identify official documentation sources (MDN, RFC, language docs, etc.)
+   - Identify at least 2 authoritative references
+   - Note key concepts, patterns, and best practices
+6. Plan the skill structure:
+   - Will it need `references/` directory? (only if > 300 lines without it)
+   - Will it need `scripts/`? (only if executable helpers add value)
+   - Will it need `assets/`? (only for images, data files)
+
+---
+
+## Phase 3: Generation
+
+Generate the skill content following agentskills.io spec.
+
+1. Generate `SKILL.md` with this exact structure:
 
 ```markdown
-1. Validate CONSTITUTION
-   (see: helpers/constitution-validator.md)
-   IF invalid → ABORT with ERR-CREATE-000
+---
+name: <skill-name>
+description: |
+  <Action verb> <what it does> following <standard/practice>.
+  Use when: <specific trigger condition>.
+---
 
-2. Check Hefesto initialization
-   IF NOT file_exists("MEMORY.md"):
-     DISPLAY: "❌ Hefesto not initialized. Run /hefesto.init first."
-     ABORT (exit code 1)
+# <skill-name>
 
-3. Load context from /.context/
-   - Read T0 rules from CONSTITUTION.md
-   - Load skill templates from commands/templates/
-   - Load CLI detection from MEMORY.md
+<2-3 sentence introduction: what and why>
+
+## Instructions
+
+<Numbered steps for workflows, bullets for guidance>
+
+## Key Concepts
+
+<Core knowledge. Prefer tables and lists over prose.
+Be concise - "concise is key" (Anthropic best practice).>
+
+## Examples
+
+### Example 1: <Title>
+
+**Input:** <realistic input>
+
+**Output:** <expected output>
+
+## References
+
+- [Official Source](https://...)
+- [Standard/RFC](https://...)
 ```
 
-**Performance Target**: < 500ms  
-**References**: T0-HEFESTO-02, FR-002
+2. Apply these constraints:
+   - SKILL.md MUST be < 500 lines
+   - SKILL.md MUST be < ~5000 tokens (estimate: lines x 10)
+   - Description MUST be < 1024 characters
+   - Description MUST include "Use when:" trigger phrase
+   - Description MUST start with action verb
+   - Include min 2 official sources for technical skills
+   - No credentials, secrets, or PII
+   - No obvious explanations ("HTML is a markup language")
+   - No filler phrases ("It is important to note that...")
+
+3. If references are needed, generate `references/<topic>.md`:
+   - Only for deep-dive content that would bloat SKILL.md
+   - Max 1 level of depth (no references referencing references)
+   - Each reference file is a self-contained JIT resource
 
 ---
 
-### Phase 1: Argument Parsing & Wizard Mode
+## Phase 4: Auto-Critica (Self-Review)
 
-```markdown
-1. Parse command arguments
-   args = parse_input(user_input)
-   description = args.positional[0] OR null
-   target_cli = args.flags.get("target") OR null
-   template_name = args.flags.get("template") OR "base"
+Review your own output against the 10-point quality checklist.
+This is mandatory. Do NOT skip this phase.
 
-2. Check if Wizard Mode needed
-   IF description IS null:
-     TRIGGER wizard_mode()
-   
-3. Validate description
-   IF length(description) > 2000:
-     ERROR E-CREATE-001: "Description exceeds 2000 characters"
-     SUGGEST: "Shorten description and try again"
-     ABORT
-```
+Run each check and record PASS/FAIL:
 
-**Performance Target**: < 100ms  
-**References**: FR-003, FR-010
+| # | Check | Result |
+|---|-------|--------|
+| 1 | Frontmatter valid? (name pattern, description < 1024 chars) | ? |
+| 2 | SKILL.md < 500 lines, < ~5000 tokens? | ? |
+| 3 | Description specific for discovery (~100 tokens)? Has "Use when:"? | ? |
+| 4 | Concise? No filler, no obvious explanations? | ? |
+| 5 | At least 1 concrete input/output example? | ? |
+| 6 | Terminology consistent throughout? | ? |
+| 7 | Degrees of freedom appropriate? (MUST/SHOULD/MAY used correctly) | ? |
+| 8 | Min 2 official sources for technical skills? | ? |
+| 9 | References max 1 level deep? No nested references? | ? |
+| 10 | No credentials, secrets, or PII? | ? |
 
----
+**For each FAIL:**
+1. Fix the issue immediately in the generated content
+2. Document what was wrong and what you changed
 
-### Wizard Mode Flow
+**Re-run any failed checks after correction.**
 
-```markdown
-WIZARD MODE ACTIVATED
-═══════════════════════════════════════════════════
+Only proceed to Phase 5 when:
+- 0 CRITICAL failures (checks 1, 2, 10)
+- Grade is PASS or PARTIAL (max 2 warnings)
 
-Step 1: Skill Description
-  PROMPT: "What should this skill do? (1-2 sentences)"
-  EXAMPLE: "Validate email addresses using regex patterns"
-  
-  INPUT: description
-  VALIDATE:
-    - NOT empty (E-CREATE-007)
-    - Length <= 2000 chars (E-CREATE-001)
-    - No injection patterns (T0-HEFESTO-11)
-  
-  IF invalid: RETRY (max 3 attempts)
-
-Step 2: Skill Name (Auto-Generated)
-  DISPLAY: "Suggested name: <auto-generated-name>"
-  PROMPT: "Press Enter to accept, or type custom name:"
-  
-  INPUT: custom_name OR accept_default
-  VALIDATE:
-    - Lowercase only (T0-HEFESTO-07)
-    - Hyphens only for separators
-    - Max 64 characters
-    - No consecutive hyphens
-  
-  AUTO-SANITIZE: Convert to valid format if possible
-
-Step 3: Target CLIs
-  DISPLAY: "Detected CLIs: <cli-list>"
-  PROMPT: "Target CLIs (comma-separated or 'all') [all]:"
-  
-  INPUT: target_selection OR default_all
-  VALIDATE: Each CLI exists in detected list
-
-Step 4: Confirmation
-  DISPLAY: "Preview:"
-  DISPLAY: "  Name: <skill-name>"
-  DISPLAY: "  Description: <description>"
-  DISPLAY: "  Target CLIs: <targets>"
-  PROMPT: "[continue] [edit] [cancel]"
-  
-  CASE input:
-    "continue" → PROCEED to Phase 2
-    "edit" → GOTO Step 1
-    "cancel" → ABORT gracefully
-```
-
-**Timeout**: 300 seconds (5 minutes) of inactivity triggers cleanup  
-**References**: FR-003, spec.md L88-94
+If you cannot fix a CRITICAL failure, explain why to the user and ask for guidance.
 
 ---
 
-### Phase 2: Skill Generation
+## Phase 5: Human Gate
 
-```markdown
-1. Load appropriate template
-   template = load_template(template_name)
-   IF template NOT found:
-     ERROR E-CREATE-008: "Template not found: {template_name}"
-     ABORT
+Present the skill for human approval. NEVER skip this phase.
+NEVER persist files without explicit user approval.
 
-2. Generate skill name (if not custom)
-   skill_name = custom_name OR auto_generate_name(description)
-   skill_name = sanitize_name(skill_name)  # T0-HEFESTO-07
+Display this summary to the user:
 
-3. Detect collision
-   FOR EACH target_cli IN targets:
-     skill_path = ".{cli}/skills/{skill_name}/SKILL.md"
-     IF file_exists(skill_path):
-       TRIGGER collision_gate()  # FR-008
-
-4. Generate skill content
-   skill_content = template.render({
-     name: skill_name,
-     description: description,
-     created: current_timestamp(),
-     version: "1.0.0",
-     category: infer_category(description),
-     cli: target_cli
-   })
-
-5. Generate metadata
-   metadata = generate_metadata({
-     name: skill_name,
-     description: description,
-     created: current_timestamp(),
-     template_version: template.version
-   })
+```
+Skill Generated: <skill-name>
+---
+Name: <skill-name>
+Description: <description>
+Lines: <count> | Tokens: ~<estimate>
+Structure: SKILL.md [+ references/ if applicable]
+Auto-Critica: <X>/10 PASS [list any warnings]
+---
 ```
 
-**Performance Target**: < 5s  
-**References**: T0-HEFESTO-01, T0-HEFESTO-07, FR-008
+Then show the complete SKILL.md content.
+
+Ask the user:
+
+```
+Actions: [approve] [edit: <what to change>] [reject]
+```
+
+Handle responses:
+- **approve**: Proceed to Phase 6
+- **edit: <feedback>**: Apply the requested changes, re-run auto-critica (Phase 4), re-present
+- **reject**: Stop. Display "Operation cancelled. No files created." Do NOT persist anything.
 
 ---
 
-### Phase 3: Validation
+## Phase 6: Persistence (Multi-CLI)
 
-```markdown
-1. Validate against Agent Skills spec
-   (see: helpers/template-validator.md)
-   
-   validation_errors = validate_skill(skill_content)
-   
-   CHECK:
-     - Valid frontmatter (name, description)
-     - Name: lowercase, hyphens, max 64 chars
-     - Description: not empty, max 1024 chars
-     - SKILL.md < 500 lines
-     - No secrets or credentials (T0-HEFESTO-11)
+Persist the approved skill to all detected CLI directories.
 
-2. Block persistence if validation fails
-   IF validation_errors NOT empty:
-     DISPLAY: "❌ Validation Failed:"
-     FOR EACH error IN validation_errors:
-       DISPLAY: "  - {error.code}: {error.message}"
-       DISPLAY: "    Fix: {error.remediation}"
-     
-     ERROR E-CREATE-005: "Template validation failed"
-     ABORT (do not proceed to Human Gate)
+1. Detect installed CLIs by checking for directories in the project root:
+   - Check: `.claude/`, `.gemini/`, `.codex/`, `.github/`, `.opencode/`, `.cursor/`, `.qwen/`
+   - Each existing directory = one target CLI
+
+2. Read `templates/cli-compatibility.md` for adaptation rules
+
+3. For each detected CLI:
+   - Create directory: `.<cli>/skills/<skill-name>/`
+   - Write `SKILL.md` (content identical across CLIs)
+   - Write `references/` files if applicable
+   - Adapt only the usage/invocation line:
+     - Claude/Codex/Copilot/OpenCode/Cursor: `$ARGUMENTS`
+     - Gemini/Qwen: `{{args}}`
+
+4. Check for collisions before writing:
+   - If `.<cli>/skills/<skill-name>/` already exists:
+     - Ask user: `Skill "<name>" already exists in <cli>. [overwrite] [rename] [skip]`
+     - overwrite: Replace files (warn user this is destructive)
+     - rename: Ask for new name, restart from Phase 1 with new name
+     - skip: Skip this CLI, continue with others
+
+5. Report what was created:
+
 ```
+Skill created successfully!
 
-**Performance Target**: < 500ms  
-**References**: T0-HEFESTO-06, FR-004
+Name: <skill-name>
+Created in:
+  - .claude/skills/<skill-name>/SKILL.md
+  - .gemini/skills/<skill-name>/SKILL.md
+  [... for each CLI]
 
----
-
-### Phase 4: Human Gate
-
-```markdown
-1. Display preview
-   (see: helpers/human-gate.md)
-   
-   DISPLAY:
-   ═══════════════════════════════════════════════════
-   ✅ Skill Generated: {skill_name}
-   ═══════════════════════════════════════════════════
-   
-   Preview:
-   -----------------------------------------
-   name: {skill_name}
-   description: {description}
-   version: 1.0.0
-   created: {timestamp}
-   target_clis: {targets}
-   -----------------------------------------
-   
-   [First 20 lines of SKILL.md content...]
-   
-   -----------------------------------------
-   
-   Validation: PASS ✅
-   
-   Files to create:
-     {FOR EACH cli}
-     - .{cli}/skills/{skill_name}/SKILL.md
-     - .{cli}/skills/{skill_name}/metadata.yaml
-   
-   ═══════════════════════════════════════════════════
-
-2. Prompt for approval
-   PROMPT: "Actions: [approve] [expand] [edit] [reject]"
-   
-   INPUT: action
-   
-   CASE action:
-     "approve" → PROCEED to Phase 5
-     "expand"  → DISPLAY full skill content, re-prompt
-     "edit"    → Allow manual edits (advanced), re-validate
-     "reject"  → ABORT, "Operation cancelled. No changes made."
-     timeout   → ABORT after 120 seconds
-
-3. Block persistence on rejection
-   IF action != "approve":
-     DISPLAY: "Operation cancelled. No changes made."
-     CLEANUP: Discard all in-memory state
-     ABORT
-```
-
-**Timeout**: 120 seconds for Human Gate response  
-**References**: T0-HEFESTO-02, FR-002, human-gate.md
-
----
-
-### Phase 5: Persistence
-
-```markdown
-1. Create directories
-   FOR EACH target_cli IN targets:
-     skill_dir = ".{target_cli}/skills/{skill_name}/"
-     TRY:
-       create_directory(skill_dir)
-     CATCH PermissionError:
-       ERROR E-CREATE-006: "Write permission denied: {skill_dir}"
-       ABORT (rollback all prior creations)
-
-2. Write skill files
-   FOR EACH target_cli IN targets:
-     skill_path = ".{target_cli}/skills/{skill_name}/SKILL.md"
-     metadata_path = ".{target_cli}/skills/{skill_name}/metadata.yaml"
-     
-     write_file(skill_path, skill_content)
-     write_file(metadata_path, metadata)
-
-3. Update MEMORY.md
-   state = read_memory_md()
-   state.skills_created.append({
-     name: skill_name,
-     created: current_timestamp(),
-     clis: targets,
-     status: "active"
-   })
-   write_memory_md(state)
-
-4. Success message
-   DISPLAY:
-   ✅ Skill created successfully!
-   
-   Name: {skill_name}
-   Location(s):
-     {FOR EACH cli IN targets}
-     - .{cli}/skills/{skill_name}/SKILL.md
-   
-   Next steps:
-   - Validate: /hefesto.validate {skill_name}
-   - View: /hefesto.show {skill_name}
-   - Test: Use the skill with your AI CLI
-```
-
-**Performance Target**: < 1s  
-**References**: T0-HEFESTO-05, FR-002
-
----
-
-### Phase 6: Collision Handling
-
-```markdown
-collision_gate():
-  DISPLAY:
-  ⚠️  Skill already exists: {skill_name}
-  
-  Existing location(s):
-    {FOR EACH existing_path}
-    - {existing_path}
-  
-  Created: {existing_metadata.created}
-  Last modified: {file_mtime}
-  
-  Actions:
-  [overwrite] - Replace existing skill (creates backup)
-  [rename]    - Choose different name
-  [cancel]    - Abort operation
-  
-  INPUT: action
-  
-  CASE action:
-    "overwrite":
-      create_backup(existing_path)
-      DISPLAY: "Backup created: .hefesto/backups/{skill_name}-{timestamp}.tar.gz"
-      RETURN continue_with_overwrite
-    
-    "rename":
-      PROMPT: "New skill name:"
-      INPUT: new_name
-      skill_name = sanitize_name(new_name)
-      RETRY collision check with new name
-    
-    "cancel":
-      ABORT "Operation cancelled"
-```
-
-**References**: FR-008, T0-HEFESTO-08
-
----
-
-## Error Cases
-
-| Code | Condition | Handler |
-|------|-----------|---------|
-| **E-CREATE-001** | Description exceeds 2000 chars | Error + suggest shortening |
-| **E-CREATE-002** | Invalid skill name generated | Auto-sanitize per T0-HEFESTO-07 |
-| **E-CREATE-003** | Skill already exists | Trigger collision Human Gate (FR-008) |
-| **E-CREATE-004** | No CLIs detected | Error + suggest `/hefesto.detect` |
-| **E-CREATE-005** | Template validation fails | Show errors + block persist |
-| **E-CREATE-006** | Write permission denied | Error with path details |
-| **E-CREATE-007** | Empty description | Error + re-prompt in wizard |
-| **E-CREATE-008** | Template not found | Error + list available templates |
-
-**Error Format**:
-```
-ERROR [E-CREATE-XXX]: {Description}
-Suggestion: {Remediation action}
-Usage: /hefesto.create [description] [--target <cli>]
-```
-
-**References**: spec.md L80-86
-
----
-
-## Usage Examples
-
-### Example 1: Basic Creation
-
-```bash
-> /hefesto.create "Validate email addresses using regex patterns"
-
-Generating skill from description...
-Detected CLIs: claude, gemini
-Suggested name: validate-email
-
-═══════════════════════════════════════════════════
-✅ Skill Generated: validate-email
-═══════════════════════════════════════════════════
-
-[Preview shown...]
-
-Actions: [approve] [expand] [edit] [reject]
-> approve
-
-✅ Skill created successfully!
-
-Name: validate-email
-Location(s):
-  - .claude/skills/validate-email/SKILL.md
-  - .gemini/skills/validate-email/SKILL.md
-```
-
-### Example 2: Wizard Mode
-
-```bash
-> /hefesto.create
-
-🧙 Wizard Mode: Create Skill
-═══════════════════════════════════════════════════
-
-What should this skill do? (1-2 sentences)
-> Run Jest tests with coverage reporting
-
-Suggested name: run-jest-tests
-Press Enter to accept, or type custom name:
-> [Enter]
-
-Detected CLIs: claude, opencode
-Target CLIs (comma-separated or 'all') [all]:
-> claude
-
-Preview:
-  Name: run-jest-tests
-  Description: Run Jest tests with coverage reporting
-  Target CLIs: claude
-
-[continue] [edit] [cancel]
-> continue
-
-[Proceeds to generation and Human Gate...]
-```
-
-### Example 3: Specific Target
-
-```bash
-> /hefesto.create "Deploy application to AWS Lambda" --target gemini
-
-Generating skill from description...
-Target CLI: gemini (manually specified)
-
-[Proceeds with single-CLI generation...]
-```
-
-### Example 4: Collision Handling
-
-```bash
-> /hefesto.create "Validate email with improved regex"
-
-Generating skill from description...
-Suggested name: validate-email
-
-⚠️  Skill already exists: validate-email
-
-Existing location(s):
-  - .claude/skills/validate-email/SKILL.md
-
-Created: 2026-02-04 10:00:00
-
-Actions:
-[overwrite] - Replace existing skill (creates backup)
-[rename]    - Choose different name
-[cancel]    - Abort operation
-
-> rename
-
-New skill name:
-> validate-email-v2
-
-[Proceeds with new name...]
+Next steps:
+  - Validate: /hefesto.validate <skill-name>
+  - List all: /hefesto.list
+  - Use it: invoke the skill in your AI CLI
 ```
 
 ---
 
-## Success Criteria
+## Rules
 
-- ✅ **SC-001**: Command implemented and executable
-- ✅ **SC-003**: Human Gate triggered 100% before persist
-- ✅ **SC-004**: Wizard mode activates when description missing
-- ✅ **SC-005**: Documentation embedded in help
-
----
-
-## Performance Targets
-
-| Operation | Target | Typical |
-|-----------|--------|---------|
-| Context loading | < 500ms | 200ms |
-| Argument parsing | < 100ms | 50ms |
-| Skill generation | < 5s | 2s |
-| Validation | < 500ms | 200ms |
-| Human Gate wait | unbounded | N/A |
-| Persistence | < 1s | 500ms |
-| **Total (excl. Human Gate)** | **< 7s** | **~3s** |
-
----
-
-## Dependencies
-
-**Required Helpers:**
-- `helpers/human-gate.md` - Approval workflow
-- `helpers/template-validator.md` - T0 compliance check
-- `helpers/cli-detector.md` - Available CLIs
-
-**Required Templates:**
-- `templates/base/SKILL.md.template`
-- `templates/base/metadata.yaml.template`
-
-**State Files:**
-- `MEMORY.md` - Skill registry and CLI detection
-
----
-
-## See Also
-
-- **Related Commands**: `/hefesto.extract`, `/hefesto.validate`, `/hefesto.show`
-- **Specification**: `specs/003-hefesto-commands/contracts/create.contract.md`
-- **T0 Rules**: `CONSTITUTION.md` (T0-HEFESTO-01, 02, 06, 07, 08)
-- **User Story**: `specs/003-hefesto-commands/spec.md` US1
+- NEVER persist files without completing Phase 5 (Human Gate)
+- NEVER skip Phase 4 (Auto-Critica)
+- ALWAYS read CONSTITUTION.md and templates before generating
+- ALWAYS show the complete skill to the user before asking for approval
+- If something fails, explain clearly and ask the user what to do
+- Do not create metadata.yaml files (the agentskills.io spec uses frontmatter only)
+- Do not create or update MEMORY.md (filesystem is the state)
