@@ -2,6 +2,7 @@
 
 > **Tier:** T2 - Informativo
 > **Proposito:** Resolver problemas comuns do Hefesto Skill Generator
+> **Versao:** 2.0.0
 
 ---
 
@@ -11,7 +12,7 @@
 
 **Erro:**
 ```
-❌ INVALID_NAME: "Code-Review" contem caracteres invalidos
+INVALID_NAME: "Code-Review" contem caracteres invalidos
 ```
 
 **Causa:** Campo `name` contem uppercase, espacos, ou caracteres especiais.
@@ -28,12 +29,11 @@ name: code-review
 ```
 
 **Regras do `name`:**
-- Apenas lowercase (a-z)
-- Apenas numeros (0-9)
-- Apenas hyphens (-)
+- Apenas lowercase (a-z), numeros (0-9), hyphens (-)
 - Nao comecar/terminar com hyphen
 - Sem hyphens consecutivos
 - Max 64 caracteres
+- Pattern: `^[a-z0-9]+(-[a-z0-9]+)*$`
 
 ---
 
@@ -41,21 +41,15 @@ name: code-review
 
 **Erro:**
 ```
-❌ EMPTY_DESCRIPTION: Campo description esta vazio
+EMPTY_DESCRIPTION: Campo description esta vazio
 ```
-
-**Causa:** Campo `description` vazio ou ausente.
 
 **Solucao:**
 ```yaml
-# INCORRETO
-description: ""
-description:
-
 # CORRETO
 description: |
   Padroniza code reviews seguindo boas praticas.
-  Use quando: revisar PRs, avaliar codigo.
+  Use when: revisar PRs, avaliar codigo.
 ```
 
 ---
@@ -64,15 +58,12 @@ description: |
 
 **Erro:**
 ```
-❌ DESCRIPTION_TOO_LONG: Description excede 1024 caracteres (atual: 1156)
+DESCRIPTION_TOO_LONG: Description excede 1024 caracteres
 ```
-
-**Causa:** Description muito longa.
 
 **Solucao:**
 - Resumir descricao para < 1024 chars
 - Mover detalhes para corpo do SKILL.md
-- Usar references/ para documentacao extensa
 
 ---
 
@@ -80,16 +71,13 @@ description: |
 
 **Erro:**
 ```
-❌ FILE_TOO_LARGE: SKILL.md excede 500 linhas (atual: 623)
+FILE_TOO_LARGE: SKILL.md excede 500 linhas
 ```
 
-**Causa:** SKILL.md muito extenso.
-
 **Solucao:**
-1. Mover documentacao detalhada para `references/REFERENCE.md`
-2. Mover exemplos extensos para `references/EXAMPLES.md`
-3. Mover scripts longos para `scripts/`
-4. Manter apenas core em SKILL.md
+1. Mover documentacao detalhada para `references/`
+2. Mover scripts longos para `scripts/`
+3. Manter apenas core em SKILL.md
 
 ---
 
@@ -97,28 +85,45 @@ description: |
 
 **Erro:**
 ```
-❌ INVALID_YAML: Erro de parse no frontmatter linha 5
-```
-
-**Causa:** YAML malformado no frontmatter.
-
-**Solucao:**
-```yaml
-# INCORRETO (aspas nao escapadas)
-description: Skill para "code review"
-
-# CORRETO
-description: Skill para "code review"
-# ou
-description: |
-  Skill para "code review"
+INVALID_YAML: Erro de parse no frontmatter
 ```
 
 **Erros comuns de YAML:**
 - Aspas nao escapadas
 - Indentacao inconsistente
 - Dois pontos sem espaco depois
-- Listas mal formatadas
+
+---
+
+### 1.6. FORBIDDEN_FIELDS
+
+**Erro:**
+```
+FORBIDDEN_FIELDS: Frontmatter contem campos alem de name/description
+```
+
+**Causa:** Frontmatter com license, metadata, version, tags, compatibility.
+
+**Solucao:** Remover TODOS os campos exceto `name` e `description`.
+
+```yaml
+# PROIBIDO (v2.0.0)
+---
+name: code-review
+description: "..."
+license: MIT               # REMOVER
+metadata:
+  version: "1.0.0"        # REMOVER
+  tags: [code-review]     # REMOVER
+---
+
+# CORRETO
+---
+name: code-review
+description: |
+  Descricao. Use when: trigger.
+---
+```
 
 ---
 
@@ -126,127 +131,69 @@ description: |
 
 ### 2.1. Nenhum CLI Detectado
 
-**Erro:**
-```
-⚠️ Nenhum CLI de IA detectado no sistema
-```
-
 **Causa:** Nenhum CLI instalado ou nao esta no PATH.
 
 **Solucao:**
-1. Verificar se CLI esta instalado:
-   ```bash
-   claude --version
-   gemini --version
-   codex --version
-   ```
+1. Verificar se CLI esta instalado: `claude --version`, `gemini --version`
 2. Adicionar ao PATH se necessario
-3. Usar flag para especificar CLI manualmente:
-   ```
-   /hefesto.create --cli claude "descricao"
-   ```
+3. Ou rodar `/hefesto.init` que tenta detectar por diretorios tambem
 
 ---
 
 ### 2.2. Diretorio de Skills Nao Existe
 
-**Erro:**
-```
-⚠️ Diretorio .claude/skills/ nao existe
-```
-
 **Causa:** Diretorio de skills ainda nao foi criado.
 
-**Solucao:** Hefesto cria automaticamente. Se erro persistir:
-```bash
-mkdir -p .claude/skills
-mkdir -p .gemini/skills
-```
+**Solucao:** Rodar o installer (`install.sh` ou `install.ps1`) ou `/hefesto.init`.
 
 ---
 
 ### 2.3. Skill Ja Existe
 
-**Erro:**
-```
-⚠️ Skill "code-review" ja existe em .claude/skills/
-```
-
-**Causa:** Tentando criar skill com nome ja existente.
-
 **Solucao:**
 - Escolher outro nome
-- Usar `/hefesto.validate code-review` para validar e corrigir
+- Usar `/hefesto.validate skill-name` para validar e corrigir
 - Selecionar [overwrite] no Human Gate se quiser substituir
 
 ---
 
-## 3. Problemas de Sincronizacao
+## 3. Problemas de Instalacao
 
-### 3.1. Versoes Diferentes Entre CLIs
+### 3.1. Installer Nao Encontra CLIs
 
-**Aviso:**
-```
-⚠️ Versoes diferentes detectadas:
-   - Claude: v1.0.0
-   - Gemini: v0.9.0
-```
+**Causa:** CLIs nao estao no PATH.
 
-**Causa:** Skills desatualizadas em alguns CLIs.
+**Solucao:** O installer tambem detecta por diretorios existentes (`.claude/`, `.gemini/`, etc.). Se nenhum for encontrado, cria `.claude/` como default.
 
-**Solucao:**
-Re-criar a skill com `/hefesto.create` ou `/hefesto.validate` com fix-auto para atualizar em todos os CLIs.
+### 3.2. Permissao Negada
 
----
-
-### 3.2. Adaptacao Falhou
-
-**Erro:**
-```
-❌ Adaptacao falhou: Placeholder $CUSTOM_VAR nao suportado por Gemini
-```
-
-**Causa:** Skill usa features nao suportadas pelo CLI alvo.
+**Causa:** Sem permissao para criar diretorios.
 
 **Solucao:**
-1. Verificar features suportadas pelo CLI
-2. Remover/substituir features incompativeis
-3. Criar versao separada para CLI especifico
+```bash
+# Unix/macOS
+chmod +w .
+
+# Windows PowerShell
+# Executar como administrador se necessario
+```
+
+### 3.3. Ja Instalado
+
+**Comportamento esperado:** O installer e idempotente.
+- Arquivos identicos: `[skip]`
+- Arquivos diferentes: `[update]` (com aviso)
+- `.hefesto/version` atualizado
 
 ---
 
 ## 4. Problemas de Human Gate
 
-### 4.1. Timeout no Human Gate
+### 4.1. Opcao Invalida
 
-**Aviso:**
-```
-⚠️ Human Gate expirou apos 5 minutos de inatividade
-```
+**Opcoes validas:** `[approve]` `[edit]` `[reject]`
 
-**Causa:** Usuario nao respondeu a tempo.
-
-**Solucao:**
-- Executar comando novamente
-- Skill gerada pode estar em cache, verificar com `/hefesto.list --pending`
-
----
-
-### 4.2. Opcao Invalida
-
-**Erro:**
-```
-❌ Opcao invalida: "ok"
-Opcoes validas: [approve] [expand] [edit] [reject]
-```
-
-**Causa:** Resposta nao reconhecida no Human Gate.
-
-**Solucao:** Usar uma das opcoes validas:
-- `approve` ou `a` - Aprovar e salvar
-- `expand` ou `e` - Expandir com wizard
-- `edit` ou `ed` - Editar antes de salvar
-- `reject` ou `r` - Cancelar
+Para `/hefesto.validate`: tambem `[fix-auto]` `[fix-manual]` `[skip]`
 
 ---
 
@@ -254,49 +201,13 @@ Opcoes validas: [approve] [expand] [edit] [reject]
 
 ### 5.1. Arquivo Nao Encontrado
 
-**Erro:**
-```
-❌ Arquivo nao encontrado: @src/utils/validation.ts
-```
+**Solucao:** Verificar caminho do arquivo. Usar caminho relativo ao diretorio atual.
 
-**Causa:** Caminho incorreto ou arquivo nao existe.
+### 5.2. Nenhum Padrao Detectado
 
 **Solucao:**
-1. Verificar caminho do arquivo
-2. Usar caminho relativo a partir do diretorio atual
-3. Usar tab-completion se disponivel
-
----
-
-### 5.2. Arquivo Muito Grande
-
-**Aviso:**
-```
-⚠️ Arquivo muito grande (5000+ linhas). Analise pode demorar.
-```
-
-**Causa:** Arquivo fonte muito extenso.
-
-**Solucao:**
-- Especificar partes especificas do arquivo
-- Usar `--lines 1-500` para limitar analise
-- Extrair de multiplos arquivos menores
-
----
-
-### 5.3. Nenhum Padrao Detectado
-
-**Aviso:**
-```
-⚠️ Poucos padroes detectados no arquivo
-```
-
-**Causa:** Arquivo nao tem padroes claros para extrair.
-
-**Solucao:**
-- Verificar se arquivo e adequado para extracao
+- Arquivo pode nao ter padroes claros para extrair
 - Usar `/hefesto.create` ao inves de `/hefesto.extract`
-- Combinar multiplos arquivos para mais contexto
 
 ---
 
@@ -304,43 +215,29 @@ Opcoes validas: [approve] [expand] [edit] [reject]
 
 ### Como resetar uma skill?
 
-```
-# Deletar manualmente
-rm -rf .claude/skills/code-review/
-
-# Ou usar Hefesto
-/hefesto.delete code-review
-```
-
-### Como ver o que foi gerado?
-
-```
-# Listar skills
-/hefesto.list
-
-# Ver detalhes de uma skill
-/hefesto.show code-review
+Deletar o diretorio da skill manualmente:
+```bash
+rm -rf .claude/skills/skill-name/
+# Repetir para outros CLIs
 ```
 
 ### Como atualizar Hefesto?
 
-Skills sao arquivos Markdown, nao ha "instalacao" do Hefesto. Para atualizar templates:
-1. Baixar novos templates
-2. Substituir em `templates/`
+Rodar o installer novamente no projeto:
+```bash
+bash hefesto-skill-generator/installer/install.sh
+```
 
-### Como reportar bug?
+### Comandos disponiveis?
 
-1. Usar `/hefesto.bug` para gerar relatorio
-2. Ou criar issue em github.com/hefesto/issues
-
----
-
-## 7. Contato e Suporte
-
-- Documentacao: README.md
-- Issues: docs/cards/ (criar CARD)
-- Exemplos: .context/examples/
+| Comando | Descricao |
+|---------|-----------|
+| `/hefesto.create` | Criar skill de descricao |
+| `/hefesto.validate` | Validar + corrigir skill |
+| `/hefesto.extract` | Extrair skill de codigo |
+| `/hefesto.init` | Verificar instalacao |
+| `/hefesto.list` | Listar skills |
 
 ---
 
-**Ultima Atualizacao:** 2026-02-04
+**Ultima Atualizacao:** 2026-02-07 (v2.0.0)

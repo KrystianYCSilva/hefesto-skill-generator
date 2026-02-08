@@ -202,9 +202,13 @@ hefesto-skill-generator/
   .opencode/command/hefesto.*  # Comandos OpenCode
   .cursor/commands/hefesto.*   # Comandos Cursor
   .qwen/commands/hefesto.*     # Comandos Qwen
-  .github/workflows/release.yml  # CI/CD build + release
-  docs/                        # Documentacao
-  .context/                    # Contexto para IAs
+  .agents/                      # Agent skills internos (skill-creator)
+  .specify/                     # Spec-kit infrastructure
+  .context/                     # AI context hub (regras, padroes, exemplos)
+  knowledge/                    # Best practices e research references
+  specs/                        # Feature specifications (spec-kit artifacts)
+  docs/                         # Documentacao, ADRs, guias
+  .github/workflows/release.yml # CI/CD build + release
 ```
 
 ### Projeto do Usuario (apos install)

@@ -2,6 +2,7 @@
 
 > **Tier:** T1 - NORMATIVO
 > **Estrategia de validacao para skills geradas.**
+> **Versao:** 2.0.0
 
 ---
 
@@ -16,6 +17,7 @@
 - [ ] Frontmatter YAML valido
 - [ ] Campo `name` presente e valido
 - [ ] Campo `description` presente e nao vazio
+- [ ] Frontmatter contem SOMENTE `name` + `description`
 - [ ] SKILL.md < 500 linhas
 - [ ] Diretorios JIT corretos (scripts/, references/, assets/)
 
@@ -29,106 +31,87 @@
 - [ ] `name`: nao comeca/termina com hyphen
 - [ ] `name`: sem hyphens consecutivos
 - [ ] `description`: max 1024 chars
-- [ ] `description`: nao vazio
+- [ ] `description`: nao vazio, com "Use when:" trigger
 
-### 1.3. Validacao de Qualidade (Human Gate)
+### 1.3. Validacao de Qualidade (13 pontos)
 
-**Quando:** Apos validacoes automaticas
+**Quando:** Apos validacoes automaticas, antes de Human Gate
+
+| Nivel | Qtd | Criterios |
+|-------|-----|-----------|
+| CRITICAL | 5 | Frontmatter valido, name format, description format, body < 500 linhas, "How to" sections |
+| WARNING | 7 | Token economy, no tutorials, examples, progressive disclosure, anti-patterns, no body "When to Use", no README/CHANGELOG |
+| INFO | 1 | Security (sem credenciais, tokens, PII) |
+
+### 1.4. Human Gate
+
+**Quando:** Apos auto-critica
 
 **Apresentar ao usuario:**
-- Preview da skill
-- Resultado das validacoes automaticas
-- Opcoes: [approve], [expand], [edit], [reject]
+- Preview completo da skill
+- Resultado da auto-critica (13 pontos)
+- Opcoes: [approve] [edit] [reject]
 
 ---
 
 ## 2. Criterios de Aprovacao
 
-### 2.1. Skill Basica
-
 | Criterio | Obrigatorio |
 |----------|-------------|
-| Frontmatter valido | Sim |
+| Frontmatter valido (SOMENTE name + description) | Sim |
 | Name conforme spec | Sim |
-| Description acionavel | Sim |
-| Instrucoes presentes | Sim |
+| Description acionavel com "Use when:" | Sim |
+| Body com secoes "How to [task]" | Sim |
 | < 500 linhas | Sim |
-
-### 2.2. Skill Complexa
-
-| Criterio | Obrigatorio |
-|----------|-------------|
-| Todos de skill basica | Sim |
-| Exemplos presentes | Sim |
-| Referencias documentadas | Sim |
-| Recursos JIT organizados | Sim |
+| Auto-critica 13 pontos PASS ou PARTIAL | Sim |
+| Human Gate aprovado | Sim |
 
 ---
 
-## 3. Validacao por CLI
+## 3. Validacao via /hefesto.validate
 
-### 3.1. Validacao Universal
+O comando `/hefesto.validate` roda validacao completa com capacidade de correcao:
 
-Aplicavel a TODOS os CLIs:
+```
+1. Ler SKILL.md da skill alvo
+2. Rodar checklist 13 pontos
+3. Classificar: PASS | PARTIAL (warnings) | FAIL (criticals)
+4. Se FAIL ou PARTIAL:
+   - Diagnostico detalhado com sugestoes
+   - Opcoes: [fix-auto] [fix-manual] [skip]
+   - fix-auto: gerar versao corrigida -> Human Gate -> persistir
+5. Se PASS: reportar sucesso
+```
+
+---
+
+## 4. Validacao por CLI
+
+### 4.1. Universal (todos os CLIs)
 
 ```yaml
 ---
 name: valid-name
 description: |
-  Descricao valida.
+  Descricao valida. Use when: trigger.
 ---
 
-# Instructions
+# Skill Title
 
+## How to <capability>
 ...
 ```
 
-### 3.2. Validacao Especifica
+### 4.2. Especifica
 
-**Gemini/Qwen:**
-- Verificar conversao `$ARGUMENTS` → `{{args}}`
-- Verificar formato TOML se aplicavel
-
-**Copilot:**
-- Verificar diretorio `.github/skills/`
-- Verificar compatibilidade com VS Code
+**Gemini/Qwen:** Verificar conversao `$ARGUMENTS` -> `{{args}}`
+**Copilot:** Verificar diretorio `.github/skills/`
 
 ---
 
-## 4. Testes de Regressao
+## 5. Erros de Validacao
 
-### 4.1. Skill Existente (Overwrite)
-
-**Fluxo:**
-1. Detectar skill existente
-2. Comparar com versao nova
-3. Mostrar diff ao usuario
-4. Aguardar: [overwrite], [merge], [cancel]
-
-### 4.2. Sincronizacao Multi-CLI
-
-**Fluxo:**
-1. Identificar CLIs com skill
-2. Comparar versoes
-3. Mostrar diferencas
-4. Sincronizar apos aprovacao
-
----
-
-## 5. Metricas de Qualidade
-
-| Metrica | Alvo | Critico |
-|---------|------|---------|
-| Skills validas geradas | 100% | < 95% |
-| Taxa aprovacao 1a tentativa | >= 80% | < 60% |
-| Erros de validacao | 0 | > 5% |
-| Skills sincronizadas | 100% | < 90% |
-
----
-
-## 6. Erros de Validacao
-
-### 6.1. Erros Criticos (Bloqueantes)
+### 5.1. Erros Criticos (Bloqueantes)
 
 | Erro | Causa | Acao |
 |------|-------|------|
@@ -136,87 +119,52 @@ description: |
 | `EMPTY_DESCRIPTION` | Description vazio | Bloquear, solicitar preenchimento |
 | `INVALID_YAML` | Frontmatter malformado | Bloquear, mostrar erro |
 | `FILE_TOO_LARGE` | > 500 linhas | Bloquear, sugerir split |
+| `FORBIDDEN_FIELDS` | Frontmatter com campos alem de name/description | Bloquear, remover campos |
 
-### 6.2. Warnings (Nao Bloqueantes)
+### 5.2. Warnings (Nao Bloqueantes)
 
 | Warning | Causa | Acao |
 |---------|-------|------|
-| `MISSING_EXAMPLES` | Skill complexa sem exemplos | Avisar, permitir continuar |
-| `MISSING_REFERENCES` | Skill tecnica sem fontes | Avisar, permitir continuar |
-| `GENERIC_DESCRIPTION` | Description muito vago | Avisar, sugerir melhoria |
+| `STEP_PATTERN` | Usa "Step N" ao inves de "How to" | Avisar, sugerir refatoracao |
+| `BODY_WHEN_TO_USE` | "When to Use" no body | Avisar, mover para description |
+| `TUTORIAL_CONTENT` | Ensina conceitos basicos | Avisar, sugerir remocao |
+| `ANTI_PATTERN` | Tabelas compatibilidade, footers | Avisar, sugerir remocao |
 
 ---
 
-## 7. Formato de Reporte
+## 6. Formato de Reporte
 
-### 7.1. Validacao Bem Sucedida
+### Sucesso
 
-```markdown
-## Validacao: APROVADA ✅
+```
+## Validacao: PASS
 
-### Checklist
-- [x] Frontmatter valido
-- [x] Name conforme spec: `code-review`
-- [x] Description presente (142 chars)
-- [x] SKILL.md: 87 linhas
-
-### Warnings
-Nenhum
-
-### Proximo Passo
-Human Gate: [approve] [expand] [edit] [reject]
+- [x] Frontmatter: SOMENTE name + description
+- [x] Name: `code-review` (11 chars, conforme)
+- [x] Description: 142 chars, com "Use when:"
+- [x] Body: 87 linhas, secoes "How to"
+- [x] Auto-critica: 13/13 PASS
 ```
 
-### 7.2. Validacao com Erros
+### Falha
 
-```markdown
-## Validacao: FALHOU ❌
+```
+## Validacao: FAIL
 
-### Erros (Bloqueantes)
-- `INVALID_NAME`: "Code-Review" contem uppercase
-  - Sugestao: `code-review`
+### CRITICAL (bloqueantes)
+- FORBIDDEN_FIELDS: Frontmatter contem `license`, `metadata`
+  -> Remover campos extras, manter SOMENTE name + description
 
-### Warnings
-- `MISSING_EXAMPLES`: Skill parece complexa (4 passos)
-  - Sugestao: Adicionar secao Examples
+### WARNING
+- STEP_PATTERN: Usa "Step 1:", "Step 2:" ao inves de "How to"
+  -> Refatorar para secoes "How to [task]"
 
-### Acao Necessaria
-Corrigir erros antes de prosseguir.
+### Opcoes
+- [fix-auto] Aplicar correcoes automaticamente
+- [fix-manual] Corrigir manualmente
+- [skip] Ignorar
 ```
 
 ---
 
-## 8. Validacao Continua
-
-### 8.1. Pre-Commit (Recomendado)
-
-Se usuario usar Git, sugerir hook:
-
-```bash
-# .git/hooks/pre-commit
-for skill in .*/skills/*/SKILL.md; do
-  hefesto validate "$skill" || exit 1
-done
-```
-
-### 8.2. CI/CD (Opcional)
-
-Workflow para validacao automatica:
-
-```yaml
-# .github/workflows/validate-skills.yml
-on: [push, pull_request]
-jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: |
-          for skill in .*/skills/*/SKILL.md; do
-            # Validar cada skill
-          done
-```
-
----
-
-**Ultima Atualizacao:** 2026-02-04
+**Ultima Atualizacao:** 2026-02-07 (v2.0.0)

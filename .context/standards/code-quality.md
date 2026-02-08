@@ -2,6 +2,7 @@
 
 > **Tier:** T1 - NORMATIVO
 > **Seguir estas regras como padrao.**
+> **Versao:** 2.0.0
 
 ---
 
@@ -9,60 +10,36 @@
 
 **Regra:** Todo Markdown DEVE ser bem formatado.
 
-**Requisitos:**
 - Headers hierarquicos (H1 > H2 > H3)
-- Listas consistentes (- ou *)
+- Listas consistentes
 - Blocos de codigo com linguagem especificada
 - Tabelas alinhadas
 - Links funcionais
 
-```markdown
-# CORRETO
-
-## Section Header
-
-- Item 1
-- Item 2
-
-```yaml
-code: here
-```
-
-# PROIBIDO
-
-Section Header  # Sem #
-
-* Item 1
-- Item 2  # Misturado
-
-```
-code without language
-```
-```
-
 ---
 
-## T1-QUALITY-02: YAML Frontmatter Valido
+## T1-QUALITY-02: Frontmatter Minimo
 
-**Regra:** Frontmatter DEVE ser YAML valido e bem formatado.
+**Regra:** Frontmatter DEVE conter SOMENTE `name` + `description`.
 
 ```yaml
-# CORRETO
+# CORRETO (v2.0.0)
 ---
-name: skill-name
+name: code-review
 description: |
-  Descricao multiline.
-  Segunda linha.
-metadata:
-  version: "1.0.0"
+  Padroniza code reviews seguindo boas praticas SOLID.
+  Use when: revisar PRs, avaliar codigo.
 ---
 
 # PROIBIDO
 ---
-name: skill-name
-description: Descricao com "aspas" sem escape
+name: code-review
+description: "..."
+license: MIT                    # NAO permitido
+compatibility: Claude Code      # NAO permitido
 metadata:
-  version: 1.0.0  # String sem aspas em YAML
+  version: "1.0.0"             # NAO permitido
+  tags: [code-review]          # NAO permitido
 ---
 ```
 
@@ -70,18 +47,13 @@ metadata:
 
 ## T1-QUALITY-03: Descricoes Acionaveis
 
-**Regra:** Descricoes DEVEM ser acionaveis com "Use when:" ou similar.
+**Regra:** Description DEVE ser acionavel com "Use when:" ou trigger equivalente.
 
 ```yaml
 # CORRETO
 description: |
   Padroniza code reviews seguindo boas praticas SOLID.
-  Use quando: revisar PRs, avaliar codigo de terceiros, onboarding.
-
-# ACEITAVEL
-description: |
-  Analisa complexidade ciclomatica e sugere refatoracoes.
-  Ideal para: reducao de divida tecnica, melhoria de maintainability.
+  Use when: revisar PRs, avaliar codigo de terceiros, onboarding.
 
 # PROIBIDO
 description: Uma skill para code review.  # Nao acionavel
@@ -89,91 +61,78 @@ description: Uma skill para code review.  # Nao acionavel
 
 ---
 
-## T1-QUALITY-04: Instrucoes Claras
+## T1-QUALITY-04: Body Pattern "How to [task]"
 
-**Regra:** Instrucoes DEVEM ser claras e sequenciais.
+**Regra:** O body DEVE usar secoes "How to [task]", NAO "Instructions > Step N".
 
 ```markdown
-# CORRETO
+# CORRETO (v2.0.0)
 
-## Instructions
+## How to review a Pull Request
 
-### Step 1: Analisar Contexto
-
-Leia o codigo/PR alvo e identifique:
-- Linguagem/framework
+Leia o codigo alvo e identifique:
+- Linguagem e framework
 - Padrao arquitetural
-- Testes existentes
+- Presenca de testes
 
-### Step 2: Aplicar Checklist
+## How to apply SOLID checklist
 
-Verifique cada item:
-- [ ] Nomes descritivos
-- [ ] Funcoes pequenas (< 20 linhas)
-- [ ] Sem codigo duplicado
+Verifique cada principio...
 
 # PROIBIDO
 
 ## Instructions
 
-Faca code review do codigo seguindo boas praticas e reporte os problemas encontrados.
-# Muito vago, sem passos claros
+### Step 1: Analisar Contexto
+### Step 2: Aplicar Checklist
 ```
 
 ---
 
-## T1-QUALITY-05: Exemplos Quando Necessario
+## T1-QUALITY-05: Token Economy
 
-**Regra:** Skills complexas DEVEM incluir exemplos.
+**Regra:** Calibrar profundidade pelo nivel de conceito.
 
-**Criterio de complexidade:**
-- Mais de 3 passos
-- Requer conhecimento de dominio
-- Multiplos casos de uso
+| Nivel | Tratamento |
+|-------|------------|
+| Basico (AI ja sabe) | 1 frase |
+| Intermediario | 1 paragrafo + exemplo |
+| Avancado/project-specific | Secao completa + references/ |
 
-```markdown
-# CORRETO (skill complexa)
-
-## Examples
-
-### Example 1: PR de Feature Nova
-
-**Input:** PR com 5 arquivos, nova feature de login
-
-**Output Esperado:**
-```
-## Code Review Summary
-
-### Positivo
-- Boa separacao de responsabilidades
-- Testes unitarios presentes
-
-### Melhorias Sugeridas
-- Extrair validacao para classe separada
-- Adicionar teste de integracao
-```
-
-# PROIBIDO (skill complexa)
-
-## Instructions
-
-[Instrucoes sem exemplos]  # Falta exemplo para skill complexa
-```
+**PROIBIDO:** Ensinar conceitos que o AI agent ja conhece (polimorfismo, Streams, try-catch).
 
 ---
 
-## T1-QUALITY-06: Estrutura Consistente
+## T1-QUALITY-06: Estrutura de Secoes
 
 **Regra:** Skills DEVEM seguir estrutura consistente.
 
-**Ordem de Secoes:**
-1. Frontmatter (YAML)
-2. Titulo (H1)
-3. When to Use
-4. Instructions
-5. Examples (se aplicavel)
-6. References (se aplicavel)
-7. Footer (opcional)
+```markdown
+---
+name: skill-id
+description: |
+  Action verb. Use when: trigger.
+---
+
+# Skill Title
+
+Brief introduction (1-2 frases).
+
+## How to <first capability>
+
+Task-oriented instructions.
+
+## How to <second capability>
+
+More instructions.
+```
+
+**PROIBIDO no body:**
+- Secao "When to Use" (trigger info fica no description)
+- Secao "References" com URLs well-known
+- Tabelas de compatibilidade
+- Version/license footers
+- README.md ou CHANGELOG.md dentro da skill
 
 ---
 
@@ -182,75 +141,37 @@ Faca code review do codigo seguindo boas praticas e reporte os problemas encontr
 **Regra:** Recursos adicionais DEVEM estar em diretorios padrao.
 
 ```
-# CORRETO
 skill/
-├── SKILL.md
-├── scripts/
-│   └── validate.py
-├── references/
-│   └── REFERENCE.md
-└── assets/
-    └── schema.json
-
-# PROIBIDO
-skill/
-├── SKILL.md
-├── validate.py      # Solto na raiz
-├── REFERENCE.md     # Solto na raiz
-└── schema.json      # Solto na raiz
+├── SKILL.md          # Core (< 500 linhas)
+├── references/       # Docs extensas (JIT loaded)
+├── scripts/          # Executaveis
+└── assets/           # Recursos estaticos
 ```
 
 ---
 
-## T1-QUALITY-08: Versionamento
+## T1-QUALITY-08: Exemplos Quando Nao-Obvios
 
-**Regra:** Skills DEVEM ter versao no metadata.
-
-```yaml
-# CORRETO
-metadata:
-  version: "1.0.0"
-  created: 2026-02-04
-  updated: 2026-02-04
-
-# PROIBIDO
-metadata:
-  author: nome  # Sem versao
-```
+**Regra:** Exemplos SAO necessarios apenas para padroes nao-obvios ou project-specific. Nao e obrigatorio para conceitos universais.
 
 ---
 
-## T1-QUALITY-09: Tags para Descoberta
+## T1-QUALITY-09: Progressive Disclosure
 
-**Regra:** Skills DEVEM ter 3-8 tags relevantes.
-
-```yaml
-# CORRETO
-metadata:
-  tags: [code-review, quality, solid, clean-code, best-practices]
-
-# PROIBIDO
-metadata:
-  tags: []  # Vazio
-  tags: [skill]  # Muito generico
-```
+**Regra:** Se SKILL.md ultrapassa ~200 linhas, mover conteudo detalhado para `references/`.
 
 ---
 
-## T1-QUALITY-10: Compatibilidade Documentada
+## T1-QUALITY-10: Anti-Patterns
 
-**Regra:** Compatibilidade de CLI DEVE ser documentada.
+**Regra:** Skills NAO devem conter:
 
-```yaml
-# CORRETO
-compatibility: Claude Code, Gemini CLI, Codex, OpenCode, Cursor, Qwen Code, VS Code/Copilot
-
-# OU
-compatibility: |
-  Requer acesso a filesystem e execucao de scripts Python.
-  Testado em: Claude Code 1.0+, Gemini CLI 0.20+
-```
+- Tabelas de compatibilidade entre CLIs
+- Footers de versao ou license
+- Secao "References" com URLs well-known (MDN, Oracle, etc.)
+- Secao "When to Use" no body (trigger fica no description)
+- README.md, CHANGELOG.md dentro da skill
 
 ---
 
-**Ultima Atualizacao:** 2026-02-04
+**Ultima Atualizacao:** 2026-02-07 (v2.0.0)
