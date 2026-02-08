@@ -2,7 +2,7 @@
 
 > **Template-driven Agent Skill generator for 7 AI CLIs**
 
-[![Version](https://img.shields.io/badge/version-2.1.0-blue)]()
+[![Version](https://img.shields.io/badge/version-2.0.0-blue)]()
 [![Agent Skills](https://img.shields.io/badge/standard-Agent%20Skills-green)](https://agentskills.io)
 [![License](https://img.shields.io/badge/license-MIT-green)]()
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)]()
@@ -22,8 +22,9 @@ Named after the Greek god of the forge, Hefesto crafts specialized tools (skills
 ```
 MARKDOWN TEMPLATES  →  AI AGENT  →  SKILLS (output)
                          ↑
-                    CONSTITUTION.md
-                    (T0 governance rules)
+                    skill-template.md
+                    quality-checklist.md
+                    cli-compatibility.md
 ```
 
 - **No code**: All logic lives in Markdown templates
@@ -206,7 +207,7 @@ hefesto-skill-generator/
 ```
 my-project/
 ├── .hefesto/
-│   ├── version                  # Installed version ("2.1.0")
+│   ├── version                  # Installed version ("2.0.0")
 │   └── templates/               # Skill template, checklist, CLI rules
 ├── .claude/commands/hefesto.*   # Commands (per detected CLI)
 ├── .claude/skills/              # Skills directory (per detected CLI)

@@ -14,7 +14,7 @@ param()
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$HEFESTO_VERSION = "2.1.0"
+$HEFESTO_VERSION = "2.0.0"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $PayloadDir = Join-Path $ScriptDir "payload"
 

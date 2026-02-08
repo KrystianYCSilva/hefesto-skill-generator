@@ -319,8 +319,7 @@ Arquivos:
 ### Proximos Passos
 
 1. Teste a skill com `/conventional-commits`
-2. Considere adicionar scripts de validacao (`/hefesto.expand conventional-commits`)
-3. Sincronize com outros CLIs se necessario (`/hefesto.sync conventional-commits`)
+2. Valide a skill com `/hefesto.validate conventional-commits`
 ```
 
 ---

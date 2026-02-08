@@ -1,7 +1,7 @@
 # Development Workflows - Hefesto Skill Generator
 
 > **Tier:** T2 - Informativo
-> **Proposito:** Fluxos de trabalho para desenvolvimento e uso do Hefesto
+> **Proposito:** Fluxos de trabalho para uso do Hefesto
 
 ---
 
@@ -10,277 +10,89 @@
 ### 1.1. Via Descricao Natural
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│ INICIO: Usuario quer criar skill                            │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 1: Descrever a skill                                  │
-│                                                              │
-│ /hefesto.create Uma skill para [descricao do que faz]        │
-│                                                              │
-│ Dicas:                                                       │
-│ - Seja especifico sobre o proposito                          │
-│ - Mencione padroes/frameworks se relevante                   │
-│ - Inclua casos de uso principais                             │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 2: Revisar preview (Human Gate)                       │
-│                                                              │
-│ - Verificar name gerado                                      │
-│ - Verificar description                                      │
-│ - Verificar instrucoes                                       │
-│                                                              │
-│ Opcoes: [approve] [expand] [edit] [reject]                  │
-└─────────────────────────────────────────────────────────────┘
-                              │
-          ┌───────────────────┼───────────────────┐
-          ▼                   ▼                   ▼
-    [approve]            [expand]            [reject]
-          │                   │                   │
-          │                   ▼                   │
-          │     ┌─────────────────────────────┐   │
-          │     │ PASSO 2b: Wizard            │   │
-          │     │ - Adicionar scripts?        │   │
-          │     │ - Adicionar referencias?    │   │
-          │     │ - Adicionar assets?         │   │
-          │     └─────────────────────────────┘   │
-          │                   │                   │
-          └───────────────────┘                   │
-                              │                   │
-                              ▼                   │
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 3: Skill persistida                                   │
-│                                                              │
-│ CLIs detectados: Claude, Gemini                              │
-│ Locais:                                                      │
-│ - .claude/skills/{name}/SKILL.md                             │
-│ - .gemini/skills/{name}/SKILL.md                             │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 4: Testar skill                                       │
-│                                                              │
-│ /{name}                                                      │
-│ /{name} [argumentos se aplicavel]                            │
-└─────────────────────────────────────────────────────────────┘
+/hefesto.create "Validate email addresses using RFC 5322 regex patterns"
+```
+
+**Fases:**
+
+```
+Phase 1: Understanding    -> Parse descricao, extrair conceitos
+Phase 2: Research         -> Ler templates, exemplars, docs oficiais
+Phase 3: Generation       -> Gerar SKILL.md (agentskills.io spec)
+Phase 4: Auto-Critica     -> Self-review contra checklist 13 pontos
+Phase 5: Human Gate       -> Preview -> [approve] [edit] [reject]
+Phase 6: Persistence      -> Escrever em TODOS os CLIs detectados
 ```
 
 ### 1.2. Via Extracao de Codigo
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│ INICIO: Usuario tem codigo com padroes uteis                │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 1: Identificar arquivo(s) fonte                       │
-│                                                              │
-│ /hefesto.extract @src/utils/validation.ts                    │
-│ /hefesto.extract @docs/coding-standards.md                   │
-│ /hefesto.extract @src/components/ --pattern "*.tsx"          │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 2: Analise automatica                                 │
-│                                                              │
-│ Hefesto analisa:                                             │
-│ - Padroes de codigo                                          │
-│ - Convencoes                                                 │
-│ - Boas praticas                                              │
-│ - Comentarios/documentacao                                   │
-│                                                              │
-│ Gera SKILL.md com instrucoes derivadas                       │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 3: Human Gate (como workflow anterior)                │
-└─────────────────────────────────────────────────────────────┘
+/hefesto.extract src/utils/validation.ts
 ```
+
+**Fases:** Analise automatica -> gera SKILL.md -> continua como create (fases 4-6).
 
 ---
 
 ## 2. Workflow: Validar Skill Existente
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│ INICIO: Usuario quer validar skill                          │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 1: Executar validacao                                 │
-│                                                              │
-│ /hefesto.validate code-review                                │
-│ /hefesto.validate .claude/skills/code-review/SKILL.md        │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 2: Revisar relatorio                                  │
-│                                                              │
-│ ## Validacao: code-review                                    │
-│                                                              │
-│ ### Estrutura                                                │
-│ ✅ SKILL.md presente                                         │
-│ ✅ Frontmatter valido                                        │
-│ ✅ 87 linhas (< 500)                                         │
-│                                                              │
-│ ### Agent Skills Spec                                        │
-│ ✅ name conforme                                             │
-│ ✅ description conforme                                      │
-│                                                              │
-│ ### Qualidade                                                │
-│ ✅ Description acionavel                                     │
-│ ✅ Instrucoes claras                                         │
-│ ⚠️ Warning: Considerar adicionar mais exemplos               │
-│                                                              │
-│ **Resultado:** APROVADA ✅                                   │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 3 (se erros): Corrigir                                │
-│                                                              │
-│ /hefesto.edit code-review                                    │
-│ [Corrigir problemas apontados]                               │
-│ /hefesto.validate code-review                                │
-└─────────────────────────────────────────────────────────────┘
+/hefesto.validate validate-email
+```
+
+**Fluxo:**
+
+```
+1. Ler SKILL.md da skill alvo
+2. Rodar checklist 13 pontos (5 CRITICAL + 7 WARNING + 1 INFO)
+3. Classificar: PASS | PARTIAL (warnings) | FAIL (criticals)
+4. Se FAIL ou PARTIAL:
+   - Diagnostico detalhado com sugestoes
+   - Opcoes: [fix-auto] [fix-manual] [skip]
+   - fix-auto: gerar versao corrigida -> Human Gate -> persistir
+5. Se PASS: reportar sucesso
 ```
 
 ---
 
-## 3. Workflow: Sincronizar Entre CLIs
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│ INICIO: Skill existe em um CLI, precisa em outros           │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 1: Executar sincronizacao                             │
-│                                                              │
-│ /hefesto.sync code-review                                    │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 2: Revisar status                                     │
-│                                                              │
-│ ## Sincronizacao: code-review                                │
-│                                                              │
-│ | CLI | Status | Acao |                                      │
-│ |-----|--------|------|                                      │
-│ | Claude | ✅ Existe | Origem |                              │
-│ | Gemini | ❌ Nao existe | Criar |                           │
-│ | Codex | ❌ Nao existe | Criar |                            │
-│                                                              │
-│ Criar skill em 2 CLIs?                                       │
-│ [yes] [no] [select]                                          │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 3: Confirmar e executar                               │
-│                                                              │
-│ [yes] selecionado                                            │
-│                                                              │
-│ Criando em Gemini CLI... ✅                                  │
-│ Criando em Codex... ✅                                       │
-│                                                              │
-│ Sincronizacao concluida!                                     │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 4. Workflow: Adaptar para CLI Especifico
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│ INICIO: Skill precisa de adaptacao para CLI especifico      │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 1: Identificar skill e CLI alvo                       │
-│                                                              │
-│ /hefesto.adapt code-review --target gemini                   │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 2: Revisar adaptacoes                                 │
-│                                                              │
-│ ## Adaptacao: code-review → Gemini CLI                       │
-│                                                              │
-│ ### Transformacoes Aplicadas                                 │
-│ - $ARGUMENTS → {{args}}                                      │
-│                                                              │
-│ ### Preview                                                  │
-│ [Skill adaptada]                                             │
-│                                                              │
-│ [approve] [edit] [reject]                                    │
-└─────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│ PASSO 3: Persistir                                          │
-│                                                              │
-│ Skill adaptada salva em:                                     │
-│ .gemini/skills/code-review/SKILL.md                          │
-└─────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 5. Workflow: Listar Skills
+## 3. Workflow: Listar Skills
 
 ```
 /hefesto.list
-
-## Skills do Projeto
-
-| Skill | CLIs | Versao | Ultima Atualizacao |
-|-------|------|--------|-------------------|
-| code-review | Claude, Gemini | 1.0.0 | 2026-02-04 |
-| conventional-commits | Claude | 1.0.0 | 2026-02-04 |
-| testing-strategy | Claude, Gemini, Codex | 1.2.0 | 2026-02-03 |
-
-### Detalhes
-
-- **Total:** 3 skills
-- **CLIs cobertos:** Claude (3), Gemini (2), Codex (1)
-
-### Comandos
-
-- `/hefesto.validate <skill>` - Validar skill
-- `/hefesto.sync <skill>` - Sincronizar entre CLIs
-- `/hefesto.edit <skill>` - Editar skill
 ```
+
+Lista todas as skills instaladas no projeto, agrupadas por CLI.
 
 ---
 
-## 6. Comandos Rapidos
+## 4. Workflow: Verificar Instalacao
+
+```
+/hefesto.init
+```
+
+**Modo Verificacao** (se `.hefesto/version` existe):
+- Mostra versao instalada
+- Verifica templates (3 requeridos)
+- Detecta CLIs e compara com comandos instalados
+- Reporta status: `[OK]` ou `[NEEDS UPDATE]`
+
+**Modo Bootstrap** (se `.hefesto/version` NAO existe):
+- Informa para rodar installer primeiro (`install.sh` ou `install.ps1`)
+- Oferece criar diretorios basicos como fallback
+
+---
+
+## 5. Comandos Rapidos
 
 | Acao | Comando |
 |------|---------|
-| Criar skill | `/hefesto.create <descricao>` |
-| Extrair de codigo | `/hefesto.extract @arquivo` |
-| Validar skill | `/hefesto.validate <name>` |
-| Sincronizar CLIs | `/hefesto.sync <name>` |
-| Adaptar para CLI | `/hefesto.adapt <name> --target <cli>` |
+| Criar skill | `/hefesto.create "descricao"` |
+| Extrair de codigo | `/hefesto.extract arquivo` |
+| Validar skill | `/hefesto.validate skill-name` |
+| Verificar instalacao | `/hefesto.init` |
 | Listar skills | `/hefesto.list` |
-| Ajuda | `/hefesto.help` |
 
 ---
 
-**Ultima Atualizacao:** 2026-02-04
+**Ultima Atualizacao:** 2026-02-07

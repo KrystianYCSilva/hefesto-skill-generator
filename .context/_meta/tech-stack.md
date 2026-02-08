@@ -1,7 +1,7 @@
 # Tech Stack - Hefesto Skill Generator
 
 > **Tier:** T2 - Informativo
-> **Versao:** 1.0.0
+> **Versao:** 2.0.0
 
 ---
 
@@ -9,39 +9,16 @@
 
 ### Tipo de Sistema
 
-**Prompt-Based System** - O Hefesto e um sistema baseado em prompts/templates que funciona via comandos em CLIs de IA.
+**Spec-Kit Template-Driven** - Zero Python, zero dependencias. Toda logica vive em Markdown templates que a IA interpreta diretamente.
 
 ### Componentes
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Hefesto Skill Generator                   │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
-│  │  Commands   │  │  Templates  │  │  Knowledge Base     │  │
-│  │  (/hefesto) │  │  (skill-    │  │  (agent-skills-spec │  │
-│  │             │  │   template) │  │   best-practices)   │  │
-│  └──────┬──────┘  └──────┬──────┘  └──────────┬──────────┘  │
-│         │                │                     │             │
-│         └────────────────┼─────────────────────┘             │
-│                          │                                   │
-│                          ▼                                   │
-│  ┌─────────────────────────────────────────────────────────┐│
-│  │                   Generation Engine                      ││
-│  │  ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────────────┐││
-│  │  │Template │ │Validator│ │Human    │ │Multi-CLI        │││
-│  │  │Parser   │ │         │ │Gate     │ │Generator        │││
-│  │  └─────────┘ └─────────┘ └─────────┘ └─────────────────┘││
-│  └─────────────────────────────────────────────────────────┘│
-│                          │                                   │
-│                          ▼                                   │
-│  ┌─────────────────────────────────────────────────────────┐│
-│  │                    Output (Skills)                       ││
-│  │  .claude/ │ .gemini/ │ .codex/ │ .github/ │ .cursor/    ││
-│  └─────────────────────────────────────────────────────────┘│
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
+MARKDOWN TEMPLATES  ->  AI AGENT  ->  SKILLS (output)
+                         ^
+                    skill-template.md
+                    quality-checklist.md
+                    cli-compatibility.md
 ```
 
 ---
@@ -52,126 +29,80 @@
 
 | Componente | Tecnologia | Justificativa |
 |------------|------------|---------------|
-| Formato | Markdown + YAML | Padrao Agent Skills |
-| Templates | Markdown com placeholders | Compatibilidade universal |
-| Validacao | Regex + Schema | Conformidade com spec |
-| Shell Scripts | Bash/PowerShell | Cross-platform CLI detection |
-| Linguagem | Markdown (prompt-based) | Zero dependencies |
-
-### Foundation Infrastructure (Implementado)
-
-| Componente | Tecnologia | Arquivo |
-|------------|------------|---------|
-| Bootstrap | Markdown definitions | `commands/hefesto.init.md` |
-| CLI Detection | Shell scripts (Bash/PowerShell) | `commands/helpers/cli-detection-strategy.md` |
-| State Management | YAML frontmatter + Markdown tables | `commands/templates/memory-template.md` |
-| Validation | Pattern matching + schema validation | `commands/helpers/constitution-validator.md` |
-| Recovery | Filesystem scanning + backup | `commands/helpers/memory-recovery.md` |
-| Error Handling | Structured error codes | `commands/helpers/error-handling.md` |
+| Formato | Markdown + YAML frontmatter | Padrao Agent Skills |
+| Templates | 3 Markdown (skill, checklist, CLI map) | Fonte de verdade |
+| Installer | Bash + PowerShell | Cross-platform bootstrap |
+| CI/CD | GitHub Actions | Build + release automatizado |
+| Linguagem | Markdown (template-driven) | Zero dependencies |
 
 ### Armazenamento
 
 | Local | Uso | Formato |
 |-------|-----|---------|
-| `MEMORY.md` (raiz projeto) | Estado persistente | YAML + Markdown |
-| `CONSTITUTION.md` (raiz projeto) | Regras T0 | YAML + Markdown |
-| `.{cli}/skills/` | Skills geradas por padrao | Markdown (SKILL.md) |
-| `commands/` | Definicoes de comandos | Markdown |
-| `commands/helpers/` | Logica auxiliar | Markdown |
-| `commands/templates/` | Templates | Markdown |
+| `.hefesto/` | Namespace Hefesto no projeto usuario | Templates + version |
+| `.hefesto/templates/` | Templates distribuidos | Markdown |
+| `.<cli>/commands/` | Comandos hefesto.* por CLI | `.md` ou `.toml` |
+| `.<cli>/skills/` | Skills geradas | Markdown (SKILL.md) |
+| `templates/` | Templates fonte (repo Hefesto) | Markdown |
+| `installer/payload/` | Pacote distribuivel | Markdown + scripts |
 
 ### Formatos Suportados
 
 | Formato | Uso |
 |---------|-----|
-| Markdown (SKILL.md) | Formato primario |
-| YAML | Frontmatter |
-| TOML | Formato alternativo (Gemini/Qwen) |
+| Markdown (SKILL.md) | Formato primario de skills |
+| YAML | Frontmatter (name + description) |
+| TOML | Formato alternativo (Gemini commands) |
 
 ---
 
 ## 3. CLIs Suportados
 
-### Com Suporte Nativo Agent Skills
-
-| CLI | Versao Min | Diretorio | Formato |
-|-----|------------|-----------|---------|
-| Claude Code | 1.0+ | `.claude/skills/` | SKILL.md |
-| Gemini CLI | 0.20+ | `.gemini/skills/` | SKILL.md/TOML |
-| OpenAI Codex | 0.90+ | `.codex/skills/` | SKILL.md |
-| VS Code/Copilot | 1.100+ | `.github/skills/` | SKILL.md |
-| OpenCode | 0.1+ | `.opencode/skills/` | SKILL.md |
-| Cursor | 1.0+ | `.cursor/skills/` | SKILL.md |
-| Qwen Code | 0.8+ | `.qwen/skills/` | SKILL.md/TOML |
-
-### Adaptacoes Necessarias
-
-| CLI | Adaptacao |
-|-----|-----------|
-| Gemini/Qwen | `$ARGUMENTS` → `{{args}}` |
-| Gemini/Qwen | Suporte a TOML alternativo |
+| CLI | Skills Dir | Commands Dir | Formato Cmd | Variable Syntax |
+|-----|-----------|-------------|-------------|-----------------|
+| Claude Code | `.claude/skills/` | `.claude/commands/` | `.md` | `$ARGUMENTS` |
+| Gemini CLI | `.gemini/skills/` | `.gemini/commands/` | `.toml` | `{{args}}` |
+| OpenAI Codex | `.codex/skills/` | `.codex/prompts/` | `.md` | `$ARGUMENTS` |
+| VS Code/Copilot | `.github/skills/` | `.github/agents/` + `prompts/` | `.md` | `$ARGUMENTS` |
+| OpenCode | `.opencode/skills/` | `.opencode/command/` | `.md` | `$ARGUMENTS` |
+| Cursor | `.cursor/skills/` | `.cursor/commands/` | `.md` | `$ARGUMENTS` |
+| Qwen Code | `.qwen/skills/` | `.qwen/commands/` | `.md` | `{{args}}` |
 
 ---
 
 ## 4. Estrutura de Arquivos
 
-### Projeto Hefesto
+### Repositorio Hefesto
 
 ```
 hefesto-skill-generator/
-├── README.md
-├── CONSTITUTION.md           # T0 Rules
-├── MEMORY.md                 # Estado persistente
-├── AGENTS.md                 # Bootstrap para IAs
-│
-├── .context/                 # Contexto para IAs
-│   ├── README.md
-│   ├── ai-assistant-guide.md
-│   ├── _meta/
-│   ├── standards/
-│   ├── patterns/
-│   ├── examples/
-│   ├── workflows/
-│   └── troubleshooting/
-│
-├── docs/                     # Documentacao humana
-│   ├── README.md
-│   ├── cards/
-│   ├── decisions/
-│   └── ...
-│
-├── templates/                # Templates de skills
-│   ├── skill-template.md
-│   └── adapters/
-│
-├── commands/                 # Comandos /hefesto.*
-│   ├── hefesto.create.md
-│   ├── hefesto.extract.md
-│   └── ...
-│
-├── knowledge/                # Base de conhecimento
-│   ├── agent-skills-spec.md
-│   ├── best-practices.md
-│   └── ...
-│
-└── examples/                 # Skills de exemplo
-    └── ...
+  README.md
+  templates/                    # Templates fonte
+    skill-template.md
+    quality-checklist.md
+    cli-compatibility.md
+  installer/                    # Bootstrap distribuivel
+    install.sh / install.ps1
+    payload/
+      hefesto/templates/
+      commands/{cli}/
+  .<cli>/commands/hefesto.*     # 5 comandos por CLI (7 CLIs)
+  .<cli>/skills/                # Skills de demonstracao
+  .github/workflows/release.yml
+  docs/                         # Documentacao
+  .context/                     # Contexto para IAs
 ```
 
-### Skill Gerada
+### Projeto do Usuario (apos install)
 
 ```
-skill-name/
-├── SKILL.md              # Core (obrigatorio)
-├── scripts/              # Executaveis (opcional)
-│   ├── validate.py
-│   └── execute.sh
-├── references/           # Docs detalhadas (opcional)
-│   ├── REFERENCE.md
-│   └── EXAMPLES.md
-└── assets/               # Recursos estaticos (opcional)
-    ├── templates/
-    └── schemas/
+meu-projeto/
+  .hefesto/
+    version                    # "2.0.0"
+    templates/                 # 3 templates
+  .<cli>/
+    commands/hefesto.*         # 5 comandos
+    skills/                    # Skills geradas
 ```
 
 ---
@@ -182,16 +113,15 @@ skill-name/
 
 | Dependencia | Tipo | Obrigatorio |
 |-------------|------|-------------|
-| CLI de IA (qualquer) | Runtime | Sim |
+| CLI de IA (qualquer 1 dos 7) | Runtime | Sim |
 | Filesystem | Sistema | Sim |
 | Git | Sistema | Nao (recomendado) |
 
-### Desenvolvimento
+### Instalacao
 
-| Dependencia | Uso |
-|-------------|-----|
-| Markdown parser | Validacao de templates |
-| YAML parser | Validacao de frontmatter |
+| Dependencia | Tipo | Obrigatorio |
+|-------------|------|-------------|
+| Bash 3.2+ (Unix) ou PowerShell 5.1+ (Windows) | Installer | Sim |
 
 ---
 
@@ -202,8 +132,7 @@ skill-name/
 | Sistema | Integracao |
 |---------|-----------|
 | spec-kit | Comandos /speckit.* compativeis |
-| itzamna-prompt-os | Estrutura .context/ compativel |
-| prompts | Templates de skill compativeis |
+| agentskills.io | Standard de skills seguido |
 
 ### APIs Externas
 
@@ -211,4 +140,4 @@ Nenhuma API externa necessaria. Sistema completamente local.
 
 ---
 
-**Ultima Atualizacao:** 2026-02-04
+**Ultima Atualizacao:** 2026-02-07

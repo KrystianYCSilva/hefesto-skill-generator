@@ -10,8 +10,8 @@
 
 ```
 1. Ler este arquivo
-2. Carregar CONSTITUTION.md (T0 - regras absolutas)
-3. Templates em templates/ (skill-template, quality-checklist, cli-compatibility)
+2. Carregar templates/ (skill-template, quality-checklist, cli-compatibility)
+3. Verificar .hefesto/version para estado da instalacao
 ```
 
 ---
@@ -22,11 +22,12 @@ Hefesto e um **spec-kit**: templates Markdown que o AI agent interpreta e execut
 Nao ha codigo Python, Node.js ou qualquer dependencia externa.
 
 ```
-COMANDOS (Markdown)  →  AI AGENT (interpreta)  →  SKILLS (output)
-      ↑                       ↑                        ↓
-  templates/              CONSTITUTION.md        .<cli>/skills/
-  quality-checklist       (regras T0)            (7 CLIs)
-  cli-compatibility
+MARKDOWN TEMPLATES  ->  AI AGENT  ->  SKILLS (output)
+      ^                                    |
+  templates/                          .<cli>/skills/
+  skill-template.md                   (7 CLIs)
+  quality-checklist.md
+  cli-compatibility.md
 ```
 
 ---
@@ -36,24 +37,10 @@ COMANDOS (Markdown)  →  AI AGENT (interpreta)  →  SKILLS (output)
 | Comando | Descricao | Human Gate |
 |---------|-----------|------------|
 | `/hefesto.create` | Criar skill de descricao natural (6 fases + auto-critica) | Sim |
-| `/hefesto.validate` | Validar skill contra Agent Skills spec | Nao (read-only) |
+| `/hefesto.validate` | Validar + corrigir skill contra spec (fix-auto) | Sim |
 | `/hefesto.extract` | Extrair skill de codigo/docs existente | Sim |
-| `/hefesto.init` | Bootstrap: detectar CLIs, criar diretorios | Nao |
+| `/hefesto.init` | Bootstrap: detectar CLIs, verificar instalacao | Nao |
 | `/hefesto.list` | Listar todas as skills instaladas | Nao (read-only) |
-
-### Comandos Spec-Kit (inalterados)
-
-| Comando | Descricao |
-|---------|-----------|
-| `/speckit.specify` | Criar spec de feature |
-| `/speckit.clarify` | Clarificar spec com perguntas |
-| `/speckit.plan` | Gerar plano de implementacao |
-| `/speckit.tasks` | Gerar tasks de implementacao |
-| `/speckit.implement` | Executar tasks |
-| `/speckit.analyze` | Analisar consistencia |
-| `/speckit.checklist` | Gerar checklist |
-| `/speckit.constitution` | Gerenciar constituicao |
-| `/speckit.taskstoissues` | Converter tasks em GitHub issues |
 
 ---
 
@@ -62,7 +49,7 @@ COMANDOS (Markdown)  →  AI AGENT (interpreta)  →  SKILLS (output)
 ```
 SEMPRE antes de persistir skills:
 1. Gerar skill em memoria
-2. Auto-Critica: checklist 10 itens (T0-HEFESTO-12)
+2. Auto-Critica: checklist 13 itens (5 CRITICAL + 7 WARNING + 1 INFO)
 3. Corrigir FAILs automaticamente
 4. Apresentar preview ao usuario
 5. Aguardar: [approve], [edit], [reject]
@@ -80,7 +67,7 @@ SEMPRE antes de persistir skills:
 | T0-HEFESTO-03 | SKILL.md < 500 linhas, recursos JIT em sub-arquivos |
 | T0-HEFESTO-04 | SEMPRE detectar CLIs antes de perguntar ao usuario |
 | T0-HEFESTO-05 | Armazenar skills no projeto atual por padrao |
-| T0-HEFESTO-12 | Auto-critica OBRIGATORIA antes de Human Gate |
+| T0-HEFESTO-12 | Auto-critica 13 pontos OBRIGATORIA antes de Human Gate |
 | T0-HEFESTO-13 | Logica em Markdown, NUNCA em codigo executavel |
 
 ---
@@ -89,13 +76,12 @@ SEMPRE antes de persistir skills:
 
 | Preciso de... | Arquivo |
 |---------------|---------|
-| Regras T0 completas | `CONSTITUTION.md` |
 | Template de skill | `templates/skill-template.md` |
 | Checklist de qualidade | `templates/quality-checklist.md` |
 | Regras multi-CLI | `templates/cli-compatibility.md` |
-| Knowledge base | `knowledge/` |
+| Regras T0 completas | `CONSTITUTION.md` |
 | Contexto do projeto | `.context/` |
 
 ---
 
-**AGENTS.md** | Hefesto Skill Generator | 2026-02-07
+**AGENTS.md** | Hefesto Skill Generator v2.0.0 | 2026-02-07

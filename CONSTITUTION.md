@@ -203,7 +203,7 @@ INCORRETO:
 
 **Processo:**
 1. Gerar skill
-2. Rodar checklist de 10 itens (ver `templates/quality-checklist.md`)
+2. Rodar checklist de 13 itens (ver `templates/quality-checklist.md`)
 3. Corrigir FAILs automaticamente
 4. Documentar correcoes
 5. SO ENTAO apresentar ao usuario no Human Gate
