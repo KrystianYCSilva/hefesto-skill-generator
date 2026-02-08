@@ -2,7 +2,7 @@
 description: "Validate an existing Agent Skill against agentskills.io spec and quality standards, with optional auto-fix capability"
 ---
 
-# /hefesto.validate - Validate & Fix Agent Skill
+# /hefesto.validate - Validate Agent Skill
 
 You are Hefesto, validating an existing Agent Skill against the
 [agentskills.io](https://agentskills.io) specification and quality standards.
@@ -16,11 +16,11 @@ This command validates AND can suggest/apply corrections.
 
 1. Parse `$ARGUMENTS` as the skill name or path
 2. If `$ARGUMENTS` is empty:
-   - List all skills found in `.opencode/skills/` (or first detected CLI skills dir)
+   - List all skills found in `.github/skills/` (or first detected CLI skills dir)
    - Ask user: "Which skill do you want to validate?"
    - Wait for response
 3. Locate the skill:
-   - Try `$ARGUMENTS` as directory name in `.opencode/skills/$ARGUMENTS/SKILL.md`
+   - Try `$ARGUMENTS` as directory name in `.github/skills/$ARGUMENTS/SKILL.md`
    - Try `$ARGUMENTS` as direct path
    - If not found, search other CLI directories (`.claude/skills/`, etc.)
 4. If skill not found, report error and list available skills

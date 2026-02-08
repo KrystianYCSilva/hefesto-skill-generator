@@ -41,7 +41,14 @@
       "WebFetch(domain:qwenlm.github.io)",
       "Bash(git checkout:*)",
       "Bash(git pull:*)",
-      "WebFetch(domain:api.github.com)"
+      "WebFetch(domain:api.github.com)",
+      "Bash(git status:*)",
+      "Bash(test:*)",
+      "Bash(for dir in .claude .gemini .codex .opencode .cursor .qwen .github)",
+      "Bash(do echo -n \"$dir: \")",
+      "Bash(ls:*)",
+      "Bash(cmd /c type:*)",
+      "Bash(cmd /c dir:*)"
     ]
   }
 }
