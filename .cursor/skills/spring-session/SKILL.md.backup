@@ -1,0 +1,113 @@
+---
+name: spring-session
+description: |
+  Guides distributed HTTP session management with Spring Session using Redis, JDBC, and security-aligned session policies for scalable web applications.
+  Use when: centralizing user sessions across multiple application instances, removing container-bound session state, or hardening session handling in Spring stacks.
+---
+
+# Spring Session
+
+Spring Session was introduced to decouple HTTP session state from single application instances, enabling horizontal scale and failover in clustered deployments. This skill helps the agent implement reliable and secure session storage patterns.
+
+## How to choose a session repository
+
+1. Use Redis for low-latency distributed session storage.
+2. Use JDBC when operationally aligned with relational governance requirements.
+3. Choose repository by latency profile, consistency expectations, and ops maturity.
+4. Keep repository choice explicit per environment.
+
+## How to configure Spring Session cleanly
+
+1. Add only the needed Spring Session module and backend dependency.
+2. Set session timeout and namespace with clear policy.
+3. Align serializer strategy for compatibility and security.
+4. Keep default settings minimal and documented.
+
+## How to integrate session policy with Spring Security
+
+1. Configure concurrent session controls for sensitive applications.
+2. Regenerate session ID on authentication to prevent fixation.
+3. Invalidate sessions reliably on logout and credential changes.
+4. Apply secure cookie flags (`HttpOnly`, `Secure`, `SameSite`) by environment.
+
+## How to handle session lifecycle and cleanup
+
+1. Define expiration and eviction policy per risk profile.
+2. Track active sessions and invalidation events.
+3. Ensure cleanup jobs are active for JDBC-backed stores.
+4. Test failover behavior under node restarts.
+
+## How to migrate from container sessions safely
+
+1. Run side-by-side validation in non-production first.
+2. Verify serialization compatibility across deployments.
+3. Plan zero-downtime migration window and rollback path.
+4. Observe login/logout flows and timeout behavior during cutover.
+
+## Common Warnings & Pitfalls
+
+- Using default Java serialization without security review.
+- Storing very large objects in session and increasing latency.
+- Ignoring session invalidation across parallel devices.
+- Misaligned timeout values between app and backing store.
+- Treating session store outages as non-critical incidents.
+
+## Common Errors and Fixes
+
+| Symptom | Root Cause | Fix |
+|---|---|---|
+| Users randomly logged out | TTL mismatch or eviction pressure | Align timeout policy and size backend capacity |
+| Session fixation risk | Session ID not rotated after login | Enable session migration/renewal on auth success |
+| Serialization exceptions after deploy | Class/version incompatibility in session payload | Version session payload and avoid storing complex mutable objects |
+| High login latency | Session backend network bottleneck | Tune connection pool and colocate backend where possible |
+
+## Advanced Tips
+
+- Keep session payload minimal; store identifiers, not full domain objects.
+- Use stateless JWT for public APIs and session only where browser workflows require it.
+- Add security audit events for session creation/termination.
+- Define incident runbooks for session store degradation and failover.
+
+## Version History and Usage Divergences
+
+| Version Line | Key Change | Practical Divergence |
+|---|---|---|
+| Session 2.x | Mature Redis/JDBC session stores on `javax` stack | Legacy apps relied on container defaults and weak cookie policies |
+| Session 3.x | Jakarta + Boot 3 alignment | Required package and dependency updates for security/session modules |
+
+## Java and Kotlin Usage Examples
+
+```java
+@Bean
+RedisIndexedSessionRepository redisSessionRepository(RedisConnectionFactory cf) {
+  RedisIndexedSessionRepository repo = new RedisIndexedSessionRepository(cf);
+  repo.setDefaultMaxInactiveInterval(1800);
+  return repo;
+}
+```
+
+```kotlin
+@Configuration
+class SessionConfig {
+  @Bean
+  fun cookieSerializer(): DefaultCookieSerializer = DefaultCookieSerializer().apply {
+    setUseSecureCookie(true)
+    setSameSite("Lax")
+  }
+}
+```
+
+## Expert Techniques
+
+- Index sessions by principal for immediate forced logout and incident response.
+- Encrypt or minimize sensitive attributes stored in session payloads.
+- Keep session payload schema versioned for rolling deployments.
+- Add session churn dashboards (create, invalidate, expire) to detect auth anomalies.
+## References
+
+- [Spring Session Project](https://spring.io/projects/spring-session)
+- [Spring Session Reference](https://docs.spring.io/spring-session/reference/)
+- [Spring Security Session Management](https://docs.spring.io/spring-security/reference/servlet/authentication/session-management.html)
+- [Redis Documentation](https://redis.io/docs/)
+
+

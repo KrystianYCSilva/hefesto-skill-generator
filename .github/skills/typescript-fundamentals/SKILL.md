@@ -1,0 +1,76 @@
+---
+name: typescript-fundamentals
+description: |
+  Guides TypeScript fundamentals for backend and fullstack development, including type modeling, strict compiler settings, module boundaries, and runtime-safe patterns.
+  Use when: creating or maintaining TypeScript services, enforcing type safety at scale, or reducing runtime bugs through stronger contracts.
+---
+
+# TypeScript Fundamentals
+
+TypeScript expanded JavaScript with a static type system to improve large-scale maintainability and refactoring safety. This skill helps the agent apply TypeScript in pragmatic, production-focused ways.
+
+## How to set a strict project baseline
+
+1. Enable `strict` mode and keep `noImplicitAny` active.
+2. Define explicit `tsconfig` targets, module strategy, and path aliases.
+3. Keep build and type-check steps separate for faster feedback loops.
+4. Lock tooling versions for reproducible CI behavior.
+
+## How to model domain types clearly
+
+1. Use interfaces/types to express domain contracts.
+2. Prefer discriminated unions for finite state modeling.
+3. Use utility types carefully (`Partial`, `Pick`, `Omit`, `Record`).
+4. Keep transport DTOs separate from domain entities.
+
+## How to use functions, generics, and narrowing safely
+
+1. Type function inputs/outputs explicitly for public boundaries.
+2. Use generics where behavior is truly reusable.
+3. Use type guards for runtime-driven narrowing.
+4. Avoid complex conditional types unless they add clear value.
+
+## How to design module and package boundaries
+
+1. Export small, stable module contracts.
+2. Avoid cyclic dependencies between core modules.
+3. Group types by domain, not by framework internals.
+4. Keep shared libraries versioned and documented.
+
+## How to add runtime safety beyond compile-time checks
+
+1. Validate external input (HTTP, queue, files) at runtime.
+2. Treat `unknown` as default for untrusted data.
+3. Add schema validation libraries where needed.
+4. Keep error handling explicit and typed in service boundaries.
+
+## Common Warnings & Pitfalls
+
+- Using `any` as an escape hatch in core business paths.
+- Overly complex type-level programming that hurts readability.
+- Assuming compile-time types validate runtime payloads.
+- Mixing ESM/CJS settings inconsistently across tooling.
+- Skipping strict null checks and increasing production NPE-like bugs.
+
+## Common Errors and Fixes
+
+| Symptom | Root Cause | Fix |
+|---|---|---|
+| `Cannot find module` at runtime | Build/module resolution mismatch | Align `tsconfig`, bundler, and runtime module strategy |
+| Type checks pass but runtime fails | Missing runtime validation | Add schema validation for external inputs |
+| `Property does not exist` in union usage | Missing discriminant narrowing | Add explicit type guards/discriminated unions |
+| Slow type-check in monorepo | Unbounded project references | Split tsconfig projects and enable incremental builds |
+
+## Advanced Tips
+
+- Use project references for large monorepos.
+- Introduce type tests for critical public APIs.
+- Keep API contracts generated from source of truth where possible.
+- Review strictness flags during migrations instead of disabling globally.
+
+## How to use extended references
+
+- Read [Version History](references/version-history.md) before upgrades, migrations, or compatibility decisions.
+- Read [Java and Kotlin Examples](references/java-kotlin-examples.md) for implementation-ready snippets and language-specific guidance.
+- Read [Advanced Techniques](references/advanced-techniques.md) for specialist playbooks, incident tactics, and performance patterns.
+

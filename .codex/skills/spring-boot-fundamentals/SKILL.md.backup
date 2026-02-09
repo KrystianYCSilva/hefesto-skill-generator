@@ -1,0 +1,83 @@
+---
+name: spring-boot-fundamentals
+description: |
+  Guides Spring Boot setup, starter selection, auto-configuration, dependency injection, and profile-based configuration for production-ready services.
+  Use when: bootstrapping a new Spring Boot API, diagnosing startup behavior, or standardizing configuration across dev, test, and prod.
+---
+
+# Spring Boot Fundamentals
+
+Spring Boot (2014) was created on top of the Spring Framework (2003) to reduce XML-heavy setup and make Java/Kotlin backend delivery faster. This skill gives the agent a reliable baseline to create, read, and fix Spring Boot services with minimal boilerplate.
+
+## How to bootstrap a project with the right starters
+
+1. Start with `spring-boot-starter-parent` and a compatible Java LTS (17 or 21).
+2. Add only required starters first:
+- `spring-boot-starter-web` for REST APIs.
+- `spring-boot-starter-validation` for Bean Validation.
+- `spring-boot-starter-actuator` for operational endpoints.
+- `spring-boot-starter-test` for tests.
+3. Use one BOM/source of truth for versions to avoid dependency drift.
+4. Keep optional integrations disabled until needed (messaging, security, data).
+
+## How to reason about auto-configuration
+
+1. Treat auto-configuration as conditional wiring, not magic.
+2. Check the startup report with `--debug` to understand why beans are matched or skipped.
+3. Use exclusions only for explicit architecture reasons, not to hide conflicts.
+4. Prefer replacing a bean by defining a clear custom `@Bean` over broad disabling.
+
+## How to organize configuration and profiles
+
+1. Use `application.yml` as the default baseline and `application-<profile>.yml` for environment overrides.
+2. Keep secrets outside the repository (env vars, secret manager).
+3. Follow a naming convention for properties by domain (`billing.*`, `security.*`).
+4. Prefer typed config with `@ConfigurationProperties` for non-trivial groups.
+
+## How to apply dependency injection and component boundaries
+
+1. Prefer constructor injection for mandatory dependencies.
+2. Use stereotypes intentionally:
+- `@RestController` for transport.
+- `@Service` for business orchestration.
+- `@Repository` for persistence boundaries.
+3. Keep controllers thin; business rules belong in services.
+4. Avoid field injection and cross-layer shortcuts that increase coupling.
+
+## How to use runners and startup hooks safely
+
+1. Use `CommandLineRunner` and `ApplicationRunner` only for deterministic startup tasks.
+2. Make startup jobs idempotent (safe for retries/restarts).
+3. Fail fast on critical bootstrap failures; log actionable diagnostics.
+4. Move long-running startup work to async jobs when possible.
+
+## Common Warnings & Pitfalls
+
+- Overusing starters causes hidden transitive behavior and slower startup.
+- `@ComponentScan` in broad packages can accidentally register unwanted beans.
+- Mixing profile logic in code and configuration creates environment drift.
+- Hardcoding external endpoints breaks promotion across environments.
+- Ignoring graceful shutdown settings can corrupt in-flight processing.
+
+## Common Errors and Fixes
+
+| Symptom | Root Cause | Fix |
+|---|---|---|
+| `NoSuchBeanDefinitionException` | Bean not scanned or conditional not matched | Move class under base package, validate conditions, or define explicit `@Bean` |
+| `Port 8080 already in use` | Local conflict | Change `server.port` per profile or stop conflicting process |
+| `Failed to bind properties` | Wrong property prefix/type mismatch | Align `@ConfigurationProperties` prefix and field types |
+| Circular dependency error | Tight coupling between services | Extract interface/orchestration layer and break cyclic dependency |
+
+## Advanced Tips
+
+- Use Spring Boot Build Image (Paketo) for reproducible container builds.
+- Add startup metrics and readiness/liveness probes from day one.
+- Track dependency upgrades with release notes per Spring Boot minor version.
+- For large systems, standardize project archetypes with approved starters and defaults.
+
+## How to use extended references
+
+- Read [Version History](references/version-history.md) before upgrades, migrations, or compatibility decisions.
+- Read [Java and Kotlin Examples](references/java-kotlin-examples.md) for implementation-ready snippets and language-specific guidance.
+- Read [Advanced Techniques](references/advanced-techniques.md) for specialist playbooks, incident tactics, and performance patterns.
+

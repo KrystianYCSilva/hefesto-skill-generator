@@ -1,0 +1,110 @@
+---
+name: gcp-pubsub
+description: |
+  Guides Pub/Sub topic and subscription design, message delivery semantics, retries, dead-letter strategy, ordering, and consumer reliability patterns.
+  Use when: implementing asynchronous messaging on GCP, designing event-driven services, or troubleshooting throughput and delivery consistency issues.
+---
+
+# GCP Pub/Sub
+
+Pub/Sub is a core building block for event-driven systems on Google Cloud, allowing loose coupling and horizontal scale. This skill helps the agent implement reliable publishing and consumption patterns with clear operational guardrails.
+
+## How to model topics and subscriptions
+
+1. Design topics around stable business events, not temporary implementation details.
+2. Use separate subscriptions per consumer responsibility.
+3. Choose pull vs push based on runtime and backpressure control needs.
+4. Define naming conventions that encode domain and environment.
+
+## How to publish messages safely
+
+1. Include schema version and trace metadata in attributes.
+2. Keep payloads compact and contract-oriented.
+3. Enable batching for throughput-sensitive publishers.
+4. Handle publish futures/errors and add retry with jitter for transient failures.
+
+## How to consume with strong delivery guarantees
+
+1. Acknowledge only after durable processing is complete.
+2. Extend ack deadline for long-running handlers when required.
+3. Make handlers idempotent to tolerate at-least-once delivery.
+4. Define poison-message strategy with dead-letter topics.
+
+## How to use ordering, retry, and exactly-once options
+
+1. Use ordering keys only where strict sequence is business-critical.
+2. Configure retry policy and max delivery attempts per subscription.
+3. Use exactly-once delivery only when trade-offs are justified.
+4. Keep failure handling observable and deterministic.
+
+## How to tune throughput and flow control
+
+1. Set flow-control limits by CPU/memory profile.
+2. Tune max outstanding messages and bytes.
+3. Scale consumers horizontally with partition-friendly processing.
+4. Monitor publish latency, backlog, and redelivery trends.
+
+## Common Warnings & Pitfalls
+
+- Treating Pub/Sub as exactly-once by default.
+- No schema evolution strategy for event contracts.
+- Missing idempotency in consumers.
+- Dead-letter policy configured but not monitored.
+- Large message payloads causing processing and cost issues.
+
+## Common Errors and Fixes
+
+| Symptom | Root Cause | Fix |
+|---|---|---|
+| Duplicate side effects in consumer | Non-idempotent handler with redelivery | Add idempotency key/state check before applying side effects |
+| Growing backlog with stable traffic | Consumer throughput lower than publish rate | Scale workers, tune flow control, optimize handler time |
+| Messages sent to DLQ unexpectedly | Retry policy too aggressive or permanent handler error | Adjust retries and fix deterministic handler failures |
+| Ordering breaks under load | Missing/incorrect ordering key strategy | Apply stable ordering keys only where required |
+
+## Advanced Tips
+
+- Combine outbox pattern with Pub/Sub for transactional event publishing.
+- Add contract tests for event schemas and compatibility checks in CI.
+- Separate high-priority and bulk topics to isolate latency-sensitive flows.
+- Build replay tools for controlled backfill and incident recovery.
+
+## Version History and Usage Divergences
+
+| Feature Era | Key Change | Practical Divergence |
+|---|---|---|
+| Basic pull/push subscriptions | Standard at-least-once semantics | Idempotency required in all consumers |
+| Advanced delivery controls | Exactly-once and refined retry/dead-letter controls | Higher reliability options with cost/latency trade-offs |
+
+## Java and Kotlin Usage Examples
+
+```java
+Publisher publisher = Publisher.newBuilder(topicName).build();
+PubsubMessage msg = PubsubMessage.newBuilder()
+  .setData(ByteString.copyFromUtf8(payloadJson))
+  .putAttributes("eventType", "PAYMENT_CREATED")
+  .build();
+publisher.publish(msg).get();
+```
+
+```kotlin
+subscriber = Subscriber.newBuilder(subscriptionName) { message, consumer ->
+  process(message)
+  consumer.ack()
+}.build()
+subscriber.startAsync().awaitRunning()
+```
+
+## Expert Techniques
+
+- Use deduplication keys persisted in a fast store for side-effecting consumers.
+- Cap outstanding bytes/messages aggressively during incident backpressure.
+- Segment high-priority events into dedicated topics/subscriptions.
+- Use replay runbooks with bounded time windows and compensating logic.
+## References
+
+- [Pub/Sub Documentation](https://cloud.google.com/pubsub/docs)
+- [Pub/Sub Concepts](https://cloud.google.com/pubsub/docs/overview)
+- [Publisher Best Practices](https://cloud.google.com/pubsub/docs/publish-best-practices)
+- [Subscriber Best Practices](https://cloud.google.com/pubsub/docs/subscribe-best-practices)
+
+

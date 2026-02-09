@@ -1,0 +1,2 @@
+Created 10 skill files under C:\Users\kryst\IdeaProjects\hefesto-skill-generator\.claude\skills
+Copied skills to: .gemini, .codex, .opencode, .cursor, .qwen, .github

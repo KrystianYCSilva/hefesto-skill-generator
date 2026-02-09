@@ -1,0 +1,25 @@
+
+skill                    grade critical warning lines howTo clis refs
+-----                    ----- -------- ------- ----- ----- ---- ----
+gcp-app-engine           PASS         0       0    76     6 7/7  True
+gcp-cloud-run            PASS         0       0    76     6 7/7  True
+gcp-cloud-storage        PASS         0       0    76     6 7/7  True
+gcp-kubernetes           PASS         0       0    76     6 7/7  True
+gcp-pubsub               PASS         0       0    76     6 7/7  True
+go-fundamentals          PASS         0       0    76     6 7/7  True
+keycloak                 PASS         0       0    76     6 7/7  True
+microservicos            PASS         0       0    76     6 7/7  True
+postgres-expert          PASS         0       0    83     7 7/7  True
+rest-api-development     PASS         0       0    83     7 7/7  True
+spring-boot-advanced     PASS         0       0    92     8 7/7  True
+spring-boot-fundamentals PASS         0       0    83     6 7/7  True
+spring-cache             PASS         0       0    76     6 7/7  True
+spring-cloud             PASS         0       0    83     7 7/7  True
+spring-cloud-gcp         PASS         0       0    83     7 7/7  True
+spring-data              PASS         0       0    83     7 7/7  True
+spring-security          PASS         0       0    83     7 7/7  True
+spring-session           PASS         0       0    76     6 7/7  True
+spring-web               PASS         0       0    83     7 7/7  True
+typescript-fundamentals  PASS         0       0    76     6 7/7  True
+
+

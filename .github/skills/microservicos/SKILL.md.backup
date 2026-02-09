@@ -1,0 +1,104 @@
+---
+name: microservicos
+description: |
+  Guides microservice architecture design, service boundaries, communication patterns, resilience, data consistency, and operational governance.
+  Use when: decomposing systems into services, reviewing distributed architecture trade-offs, or hardening microservice platforms in production.
+---
+
+# Microservicos
+
+Microservices became a dominant architecture pattern to scale teams and systems independently, but they also introduced distributed complexity. This skill helps the agent apply microservice patterns with clear trade-off awareness and operational discipline.
+
+## How to define service boundaries
+
+1. Decompose by business capability and bounded context.
+2. Keep each service owning its core data model.
+3. Avoid splitting too early before domain seams are clear.
+4. Document ownership, contracts, and dependency graph.
+
+## How to choose communication patterns
+
+1. Use synchronous HTTP/gRPC for request-response interactions.
+2. Use async events/queues for decoupling and resilience.
+3. Design APIs/events with explicit versioning strategy.
+4. Keep cross-service calls bounded by timeout budgets.
+
+## How to handle data consistency across services
+
+1. Prefer eventual consistency with explicit business workflows.
+2. Use saga/orchestration patterns for multi-service transactions.
+3. Use outbox/inbox patterns for reliable event publication.
+4. Make consumers idempotent for duplicate message tolerance.
+
+## How to apply resilience patterns
+
+1. Set timeouts, retries, and circuit breakers per dependency.
+2. Use bulkheads to isolate failure domains.
+3. Add fallback behavior only where business-safe.
+4. Validate failure paths with drills and automated tests.
+
+## How to operate microservices in production
+
+1. Standardize logging, metrics, and tracing across services.
+2. Define SLOs per user-visible capability.
+3. Track dependency health and latency budgets.
+4. Keep runbooks for incident response and rollback.
+
+## Common Warnings & Pitfalls
+
+- Splitting monoliths without domain and team readiness.
+- Distributed transactions without clear failure compensation.
+- Shared database across services eroding ownership boundaries.
+- API contract drift without compatibility governance.
+- Underestimating observability and platform engineering effort.
+
+## Common Errors and Fixes
+
+| Symptom | Root Cause | Fix |
+|---|---|---|
+| Cascading failures after one dependency degrades | Missing resilience boundaries | Add circuit breaker, timeout budget, and fallback policy |
+| Frequent integration breakage | Contract changes without version policy | Introduce contract testing and compatibility lifecycle |
+| Operational complexity explodes | No platform standards | Define golden paths, templates, and shared operational controls |
+| Inconsistent business state | No saga/outbox/idempotency design | Apply explicit consistency patterns and event reliability rules |
+
+## Advanced Tips
+
+- Start with modular monolith when uncertainty is high; split with evidence.
+- Use architecture decision records for each decomposition move.
+- Build a service maturity model (observability, reliability, security, ownership).
+- Track cognitive load as a first-class architecture metric.
+
+## Version History and Usage Divergences
+
+| Architecture Era | Key Change | Practical Divergence |
+|---|---|---|
+| SOA to early microservices | Team and deploy independence emphasis | Often produced premature service fragmentation |
+| Cloud-native maturity era | SRE, platform engineering, and service mesh adoption | Success depended more on ops discipline than decomposition alone |
+
+## Java and Kotlin Usage Examples
+
+```java
+// BFF/service boundary contract style
+record CreatePaymentRequest(String orderId, BigDecimal amount) {}
+```
+
+```kotlin
+// Explicit timeout budget per outbound dependency
+suspend fun reserveStock(cmd: ReserveStockCmd): ReserveStockResult =
+  withTimeout(800) { inventoryClient.reserve(cmd) }
+```
+
+## Expert Techniques
+
+- Use cell-based architecture to limit blast radius for multi-tenant systems.
+- Track coupling by change-frequency and runtime dependency, not only diagrams.
+- Measure cognitive load per team as a decomposition fitness function.
+- Implement strangler migrations with measurable cutover checkpoints.
+## References
+
+- [Microservices.io Patterns](https://microservices.io/patterns/index.html)
+- [Martin Fowler Microservices](https://martinfowler.com/microservices/)
+- [Domain-Driven Design Reference](https://domainlanguage.com/ddd/reference/)
+- [CNCF Cloud Native Definition](https://github.com/cncf/toc/blob/main/DEFINITION.md)
+
+
