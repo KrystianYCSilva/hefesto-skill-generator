@@ -248,6 +248,17 @@ description: |
 
 ---
 
+### T1-HEFESTO-03: Web Research
+
+**Regra:** Skills DEVEM usar web search para verificar URLs e encontrar referencias autoritativas quando disponivel.
+
+**Diretrizes:**
+- Ao citar URLs, SEMPRE verificar via web search antes de incluir
+- NUNCA inventar URLs ou links
+- Se web search indisponivel, declarar que referencias nao foram verificadas
+
+---
+
 ## Resolucao de Conflitos
 
 ```
@@ -265,6 +276,7 @@ ALWAYS cite a regra especifica (ID) na resposta
 | 1.0.0 | 2026-02-04 | Versao inicial |
 | 1.1.0 | 2026-02-04 | Adicionado T0-HEFESTO-11 (Seguranca) |
 | 2.0.0 | 2026-02-07 | Reset spec-kit: removido refs Python, adicionado T0-12 (Auto-Critica) e T0-13 (Template Authority), simplificado T0-08/09 |
+| 2.1.0 | 2026-02-08 | Adicionado T1-HEFESTO-03 (Web Research), comandos update e agent |
 
 ---
 

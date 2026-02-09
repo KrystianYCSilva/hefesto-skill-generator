@@ -57,6 +57,11 @@ Read and analyze the source material.
    - **Audience**: Who benefits from this as a skill?
    - **Trigger**: When would an agent use this skill?
 
+5. **Web Research** (conditional):
+   - When the source material references URLs, external docs, or third-party resources: USE web search to verify they exist
+   - NEVER invent or hallucinate URLs -- if you include a link, verify it exists
+   - If web search is unavailable, explicitly state: "References not verified via web search"
+
 ---
 
 ## Phase 3: Skill Generation
@@ -65,20 +70,22 @@ Generate the skill following the same rules as `/hefesto.create`.
 
 1. Read `templates/skill-template.md` for the canonical structure
 2. Read `templates/quality-checklist.md` for quality standards
+3. Read `CONSTITUTION.md` for governance rules
 
-3. Generate `SKILL.md`:
+4. Generate `SKILL.md`:
    - Name: derived from the source content domain
    - Description: what the skill teaches + "Use when:" trigger
-   - Body: "How to [task]" sections distilled from source (not copied verbatim)
+   - Instructions: distilled from source (not copied verbatim)
    - Examples: concrete input/output from real usage
+   - References: link back to original source + official docs
 
-4. Apply all constraints from `/hefesto.create` Phase 3:
-   - Frontmatter: ONLY `name` + `description`
+5. Apply all constraints from `/hefesto.create` Phase 3:
    - < 500 lines, < ~5000 tokens
    - Description < 1024 chars with "Use when:" trigger
+   - Min 2 official sources for technical skills
    - No credentials or secrets
 
-5. **Important**: Do NOT copy code verbatim. Distill knowledge into
+6. **Important**: Do NOT copy code verbatim. Distill knowledge into
    teaching material. The skill should help an agent UNDERSTAND the
    pattern, not just replay the code.
 
@@ -86,7 +93,7 @@ Generate the skill following the same rules as `/hefesto.create`.
 
 ## Phase 4: Auto-Critica
 
-Run the 13-point quality checklist from `/hefesto.create` Phase 4.
+Run the same 13-point quality checklist from `/hefesto.create` Phase 4.
 
 Additionally verify:
 - [ ] Skill accurately represents the source material
@@ -100,7 +107,7 @@ For each FAIL: fix immediately and document the correction.
 
 ## Phase 5: Human Gate & Persistence
 
-Present the skill for approval:
+Present the skill for approval using the same flow as `/hefesto.create`:
 
 ```
 Skill Extracted: <skill-name>

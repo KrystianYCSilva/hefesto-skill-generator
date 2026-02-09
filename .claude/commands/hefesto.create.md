@@ -53,7 +53,12 @@ Gather knowledge and calibrate quality before generating.
    - Identify official documentation sources (MDN, RFC, language docs, etc.)
    - Identify at least 2 authoritative references
    - Note key concepts, patterns, and best practices
-6. Plan the skill structure:
+6. **Web Research** (conditional):
+   - When you need to cite URLs, verify claims, or find authoritative references: USE web search
+   - NEVER invent or hallucinate URLs -- if you include a link, verify it exists
+   - If web search is unavailable, explicitly state: "References not verified via web search"
+   - Prefer official documentation URLs (language docs, RFC, MDN, etc.)
+7. Plan the skill structure:
    - Will it need `references/` directory? (only if > 300 lines without it)
    - Will it need `scripts/`? (only if executable helpers add value)
    - Will it need `assets/`? (only for images, data files)

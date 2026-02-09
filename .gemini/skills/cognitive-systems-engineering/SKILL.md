@@ -1,13 +1,13 @@
 ---
 name: cognitive-systems-engineering
 description: |
-  Engineering cognitive architectures (CoALA, ACT-R) for AI agents. Covers memory tiers, decision cycles, and multi-agent patterns.
+  Engineering cognitive architectures for AI agents using frameworks like CoALA and ACT-R. Covers memory systems, decision cycles (OODA), and multi-agent patterns.
   Use when: architecting complex AI agents, designing memory systems, or defining multi-agent collaboration patterns.
 ---
 
 # Cognitive Systems Engineering
 
-Building an AI agent is building a mind. This skill provides the architectural blueprints for stateful, goal-oriented systems.
+This skill provides blueprints for building the "brain" of an AI agent, moving beyond simple prompt-response loops to persistent, stateful, and goal-oriented architectures.
 
 ## How to design Memory Systems
 

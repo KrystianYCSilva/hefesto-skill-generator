@@ -38,19 +38,27 @@ Parse the user's input and extract skill intent.
 
 Gather knowledge and calibrate quality before generating.
 
-1. Read `templates/quality-checklist.md`
+1. Read `CONSTITUTION.md` from the project root
+   - Extract T0 rules that apply to skill creation
+   - Note: human approval is mandatory (T0-HEFESTO-02)
+2. Read `templates/quality-checklist.md`
    - This is your self-review checklist for Phase 4
-2. Read `templates/skill-template.md`
+3. Read `templates/skill-template.md`
    - This is the canonical structure you MUST follow
-3. Read 1 exemplar skill from `.github/skills/` (or `.claude/skills/`) to calibrate quality
+4. Read 1 exemplar skill from `.claude/skills/` to calibrate quality
    - Prefer any skill with `references/` directory and "How to" sections
    - Study its structure, tone, and Token Economy application
    - Verify the exemplar follows current template rules before calibrating
-4. Research the skill's domain:
+5. Research the skill's domain:
    - Identify official documentation sources (MDN, RFC, language docs, etc.)
    - Identify at least 2 authoritative references
    - Note key concepts, patterns, and best practices
-5. Plan the skill structure:
+6. **Web Research** (conditional):
+   - When you need to cite URLs, verify claims, or find authoritative references: USE web search
+   - NEVER invent or hallucinate URLs -- if you include a link, verify it exists
+   - If web search is unavailable, explicitly state: "References not verified via web search"
+   - Prefer official documentation URLs (language docs, RFC, MDN, etc.)
+7. Plan the skill structure:
    - Will it need `references/` directory? (only if > 300 lines without it)
    - Will it need `scripts/`? (only if executable helpers add value)
    - Will it need `assets/`? (only for images, data files)
@@ -94,10 +102,10 @@ Each section title answers: "What does the agent DO?">
 
    | Knowledge Type | Treatment | Example |
    |---------------|-----------|---------|
-   | **Basic** (AI knows) | 1 sentence, no example | "Use `private` fields with getters for encapsulation." |
+   | **Basic** (Claude knows) | 1 sentence, no example | "Use `private` fields with getters for encapsulation." |
    | **Intermediate** (nuances matter) | 1 paragraph + 1 short example | Interface segregation in legacy Java 6 |
-   | **Advanced** (AI likely doesn't know) | Full section + examples | Custom framework patterns, complex workflows |
-   | **Project-specific** (AI cannot know) | Full detail + examples + `references/` | Internal conventions, business rules |
+   | **Advanced** (Claude likely doesn't know) | Full section + examples | Custom framework patterns, complex workflows |
+   | **Project-specific** (Claude cannot know) | Full detail + examples + `references/` | Internal conventions, business rules |
 
    **Cut ruthlessly:** If a senior developer wouldn't need the explanation, the agent doesn't either.
 
@@ -238,7 +246,7 @@ Next steps:
 
 - NEVER persist files without completing Phase 5 (Human Gate)
 - NEVER skip Phase 4 (Auto-Critica)
-- ALWAYS read templates before generating
+- ALWAYS read CONSTITUTION.md and templates before generating
 - ALWAYS show the complete skill to the user before asking for approval
 - If something fails, explain clearly and ask the user what to do
 - Do not create metadata.yaml files (the agentskills.io spec uses frontmatter only)

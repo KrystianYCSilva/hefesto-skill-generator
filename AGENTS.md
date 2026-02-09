@@ -1,7 +1,7 @@
 # AGENTS.md - Hefesto Skill Generator
 
 > **Bootstrap para AI Agents**
-> **Versao:** 2.0.0
+> **Versao:** 2.2.0
 > **Arquitetura:** Template-Driven (zero codigo, 100% Markdown)
 
 ---
@@ -37,8 +37,10 @@ MARKDOWN TEMPLATES  ->  AI AGENT  ->  SKILLS (output)
 | Comando | Descricao | Human Gate |
 |---------|-----------|------------|
 | `/hefesto.create` | Criar skill de descricao natural (6 fases + auto-critica) | Sim |
-| `/hefesto.validate` | Validar + corrigir skill contra spec (fix-auto) | Sim |
+| `/hefesto.update` | Modificar conteudo de skills existentes (7 fases + diff) | Sim |
 | `/hefesto.extract` | Extrair skill de codigo/docs existente | Sim |
+| `/hefesto.agent` | Gerar agent especializado compondo skills (6 fases) | Sim |
+| `/hefesto.validate` | Validar + corrigir skill contra spec (fix-auto) | Sim |
 | `/hefesto.init` | Bootstrap: detectar CLIs, verificar instalacao | Nao |
 | `/hefesto.list` | Listar todas as skills instaladas | Nao (read-only) |
 
@@ -77,6 +79,7 @@ SEMPRE antes de persistir skills:
 | Preciso de... | Arquivo |
 |---------------|---------|
 | Template de skill | `templates/skill-template.md` |
+| Template de agent | `templates/agent-template.md` |
 | Checklist de qualidade | `templates/quality-checklist.md` |
 | Regras multi-CLI | `templates/cli-compatibility.md` |
 | Regras T0 completas | `CONSTITUTION.md` |

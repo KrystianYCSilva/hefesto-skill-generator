@@ -38,7 +38,7 @@ Hefesto Skill Generator e um spec-kit template-driven que gera Agent Skills para
 
 ### 2.1. Command Layer
 
-5 comandos disponibilizados para cada CLI detectado:
+7 comandos disponibilizados para cada CLI detectado:
 
 | Comando | Descricao | Human Gate |
 |---------|-----------|------------|
@@ -91,7 +91,7 @@ installer/
 O installer:
 1. Detecta CLIs instalados (PATH + diretorios)
 2. Cria `.hefesto/` com templates e versao
-3. Copia comandos `hefesto.*` para cada CLI detectado
+3. Copia comandos `hefesto.*` (7 comandos) para cada CLI detectado
 4. Cria diretorios `skills/` para cada CLI
 
 ---
@@ -222,10 +222,10 @@ meu-projeto/
       quality-checklist.md
       cli-compatibility.md
   .claude/
-    commands/hefesto.*.md      # 5 comandos
+    commands/hefesto.*.md      # 7 comandos (create, update, extract, agent, validate, init, list)
     skills/                    # Skills geradas
   .gemini/
-    commands/hefesto.*.toml    # 5 comandos
+    commands/hefesto.*.toml    # 7 comandos (create, update, extract, agent, validate, init, list)
     skills/
   ...                          # Idem para cada CLI detectado
 ```
@@ -253,7 +253,7 @@ Ver `docs/decisions/` para ADRs detalhados.
 ### Adicionar Novo CLI
 
 1. Adicionar regras em `templates/cli-compatibility.md`
-2. Criar comandos no formato do CLI
+2. Criar comandos no formato do CLI (7 comandos: create, update, extract, agent, validate, init, list)
 3. Atualizar `installer/` (scripts + payload)
 
 ### Adicionar Novo Comando
