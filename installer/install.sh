@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-HEFESTO_VERSION="2.0.0"
+HEFESTO_VERSION="2.2.0"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PAYLOAD_DIR="${SCRIPT_DIR}/payload"
 

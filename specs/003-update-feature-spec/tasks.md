@@ -25,11 +25,11 @@ This is a multi-CLI distributed template system:
 
 **Purpose**: Update version numbers and constitution before implementation
 
-- [ ] T001 [P] [S0] Add T1-HEFESTO-03 (Web Research) rule to CONSTITUTION.md after line ~248
-- [ ] T002 [P] [S0] Add version history entry for 2.1.0 in CONSTITUTION.md
-- [ ] T003 [P] [S0] Update .hefesto/version from "2.1.0" to "2.2.0"
-- [ ] T004 [P] [S0] Update $HEFESTO_VERSION in installer/install.ps1 to "2.2.0"
-- [ ] T005 [P] [S0] Update version variable in installer/install.sh to "2.2.0"
+- [X] T001 [P] [S0] Add T1-HEFESTO-03 (Web Research) rule to CONSTITUTION.md after line ~248
+- [X] T002 [P] [S0] Add version history entry for 2.1.0 in CONSTITUTION.md
+- [X] T003 [P] [S0] Update .hefesto/version from "2.1.0" to "2.2.0"
+- [X] T004 [P] [S0] Update $HEFESTO_VERSION in installer/install.ps1 to "2.2.0"
+- [X] T005 [P] [S0] Update version variable in installer/install.sh to "2.2.0"
 
 ---
 
@@ -39,14 +39,14 @@ This is a multi-CLI distributed template system:
 
 ### Step 1A: Update hefesto.create (canonical)
 
-- [ ] T006 [S1] Add web research step 6 to Phase 2 in .claude/commands/hefesto.create.md after "Research the skill's domain"
-- [ ] T007 [S1] Renumber existing step 6 ("Plan the skill structure") to step 7 in .claude/commands/hefesto.create.md
+- [X] T006 [S1] Add web research step 6 to Phase 2 in .claude/commands/hefesto.create.md after "Research the skill's domain"
+- [X] T007 [S1] Renumber existing step 6 ("Plan the skill structure") to step 7 in .claude/commands/hefesto.create.md
 
 ### Step 1B: Update hefesto.extract (canonical + drift fix)
 
-- [ ] T008 [S1] Add web research step 5 to Phase 2 in .claude/commands/hefesto.extract.md after "Summarize extraction"
-- [ ] T009 [S1] Fix drift: Change "10-point quality checklist" to "13-point" at line 91 in .claude/commands/hefesto.extract.md
-- [ ] T010 [S1] Fix drift: Change "<X>/10 PASS" to "<X>/13 PASS" at line 114 in .claude/commands/hefesto.extract.md
+- [X] T008 [S1] Add web research step 5 to Phase 2 in .claude/commands/hefesto.extract.md after "Summarize extraction"
+- [X] T009 [S1] Fix drift: Change "10-point quality checklist" to "13-point" at line 91 in .claude/commands/hefesto.extract.md
+- [X] T010 [S1] Fix drift: Change "<X>/10 PASS" to "<X>/13 PASS" at line 114 in .claude/commands/hefesto.extract.md
 
 ---
 

@@ -165,3 +165,26 @@ Report each CLI as:
 ### Qwen
 - Uses `{{args}}` like Gemini
 - Skills in `.qwen/skills/`
+
+
+---
+
+## Agent-Specific Notes
+
+When generating agent commands (not skills), agents are saved as command files (not in skills/ directories).
+
+### Agent Command Locations
+
+| CLI | Agent Location | Format |
+|-----|---------------|--------|
+| Claude | `.claude/commands/<name>.md` | Markdown |
+| Gemini | `.gemini/commands/<name>.toml` | TOML wrapper |
+| Codex | `.codex/prompts/<name>.md` | Markdown |
+| GitHub | `.github/agents/<name>.md` + `.github/prompts/<name>.prompt.md` | Dual files |
+| OpenCode | `.opencode/command/<name>.md` | Markdown |
+| Cursor | `.cursor/commands/<name>.md` | Markdown |
+| Qwen | `.qwen/commands/<name>.md` | Markdown |
+
+**Copilot Note**: GitHub Copilot requires dual files - full agent in agents/, stub in prompts/.
+
+---

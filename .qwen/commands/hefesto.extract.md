@@ -57,6 +57,11 @@ Read and analyze the source material.
    - **Audience**: Who benefits from this as a skill?
    - **Trigger**: When would an agent use this skill?
 
+5. **Web Research** (conditional):
+   - When the source material references URLs, external docs, or third-party resources: USE web search to verify they exist
+   - NEVER invent or hallucinate URLs -- if you include a link, verify it exists
+   - If web search is unavailable, explicitly state: "References not verified via web search"
+
 ---
 
 ## Phase 3: Skill Generation
@@ -88,7 +93,7 @@ Generate the skill following the same rules as `/hefesto.create`.
 
 ## Phase 4: Auto-Critica
 
-Run the same 10-point quality checklist from `/hefesto.create` Phase 4.
+Run the same 13-point quality checklist from `/hefesto.create` Phase 4.
 
 Additionally verify:
 - [ ] Skill accurately represents the source material
@@ -111,7 +116,7 @@ Source: <source-path-or-description>
 Name: <skill-name>
 Description: <description>
 Lines: <count> | Tokens: ~<estimate>
-Auto-Critica: <X>/10 PASS
+Auto-Critica: <X>/13 PASS
 ---
 ```
 
