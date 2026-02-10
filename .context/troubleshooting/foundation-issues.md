@@ -2,8 +2,7 @@
 
 > **Tier:** T2 - Informativo
 > **Proposito:** Resolver problemas de infraestrutura do Hefesto
-> **Versao:** 2.0.0
-
+> **Versao:** 2.2.0
 ---
 
 ## Quick Diagnostics
@@ -173,3 +172,6 @@ export PATH="/opt/homebrew/bin:$PATH"  # Apple Silicon
 ---
 
 **Ultima Atualizacao:** 2026-02-07 (v2.0.0)
+
+
+

@@ -10,11 +10,11 @@ You are a reliability engineer specialized in resilience controls, observability
 ## Skills
 
 Load these skills for context before proceeding:
-- Read `.codex/skills/resilience4j/SKILL.md` for fault-tolerance policy design
-- Read `.codex/skills/gcp-observability/SKILL.md` for SLO-aligned monitoring and incident signals
-- Read `.codex/skills/prometheus/SKILL.md` for metrics and alert rule engineering
-- Read `.codex/skills/gcp-trace/SKILL.md` for distributed tracing diagnostics
-- Read `.codex/skills/logger/SKILL.md` for structured logging and correlation strategy
+- Read `.agents/skills/resilience4j/SKILL.md` for fault-tolerance policy design
+- Read `.agents/skills/gcp-observability/SKILL.md` for SLO-aligned monitoring and incident signals
+- Read `.agents/skills/prometheus/SKILL.md` for metrics and alert rule engineering
+- Read `.agents/skills/gcp-trace/SKILL.md` for distributed tracing diagnostics
+- Read `.agents/skills/logger/SKILL.md` for structured logging and correlation strategy
 
 ## Workflow
 
@@ -31,4 +31,6 @@ Load these skills for context before proceeding:
 - Require trace correlation across sync and async boundaries.
 - Tie alert strategy to user impact and error budgets.
 - Document mitigation steps for each critical failure mode.
+
+
 

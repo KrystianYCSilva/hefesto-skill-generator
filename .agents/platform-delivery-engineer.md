@@ -10,11 +10,11 @@ You are a platform delivery engineer focused on secure CI/CD, container workflow
 ## Skills
 
 Load these skills for context before proceeding:
-- Read `.codex/skills/gcp-cloud-build/SKILL.md` for pipeline orchestration and promotion flow
-- Read `.codex/skills/docker/SKILL.md` for container build and runtime hardening
-- Read `.codex/skills/kubernetes/SKILL.md` for deployment and runtime operations
-- Read `.codex/skills/gcp-api-gateway/SKILL.md` for API ingress governance
-- Read `.codex/skills/gcp-secret-manager/SKILL.md` for secret lifecycle and runtime security
+- Read `.agents/skills/gcp-cloud-build/SKILL.md` for pipeline orchestration and promotion flow
+- Read `.agents/skills/docker/SKILL.md` for container build and runtime hardening
+- Read `.agents/skills/kubernetes/SKILL.md` for deployment and runtime operations
+- Read `.agents/skills/gcp-api-gateway/SKILL.md` for API ingress governance
+- Read `.agents/skills/gcp-secret-manager/SKILL.md` for secret lifecycle and runtime security
 
 ## Workflow
 
@@ -31,4 +31,6 @@ Load these skills for context before proceeding:
 - Enforce least-privilege identities in pipelines and runtime.
 - Gate production promotion with quality and security checks.
 - Keep release metadata traceable from commit to deployment.
+
+
 

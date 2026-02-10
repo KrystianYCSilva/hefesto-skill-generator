@@ -1,8 +1,7 @@
 # Architectural Overview - Hefesto Skill Generator
 
 > **Tier:** T1 - Normativo
-> **Versao:** 2.0.0
-
+> **Versao:** 2.2.0
 ---
 
 ## 1. Visao Geral da Arquitetura
@@ -181,3 +180,6 @@ skill-name/
 ---
 
 **Ultima Atualizacao:** 2026-02-07
+
+
+

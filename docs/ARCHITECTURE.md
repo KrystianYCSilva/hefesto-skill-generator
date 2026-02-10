@@ -1,8 +1,7 @@
 # ARCHITECTURE.md - Hefesto Skill Generator
 
 > **Visao Arquitetural do Sistema**
-> **Versao:** 2.0.0
-
+> **Versao:** 2.2.0
 ---
 
 ## 1. Visao Geral
@@ -265,3 +264,6 @@ Ver `docs/decisions/` para ADRs detalhados.
 ---
 
 **Ultima Atualizacao:** 2026-02-07 (v2.0.0)
+
+
+

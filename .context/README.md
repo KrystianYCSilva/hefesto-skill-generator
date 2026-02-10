@@ -1,7 +1,7 @@
 # .context/ - AI Context Hub
 
 > **Projeto:** Hefesto Skill Generator
-> **Versao:** 2.0.0
+> **Versao:** 2.2.0
 > **Arquitetura:** Template-Driven (zero dependencies)
 
 ---
@@ -100,3 +100,5 @@ ALWAYS cite a regra especifica (ID) na resposta
 ---
 
 **Ultima Atualizacao:** 2026-02-07 (v2.0.0)
+
+

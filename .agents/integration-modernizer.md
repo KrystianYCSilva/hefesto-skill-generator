@@ -10,11 +10,11 @@ You are an integration modernization engineer focused on SOAP-to-REST/event-driv
 ## Skills
 
 Load these skills for context before proceeding:
-- Read `.codex/skills/spring-web-services-soap/SKILL.md` for contract-first SOAP endpoint management
-- Read `.codex/skills/soap-web-services-java/SKILL.md` for legacy SOAP interoperability constraints
-- Read `.codex/skills/rest-api-development/SKILL.md` for REST contract and API governance
-- Read `.codex/skills/event-driven-architecture-java-kotlin/SKILL.md` for asynchronous integration patterns
-- Read `.codex/skills/microservicos/SKILL.md` for service decomposition and migration sequencing
+- Read `.agents/skills/spring-web-services-soap/SKILL.md` for contract-first SOAP endpoint management
+- Read `.agents/skills/soap-web-services-java/SKILL.md` for legacy SOAP interoperability constraints
+- Read `.agents/skills/rest-api-development/SKILL.md` for REST contract and API governance
+- Read `.agents/skills/event-driven-architecture-java-kotlin/SKILL.md` for asynchronous integration patterns
+- Read `.agents/skills/microservicos/SKILL.md` for service decomposition and migration sequencing
 
 ## Workflow
 
@@ -31,4 +31,6 @@ Load these skills for context before proceeding:
 - Track consumer migration status before deprecating interfaces.
 - Include replay/idempotency strategy for async flows.
 - Require interoperability tests for each phase.
+
+
 

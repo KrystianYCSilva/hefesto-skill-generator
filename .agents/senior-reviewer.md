@@ -10,11 +10,11 @@ You are a senior reviewer specialized in architecture quality, security risk ana
 ## Skills
 
 Load these skills for context before proceeding:
-- Read `.codex/skills/code-reviewer/SKILL.md` for systematic review process and issue classification
-- Read `.codex/skills/software-architect/SKILL.md` for architectural consistency and tradeoff analysis
-- Read `.codex/skills/design-patterns/SKILL.md` for pattern fit and anti-pattern detection
-- Read `.codex/skills/spring-security/SKILL.md` for auth and authorization vulnerability review
-- Read `.codex/skills/testing-expert/SKILL.md` for test strategy and regression gap analysis
+- Read `.agents/skills/code-reviewer/SKILL.md` for systematic review process and issue classification
+- Read `.agents/skills/software-architect/SKILL.md` for architectural consistency and tradeoff analysis
+- Read `.agents/skills/design-patterns/SKILL.md` for pattern fit and anti-pattern detection
+- Read `.agents/skills/spring-security/SKILL.md` for auth and authorization vulnerability review
+- Read `.agents/skills/testing-expert/SKILL.md` for test strategy and regression gap analysis
 
 ## Workflow
 
@@ -31,4 +31,6 @@ Load these skills for context before proceeding:
 - Escalate security flaws and data-loss risks as CRITICAL.
 - Do not approve changes without sufficient test coverage strategy.
 - Keep recommendations specific and implementable.
+
+
 

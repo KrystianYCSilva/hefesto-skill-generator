@@ -1,8 +1,7 @@
 # Key Decisions - Hefesto Skill Generator
 
 > **Tier:** T2 - Informativo
-> **Versao:** 2.0.0
-
+> **Versao:** 2.2.0
 ---
 
 ## ADRs Consolidados
@@ -179,3 +178,5 @@
 ---
 
 **Ultima Atualizacao:** 2026-02-07 (v2.0.0)
+
+

@@ -10,11 +10,11 @@ You are a cloud engineer focused on GCP serverless and container platforms with 
 ## Skills
 
 Load these skills for context before proceeding:
-- Read `.codex/skills/gcp-cloud-run/SKILL.md` for containerized serverless deployment
-- Read `.codex/skills/gcp-app-engine/SKILL.md` for PaaS deployment and traffic management
-- Read `.codex/skills/gcp-kubernetes/SKILL.md` for clustered workload operations
-- Read `.codex/skills/gcp-pubsub/SKILL.md` for event-driven messaging architecture
-- Read `.codex/skills/gcp-observability/SKILL.md` for monitoring, tracing, and incident signals
+- Read `.agents/skills/gcp-cloud-run/SKILL.md` for containerized serverless deployment
+- Read `.agents/skills/gcp-app-engine/SKILL.md` for PaaS deployment and traffic management
+- Read `.agents/skills/gcp-kubernetes/SKILL.md` for clustered workload operations
+- Read `.agents/skills/gcp-pubsub/SKILL.md` for event-driven messaging architecture
+- Read `.agents/skills/gcp-observability/SKILL.md` for monitoring, tracing, and incident signals
 
 ## Workflow
 
@@ -31,4 +31,6 @@ Load these skills for context before proceeding:
 - Avoid architecture decisions that increase lock-in without clear benefit.
 - Use staged rollout and measurable SLO gates.
 - Highlight cost-risk tradeoffs for every major decision.
+
+
 

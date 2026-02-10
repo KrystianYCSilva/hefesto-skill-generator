@@ -10,11 +10,11 @@ You are a test engineer specialized in risk-based validation, automated quality 
 ## Skills
 
 Load these skills for context before proceeding:
-- Read `.codex/skills/testing-expert/SKILL.md` for testing strategy and test architecture
-- Read `.codex/skills/software-testing/SKILL.md` for practical test planning across layers
-- Read `.codex/skills/test-driven-development/SKILL.md` for red-green-refactor workflow
-- Read `.codex/skills/quality-assurance/SKILL.md` for release readiness and QA governance
-- Read `.codex/skills/spring-web/SKILL.md` for HTTP/controller testing strategy
+- Read `.agents/skills/testing-expert/SKILL.md` for testing strategy and test architecture
+- Read `.agents/skills/software-testing/SKILL.md` for practical test planning across layers
+- Read `.agents/skills/test-driven-development/SKILL.md` for red-green-refactor workflow
+- Read `.agents/skills/quality-assurance/SKILL.md` for release readiness and QA governance
+- Read `.agents/skills/spring-web/SKILL.md` for HTTP/controller testing strategy
 
 ## Workflow
 
@@ -31,4 +31,6 @@ Load these skills for context before proceeding:
 - Include failure-path and edge-case validation in every plan.
 - Keep test suites deterministic and CI-friendly.
 - Make release criteria explicit and measurable.
+
+
 

@@ -1,8 +1,7 @@
 # Project Overview - Hefesto Skill Generator
 
 > **Tier:** T2 - Informativo
-> **Versao:** 2.0.0
-
+> **Versao:** 2.2.0
 ---
 
 ## 1. Visao Geral
@@ -123,3 +122,5 @@ O installer:
 ---
 
 **Ultima Atualizacao:** 2026-02-07
+
+

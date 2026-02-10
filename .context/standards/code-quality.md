@@ -2,8 +2,7 @@
 
 > **Tier:** T1 - NORMATIVO
 > **Seguir estas regras como padrao.**
-> **Versao:** 2.0.0
-
+> **Versao:** 2.2.0
 ---
 
 ## T1-QUALITY-01: Markdown Bem Formatado
@@ -175,3 +174,5 @@ skill/
 ---
 
 **Ultima Atualizacao:** 2026-02-07 (v2.0.0)
+
+

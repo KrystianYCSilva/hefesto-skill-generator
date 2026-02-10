@@ -1,7 +1,7 @@
 # Reset Rationale: From Python System to Template-Driven Spec-Kit
 
 > **Data:** 2026-02-07
-> **Versao:** 2.0.0
+> **Versao:** 2.2.0
 > **Branch:** reset/spec-kit-model
 
 ---
@@ -116,3 +116,6 @@ Decisao do usuario: Ollama e modelos locais nao tem diretorio de skills proprio.
 | Speckit commands | 9 | 9 (inalterados) |
 | Auto-critica | Nao | Sim (10 itens) |
 | CLIs suportados | 7 | 7 |
+
+
+

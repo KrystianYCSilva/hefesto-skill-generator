@@ -1,6 +1,6 @@
 # AI Assistant Guide - Hefesto Skill Generator
 
-> **Versao:** 2.0.0
+> **Versao:** 2.2.0
 > **Para:** Todas as IAs (Claude, Copilot, Gemini, Cursor, etc.)
 
 ---
@@ -159,3 +159,6 @@ So tratar como Copilot se:
 ---
 
 **AI Assistant Guide** | Hefesto Skill Generator v2.0.0 | 2026-02-07
+
+
+

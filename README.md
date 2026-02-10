@@ -211,7 +211,7 @@ hefesto-skill-generator/
 ```
 my-project/
 ├── .hefesto/
-│   ├── version                  # Installed version ("2.0.0")
+│   ├── version                  # 2.2.0")
 │   └── templates/               # Skill template, checklist, CLI rules
 ├── .claude/commands/hefesto.*   # Commands (per detected CLI)
 ├── .claude/skills/              # Skills directory (per detected CLI)
@@ -247,3 +247,6 @@ my-project/
 ---
 
 **Hefesto Skill Generator** | Forging tools for AI agents | 2026
+
+
+

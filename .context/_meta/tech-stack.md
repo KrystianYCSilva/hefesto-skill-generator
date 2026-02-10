@@ -1,8 +1,7 @@
 # Tech Stack - Hefesto Skill Generator
 
 > **Tier:** T2 - Informativo
-> **Versao:** 2.0.0
-
+> **Versao:** 2.2.0
 ---
 
 ## 1. Arquitetura
@@ -141,3 +140,6 @@ Nenhuma API externa necessaria. Sistema completamente local.
 ---
 
 **Ultima Atualizacao:** 2026-02-07
+
+
+

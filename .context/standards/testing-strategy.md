@@ -2,8 +2,7 @@
 
 > **Tier:** T1 - NORMATIVO
 > **Estrategia de validacao para skills geradas.**
-> **Versao:** 2.0.0
-
+> **Versao:** 2.2.0
 ---
 
 ## 1. Niveis de Validacao
@@ -168,3 +167,6 @@ description: |
 ---
 
 **Ultima Atualizacao:** 2026-02-07 (v2.0.0)
+
+
+

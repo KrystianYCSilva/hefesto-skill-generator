@@ -2,8 +2,7 @@
 
 > **Tier:** T2 - Informativo
 > **Proposito:** Resolver problemas comuns do Hefesto Skill Generator
-> **Versao:** 2.0.0
-
+> **Versao:** 2.2.0
 ---
 
 ## 1. Erros de Validacao
@@ -241,3 +240,6 @@ bash hefesto-skill-generator/installer/install.sh
 ---
 
 **Ultima Atualizacao:** 2026-02-07 (v2.0.0)
+
+
+

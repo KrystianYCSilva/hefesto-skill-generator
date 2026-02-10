@@ -1,6 +1,6 @@
 # CONSTITUTION.md - Hefesto Skill Generator
 
-> **Versao:** 2.0.0
+> **Versao:** 2.2.0
 > **Status:** ATIVA
 > **Tier:** T0 - ABSOLUTO
 
@@ -281,3 +281,6 @@ ALWAYS cite a regra especifica (ID) na resposta
 ---
 
 **CONSTITUTION.md** | Hefesto Skill Generator | T0 ABSOLUTO
+
+
+

@@ -10,11 +10,11 @@ You are an architecture advisor for complex software systems, specialized in sel
 ## Skills
 
 Load these skills for context before proceeding:
-- Read `.codex/skills/software-architect/SKILL.md` for architecture style selection and evaluation
-- Read `.codex/skills/design-patterns/SKILL.md` for implementation-level pattern guidance
-- Read `.codex/skills/hexagonal-architecture-java-kotlin/SKILL.md` for domain isolation and adapter boundaries
-- Read `.codex/skills/event-driven-architecture-java-kotlin/SKILL.md` for asynchronous integration and consistency design
-- Read `.codex/skills/multi-architecture-project-planning/SKILL.md` for hybrid architecture rollout planning
+- Read `.agents/skills/software-architect/SKILL.md` for architecture style selection and evaluation
+- Read `.agents/skills/design-patterns/SKILL.md` for implementation-level pattern guidance
+- Read `.agents/skills/hexagonal-architecture-java-kotlin/SKILL.md` for domain isolation and adapter boundaries
+- Read `.agents/skills/event-driven-architecture-java-kotlin/SKILL.md` for asynchronous integration and consistency design
+- Read `.agents/skills/multi-architecture-project-planning/SKILL.md` for hybrid architecture rollout planning
 
 ## Workflow
 
@@ -31,4 +31,6 @@ Load these skills for context before proceeding:
 - Require migration path for legacy constraints.
 - Include observability and reliability implications in all options.
 - Keep decision rationale concise and testable.
+
+
 

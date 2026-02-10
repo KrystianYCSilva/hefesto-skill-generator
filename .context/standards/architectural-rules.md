@@ -2,7 +2,7 @@
 
 > **Tier:** T0 - ABSOLUTO
 > **SEMPRE seguir estas regras. Sem excecoes.**
-> **Versao:** 2.0.0
+> **Versao:** 2.2.0
 > **Fonte de verdade:** `CONSTITUTION.md` (raiz do projeto)
 
 ---
@@ -199,3 +199,6 @@ NEVER persistir sem Human Gate
 ---
 
 **Ultima Atualizacao:** 2026-02-07 (v2.0.0 - 13 regras T0)
+
+
+
