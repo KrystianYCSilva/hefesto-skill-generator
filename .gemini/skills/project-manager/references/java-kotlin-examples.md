@@ -1,0 +1,20 @@
+# Java and Kotlin Usage Examples
+
+## Java Example
+
+`java
+Plan technical milestones with explicit dependency and risk mitigation strategy.
+`
+
+## Kotlin Example
+
+`kotlin
+Keep team dashboards aligned with engineering and product outcomes.
+`
+
+## Practical Language Tips
+
+- Keep API and event contracts typed and versioned.
+- Align nullability, enums, and date/time serialization across Java and Kotlin.
+- Use shared contract tests to prevent cross-language regressions.
+- Prefer immutable transport models for integration boundaries.

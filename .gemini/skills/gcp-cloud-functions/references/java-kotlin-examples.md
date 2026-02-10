@@ -1,0 +1,28 @@
+# Java and Kotlin Usage Examples
+
+## Java Example
+
+`java
+public class Handler implements HttpFunction { public void service(HttpRequest req, HttpResponse res) throws IOException { res.getWriter().write("ok"); } }
+`
+
+## Kotlin Example
+
+`kotlin
+class Handler : HttpFunction { override fun service(req: HttpRequest, res: HttpResponse) { res.writer.write("ok") } }
+`
+
+## Java and Kotlin Practical Notes
+
+- Keep contracts typed and versioned at module and API boundaries.
+- Align nullability, enum names, and date/time formats across both languages.
+- Prefer immutable command/event DTOs for transport and integration layers.
+- Validate payloads at ingress boundaries before business-core invocation.
+
+## Topic Keywords
+
+- HTTP triggers
+- Eventarc
+- Pub/Sub events
+- IAM service accounts
+- cold starts

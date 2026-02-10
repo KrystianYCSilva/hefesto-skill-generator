@@ -1,0 +1,28 @@
+# Java and Kotlin Usage Examples
+
+## Java Example
+
+`java
+@Endpoint class CustomerEndpoint { @PayloadRoot(namespace = NS, localPart = "GetCustomerRequest") }
+`
+
+## Kotlin Example
+
+`kotlin
+@Endpoint class CustomerEndpoint(private val service: CustomerService)
+`
+
+## Java and Kotlin Practical Notes
+
+- Keep contracts typed and versioned at module and API boundaries.
+- Align nullability, enum names, and date/time formats across both languages.
+- Prefer immutable command/event DTOs for transport and integration layers.
+- Validate payloads at ingress boundaries before business-core invocation.
+
+## Topic Keywords
+
+- contract-first
+- WSDL
+- XSD
+- SOAP faults
+- WS-Security
