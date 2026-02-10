@@ -1,3 +1,10 @@
+---
+name: workflow-scripts
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Workflow Scripts
 
 ## 1. The "Spec-First" Template (`spec.md`)
@@ -41,3 +48,4 @@ llm "Write code to pass tests/feature.test.ts" > src/feature.ts
 npm test
 # (Pass)
 ```
+

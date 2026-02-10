@@ -1,3 +1,10 @@
+---
+name: glossary
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Cognitive Systems Glossary
 
 ## Architectures
@@ -15,3 +22,4 @@
 - **Metacognition**: The agent's ability to think about its own thinking (e.g., "I don't have enough info").
 - **Grounding**: Anchoring responses in retrieved facts (RAG) to prevent hallucination.
 - **Alignment**: Ensuring agent goals match human intent.
+

@@ -1,3 +1,10 @@
+---
+name: architectures
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Cognitive Architectures Deep Dive
 
 ## CoALA (Cognitive Architectures for Language Agents)
@@ -29,3 +36,4 @@ A cognitive theory of learning and memory.
 -   Use **Procedural Memory** to store tools (Agent Skills).
 -   Use **Declarative Memory** to store RAG documents.
 -   Use **Production Rules** as the System Prompt instructions.
+

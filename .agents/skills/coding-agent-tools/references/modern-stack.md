@@ -1,3 +1,10 @@
+---
+name: modern-stack
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Modern AI Coding Stack
 
 The landscape has moved beyond "autocompletion".
@@ -23,3 +30,4 @@ Reusable packages of knowledge and tools.
 -   **Pinecone**: [pinecone.io](https://www.pinecone.io/)
 -   **Qdrant**: [qdrant.ai](https://qdrant.ai/)
 -   **ChromaDB**: [trychroma.com](https://www.trychroma.com/)
+

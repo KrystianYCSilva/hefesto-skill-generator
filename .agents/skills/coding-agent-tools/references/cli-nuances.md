@@ -1,3 +1,10 @@
+---
+name: cli-nuances
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # CLI & Tool Peculiarities
 
 Each tool has a unique "dialect". Don't confuse them.
@@ -19,3 +26,4 @@ Each tool has a unique "dialect". Don't confuse them.
 ## 4. Gemini
 -   **Interaction**: Multimodal input (can paste images of UI).
 -   **Nuance**: Huge context window allows dumping entire library documentation into the prompt for "Grounding".
+

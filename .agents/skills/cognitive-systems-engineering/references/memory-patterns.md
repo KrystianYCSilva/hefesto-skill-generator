@@ -1,3 +1,10 @@
+---
+name: memory-patterns
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Memory Patterns & Implementation
 
 ## 1. Working Memory (Short-Term)
@@ -26,3 +33,4 @@ Static facts and rules.
 Tool definitions and "How-to" knowledge.
 - **Pattern**: Agent Skills (like this file).
 - **Implementation**: `SKILL.md` files defining workflows.
+

@@ -1,3 +1,10 @@
+---
+name: techniques-catalog
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Prompt Engineering Techniques Catalog
 
 ## Technique Library
@@ -39,3 +46,4 @@ Reasoning Models (e.g., OpenAI o1, DeepSeek R1) operate differently from Standar
 ### Key Takeaway
 -   **Standard Models**: You must **guide the process** (How to think).
 -   **Reasoning Models**: You must **define the goal** (What to achieve). They figure out the "How".
+

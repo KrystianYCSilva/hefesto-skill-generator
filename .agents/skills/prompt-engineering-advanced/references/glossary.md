@@ -1,3 +1,10 @@
+---
+name: glossary
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Prompt Engineering Glossary
 
 ## Techniques
@@ -16,3 +23,4 @@
 ## Frameworks
 - **RICE**: Role, Instructions, Context, Examples.
 - **CRISPE**: Capacity, Role, Insight, Statement, Personality, Experiment.
+

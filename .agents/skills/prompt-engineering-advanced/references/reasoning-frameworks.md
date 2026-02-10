@@ -1,3 +1,10 @@
+---
+name: reasoning-frameworks
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Reasoning Frameworks Deep Dive
 
 ## Chain-of-Thought (CoT)
@@ -37,3 +44,4 @@ Interleaving thought with tool use.
 - **Observation**: "18°C, Cloudy"
 - **Thought**: I have the data. I will answer the user.
 - **Answer**: "It is currently 18°C and cloudy in Tokyo."
+

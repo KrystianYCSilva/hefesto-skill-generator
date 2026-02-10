@@ -1,3 +1,10 @@
+---
+name: skill-creator-reference-output-patterns
+description: |
+  Reference material for skill-creator focused on output-patterns.
+  Use when: applying the skill-creator skill and you need detailed lookup content, examples, warnings, or advanced notes.
+---
+
 # Output Patterns
 
 Use these patterns when skills need to produce consistent, high-quality output.
@@ -80,3 +87,4 @@ Follow this style: type(scope): brief description, then detailed explanation.
 ```
 
 Examples help Claude understand the desired style and level of detail more clearly than descriptions alone.
+

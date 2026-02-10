@@ -1,3 +1,10 @@
+---
+name: skill-creator-reference-workflows
+description: |
+  Reference material for skill-creator focused on workflows.
+  Use when: applying the skill-creator skill and you need detailed lookup content, examples, warnings, or advanced notes.
+---
+
 # Workflow Patterns
 
 ## Sequential Workflows

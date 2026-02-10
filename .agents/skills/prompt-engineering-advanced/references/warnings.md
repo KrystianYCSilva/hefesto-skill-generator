@@ -1,3 +1,10 @@
+---
+name: warnings
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Warnings & Common Pitfalls (Prompt Engineering)
 
 ## 1. Over-Prompting
@@ -17,3 +24,4 @@
 ## 4. Role Amnesia
 - **Error**: Long conversations where the model forgets its initial persona.
 - **Fix**: Re-inject the System Prompt or Role periodically (or use Prompt Caching at the top).
+

@@ -1,3 +1,10 @@
+---
+name: cli-guide
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # AI CLI Guide & Documentation
 
 A detailed breakdown of the major AI coding assistants using verified documentation sources.
@@ -31,3 +38,4 @@ A detailed breakdown of the major AI coding assistants using verified documentat
 -   **OpenDevin**: [GitHub](https://github.com/OpenDevin/OpenDevin)
 -   **Aider**: [Website](https://aider.chat)
 -   **Continue**: [Website](https://continue.dev)
+

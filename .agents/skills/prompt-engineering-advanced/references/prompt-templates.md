@@ -1,3 +1,10 @@
+---
+name: prompt-templates
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Prompt Templates
 
 Copy and paste these templates to structure your prompts.
@@ -48,3 +55,4 @@ Be [Adjective 1], [Adjective 2], and [Adjective 3].
 *** EXPERIMENT ***
 (Optional) Reply with multiple options for me to choose.
 ```
+

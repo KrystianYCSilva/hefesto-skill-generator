@@ -1,3 +1,10 @@
+---
+name: warnings
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Warnings & Common Pitfalls
 
 ## 1. Context Blindness
@@ -15,3 +22,4 @@
 ## 4. Infinite Loops
 -   **Error**: Agents getting stuck in a "Fix error -> Run test -> Fix error" loop.
 -   **Fix**: Set a maximum step count (e.g., 5 turns) and force a human handoff if unresolved.
+

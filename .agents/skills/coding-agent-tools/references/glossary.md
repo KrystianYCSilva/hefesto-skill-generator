@@ -1,3 +1,10 @@
+---
+name: glossary
+description: |
+  Documentation file for agent operations and skill usage.
+  Use when: you need procedural guidance for agent execution and context management.
+---
+
 # Coding Tools Glossary
 
 ## Concepts
@@ -16,3 +23,4 @@
 - **MCP**: Model Context Protocol. Standard for connecting AI to data.
 - **RAG**: Retrieval-Augmented Generation. Fetching docs for the AI.
 - **LSP**: Language Server Protocol. How IDEs understand code structure.
+
