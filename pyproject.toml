@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hefesto-cli"
+version = "2.2.0"
+description = "Template-driven Agent Skill generator for 7 AI CLIs. Zero dependencies, 100% Markdown."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    { name = "Krystian YC Silva" },
+]
+keywords = ["ai", "agents", "cli", "skills", "agentskills", "code-generation", "hefesto"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Code Generators",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.0.0",
+]
+
+[project.scripts]
+hefesto = "hefesto_cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hefesto_cli"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"templates_hefesto" = "share/hefesto_cli/templates"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/templates_hefesto",
+    "/README.md",
+    "/pyproject.toml",
+]
