@@ -8,17 +8,26 @@
 
 ### Tipo de Sistema
 
-**Spec-Kit Template-Driven** - Zero Python, zero dependencias. Toda logica vive em Markdown templates que a IA interpreta diretamente.
+**Hybrid Architecture** - Python CLI para bootstrap + Markdown templates para AI-driven skill generation.
 
 ### Componentes
 
 ```
+PYTHON CLI (hefesto)  ->  Bootstrap + Management
+                          ↓
+                     .hefesto/templates/
+                          ↓
 MARKDOWN TEMPLATES  ->  AI AGENT  ->  SKILLS (output)
-                         ^
-                    skill-template.md
-                    quality-checklist.md
-                    cli-compatibility.md
+                          ^
+                     skill-template.md
+                     quality-checklist.md
+                     cli-compatibility.md
 ```
+
+**Camadas:**
+1. **Python CLI** (`hefesto-cli`): init, check, list, version
+2. **Templates**: Markdown files que AI agents interpretam
+3. **Slash Commands**: `/hefesto.*` para operações guiadas por AI
 
 ---
 
@@ -28,11 +37,20 @@ MARKDOWN TEMPLATES  ->  AI AGENT  ->  SKILLS (output)
 
 | Componente | Tecnologia | Justificativa |
 |------------|------------|---------------|
+| CLI | Python 3.11+ (Typer + Rich) | User-facing commands |
 | Formato | Markdown + YAML frontmatter | Padrao Agent Skills |
-| Templates | 3 Markdown (skill, checklist, CLI map) | Fonte de verdade |
-| Installer | Bash + PowerShell | Cross-platform bootstrap |
+| Templates | 4 Markdown (skill, checklist, CLI map, agent) | Fonte de verdade |
+| Installer | Python wheel + legacy bash/PowerShell | Cross-platform install |
+| Package Manager | uv / pipx / pip | Isolated global install |
 | CI/CD | GitHub Actions | Build + release automatizado |
-| Linguagem | Markdown (template-driven) | Zero dependencies |
+
+### Python Dependencies
+
+| Dependency | Version | Uso |
+|------------|---------|-----|
+| typer | >=0.12.0 | CLI framework |
+| rich | >=13.0.0 | Terminal UI (tables, panels, trees) |
+| hatchling | build-time | Wheel builder |
 
 ### Armazenamento
 
@@ -76,51 +94,75 @@ MARKDOWN TEMPLATES  ->  AI AGENT  ->  SKILLS (output)
 ```
 hefesto-skill-generator/
   README.md
-  templates/                    # Templates fonte
+  INSTALL.md
+  pyproject.toml                # Python package config
+  src/hefesto_cli/
+    __init__.py                 # CLI principal (~450 linhas)
+  templates_hefesto/            # Templates distribuidos via wheel
     skill-template.md
     quality-checklist.md
     cli-compatibility.md
-  installer/                    # Bootstrap distribuivel
-    install.sh / install.ps1
-    payload/
-      hefesto/templates/
-      commands/{cli}/
-  .<cli>/commands/hefesto.*     # 5 comandos por CLI (7 CLIs)
+    agent-template.md
+    commands/                   # 7 slash commands
+      hefesto.create.md
+      hefesto.validate.md
+      hefesto.update.md
+      hefesto.extract.md
+      hefesto.agent.md
+      hefesto.init.md
+      hefesto.list.md
+  templates/                    # Templates fonte (legacy, deprecated)
+  installer/                    # Installer scripts (legacy)
+  .<cli>/commands/hefesto.*     # Comandos por CLI (7 CLIs)
   .<cli>/skills/                # Skills de demonstracao
-  .github/workflows/release.yml
-  docs/                         # Documentacao
   .context/                     # Contexto para IAs
+  docs/
+  specs/
 ```
 
-### Projeto do Usuario (apos install)
+### Projeto do Usuario (apos `hefesto init`)
 
 ```
 meu-projeto/
   .hefesto/
-    version                    # "2.0.0"
-    templates/                 # 3 templates
+    version                    # "2.2.0"
+    templates/                 # 4 templates
+      skill-template.md
+      quality-checklist.md
+      cli-compatibility.md
+      agent-template.md
   .<cli>/
-    commands/hefesto.*         # 5 comandos
-    skills/                    # Skills geradas
+    commands/hefesto.*         # 7 comandos
+    skills/                    # Skills geradas (vazio inicialmente)
 ```
 
 ---
 
 ## 5. Dependencias
 
-### Runtime
+### Runtime (Python CLI)
+
+| Dependencia | Versao | Obrigatorio |
+|-------------|--------|-------------|
+| Python | 3.11+ | Sim |
+| typer | >=0.12.0 | Sim (auto-instalado) |
+| rich | >=13.0.0 | Sim (auto-instalado) |
+
+### Runtime (Skill Generation)
 
 | Dependencia | Tipo | Obrigatorio |
 |-------------|------|-------------|
-| CLI de IA (qualquer 1 dos 7) | Runtime | Sim |
+| CLI de IA (qualquer 1 dos 7) | Runtime | Sim (para usar slash commands) |
 | Filesystem | Sistema | Sim |
 | Git | Sistema | Nao (recomendado) |
 
 ### Instalacao
 
-| Dependencia | Tipo | Obrigatorio |
+| Dependencia | Tipo | Recomendado |
 |-------------|------|-------------|
-| Bash 3.2+ (Unix) ou PowerShell 5.1+ (Windows) | Installer | Sim |
+| uv | Package manager | Sim |
+| pipx | Package manager | Alternativa |
+| pip | Package manager | Alternativa |
 
 ---
 
@@ -139,7 +181,7 @@ Nenhuma API externa necessaria. Sistema completamente local.
 
 ---
 
-**Ultima Atualizacao:** 2026-02-07
+**Ultima Atualizacao:** 2026-02-11 (Python CLI v2.2.0)
 
 
 

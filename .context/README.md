@@ -2,7 +2,7 @@
 
 > **Projeto:** Hefesto Skill Generator
 > **Versao:** 2.2.0
-> **Arquitetura:** Template-Driven (zero dependencies)
+> **Arquitetura:** Hybrid (Python CLI + Template-Driven)
 
 ---
 
@@ -99,6 +99,6 @@ ALWAYS cite a regra especifica (ID) na resposta
 
 ---
 
-**Ultima Atualizacao:** 2026-02-07 (v2.0.0)
+**Ultima Atualizacao:** 2026-02-11 (v2.2.0 - Python CLI)
 
 

@@ -6,7 +6,9 @@
 
 ## 1. Visao Geral
 
-**Hefesto Skill Generator** e um spec-kit template-driven que gera Agent Skills para 7 CLIs de IA. Zero Python, zero dependencias - toda logica vive em Markdown templates.
+**Hefesto Skill Generator** e um sistema hibrido que gera Agent Skills para 7 CLIs de IA:
+- **Python CLI** (`hefesto-cli`): Comandos de linha (init, check, list, version)
+- **Slash Commands**: Templates Markdown para AI agents (`/hefesto.create`, validate, etc.)
 
 Named after the Greek god of the forge, Hefesto crafts specialized tools (skills) that empower AI agents.
 
@@ -96,7 +98,19 @@ Frontmatter SOMENTE name + description. Body sem tutorials desnecessarios.
 
 ## 6. Instalacao
 
-### Via Installer Script
+### Opcao 1: Python CLI (Recomendado)
+
+```bash
+uv tool install hefesto-cli --from git+https://github.com/KrystianYCSilva/hefesto-skill-generator.git
+```
+
+Comandos disponiveis:
+- `hefesto init` - Bootstrap: detecta CLIs, cria .hefesto/, instala slash commands
+- `hefesto check` - Mostra status (templates, CLIs detectados, skills instaladas)
+- `hefesto list` - Lista todas as skills instaladas
+- `hefesto version` - Mostra versao
+
+### Opcao 2: Installer Script (Legacy)
 
 ```bash
 # Unix/macOS
@@ -106,18 +120,11 @@ cd installer && bash install.sh
 cd installer; .\install.ps1
 ```
 
-### Via GitHub Release
-
-```bash
-curl -fsSL https://github.com/<org>/hefesto-skill-generator/releases/latest/download/hefesto-latest.tar.gz | tar xz
-cd installer && bash install.sh
-```
-
-O installer:
-1. Detecta CLIs instalados (PATH + diretorios)
-2. Cria `.hefesto/` com templates e versao
-3. Copia comandos `hefesto.*` para cada CLI
-4. Cria diretorios `skills/`
+O que o `hefesto init` faz:
+1. Detecta CLIs instalados (7 CLIs: Claude, Gemini, Codex, Cursor, OpenCode, Qwen, Copilot)
+2. Cria `.hefesto/` com 4 templates (skill, quality-checklist, cli-compatibility, agent)
+3. Instala 7 slash commands em cada CLI detectado
+4. Cria diretorios `skills/` para cada CLI
 
 ---
 

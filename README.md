@@ -1,17 +1,20 @@
 # Hefesto Skill Generator
 
-> **Template-driven Agent Skill generator for 7 AI CLIs**
+> **Hybrid Agent Skill generator for 7 AI CLIs**
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue)]()
+[![Version](https://img.shields.io/badge/version-2.2.0-blue)]()
 [![Agent Skills](https://img.shields.io/badge/standard-Agent%20Skills-green)](https://agentskills.io)
 [![License](https://img.shields.io/badge/license-MIT-green)]()
-[![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen)]()
 
 ---
 
 ## What is Hefesto?
 
-**Hefesto** generates [Agent Skills](https://agentskills.io) for 7 AI CLI tools from natural language descriptions. It's a **spec-kit**: Markdown templates that the AI interprets - zero Python, zero dependencies.
+**Hefesto** generates [Agent Skills](https://agentskills.io) for 7 AI CLI tools from natural language descriptions.
+
+**Hybrid architecture:**
+- **Python CLI** (`hefesto`): Bootstrap, status, list commands
+- **AI Slash Commands** (`/hefesto.*`): Template-driven skill generation by AI agents
 
 Named after the Greek god of the forge, Hefesto crafts specialized tools (skills) that empower AI agents.
 
@@ -20,6 +23,10 @@ Named after the Greek god of the forge, Hefesto crafts specialized tools (skills
 ## Architecture
 
 ```
+PYTHON CLI (hefesto)  →  Bootstrap + Management
+                         ↓
+                    .hefesto/templates/
+                         ↓
 MARKDOWN TEMPLATES  →  AI AGENT  →  SKILLS (output)
                          ↑
                     skill-template.md
@@ -27,10 +34,10 @@ MARKDOWN TEMPLATES  →  AI AGENT  →  SKILLS (output)
                     cli-compatibility.md
 ```
 
-- **No code**: All logic lives in Markdown templates
-- **No dependencies**: No Python, Node.js, pip, or npm
-- **Multi-CLI**: Generates for all detected CLIs simultaneously
-- **Self-reviewing**: Auto-critica checklist before human approval
+- **Python CLI**: Bootstrap, detection, status (typer + rich)
+- **Template-driven AI**: Skill generation via Markdown templates
+- **Multi-CLI**: Auto-detects and generates for all 7 CLIs simultaneously
+- **Self-reviewing**: Auto-critica 13-point checklist before human approval
 
 ---
 
@@ -50,32 +57,58 @@ MARKDOWN TEMPLATES  →  AI AGENT  →  SKILLS (output)
 
 ## Commands
 
+### Python CLI
+
+| Command | Description |
+|---------|-------------|
+| `hefesto init` | Bootstrap: detect CLIs, create .hefesto/, install slash commands |
+| `hefesto check` | Show status (version, templates, CLIs, skills) |
+| `hefesto list` | List all installed skills across CLIs |
+| `hefesto version` | Show Hefesto CLI version |
+
+### AI Slash Commands
+
 | Command | Description | Human Gate |
 |---------|-------------|------------|
 | `/hefesto.create` | Create skill from description | Yes |
 | `/hefesto.validate` | Validate & fix skill against spec | Yes (fix-auto) |
+| `/hefesto.update` | Update existing skill | Yes |
 | `/hefesto.extract` | Extract skill from code/docs | Yes |
-| `/hefesto.init` | Bootstrap: detect CLIs, create dirs | No |
+| `/hefesto.agent` | Generate specialized agent | Yes |
+| `/hefesto.init` | Verify Hefesto installation | No |
 | `/hefesto.list` | List installed skills | No (read-only) |
 
 ---
 
 ## Quick Start
 
-```bash
-# 1. Initialize (detects CLIs, creates directories)
-/hefesto.init
+### 1. Install Python CLI
 
-# 2. Create your first skill
+```bash
+uv tool install hefesto-cli --from git+https://github.com/KrystianYCSilva/hefesto-skill-generator.git
+```
+
+### 2. Initialize in Your Project
+
+```bash
+cd your-project/
+hefesto init        # Detects CLIs, creates .hefesto/, installs slash commands
+hefesto check       # Verify installation
+```
+
+### 3. Use Slash Commands (in AI CLI)
+
+```bash
+# Create your first skill
 /hefesto.create "Validate email addresses using RFC 5322 regex patterns"
 
-# 3. Validate the generated skill
+# Validate the generated skill
 /hefesto.validate validate-email
 
-# 4. List all skills
-/hefesto.list
+# List all skills
+hefesto list        # Or /hefesto.list in AI CLI
 
-# 5. Extract skill from existing code
+# Extract skill from existing code
 /hefesto.extract src/utils/date-formatter.ts
 ```
 
@@ -96,7 +129,24 @@ Phase 6: Persistence       → Write to all detected CLI directories
 
 ## Installation
 
-### Option 1: Installer Script (Recommended)
+### Option 1: Python CLI (Recommended)
+
+```bash
+# Install globally with uv
+uv tool install hefesto-cli --from git+https://github.com/KrystianYCSilva/hefesto-skill-generator.git
+
+# Or with pipx
+pipx install git+https://github.com/KrystianYCSilva/hefesto-skill-generator.git
+
+# Or from local clone
+git clone https://github.com/KrystianYCSilva/hefesto-skill-generator.git
+cd hefesto-skill-generator
+uv tool install .
+```
+
+See [INSTALL.md](INSTALL.md) for detailed installation instructions and troubleshooting.
+
+### Option 2: Installer Script (Legacy)
 
 ```bash
 # Unix/macOS
