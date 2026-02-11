@@ -24,12 +24,21 @@ console = Console()
 # ── CLI Configuration ────────────────────────────────────────────────────────
 
 CLI_CONFIG: dict[str, dict] = {
+    "copilot": {
+        "name": "GitHub Copilot",
+        "folder": ".github",
+        "skills_dir": "skills",
+        "commands_dir": "agents",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": False,  # IDE-based
+    },
     "claude": {
         "name": "Claude Code",
         "folder": ".claude",
         "skills_dir": "skills",
         "commands_dir": "commands",
         "var_syntax": "$ARGUMENTS",
+        "requires_cli": True,
     },
     "gemini": {
         "name": "Gemini CLI",
@@ -37,6 +46,31 @@ CLI_CONFIG: dict[str, dict] = {
         "skills_dir": "skills",
         "commands_dir": "commands",
         "var_syntax": "{{args}}",
+        "requires_cli": True,
+    },
+    "cursor-agent": {
+        "name": "Cursor",
+        "folder": ".cursor",
+        "skills_dir": "skills",
+        "commands_dir": "commands",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": False,  # IDE-based
+    },
+    "qwen": {
+        "name": "Qwen Code",
+        "folder": ".qwen",
+        "skills_dir": "skills",
+        "commands_dir": "commands",
+        "var_syntax": "{{args}}",
+        "requires_cli": True,
+    },
+    "opencode": {
+        "name": "opencode",
+        "folder": ".opencode",
+        "skills_dir": "skills",
+        "commands_dir": "command",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": True,
     },
     "codex": {
         "name": "Codex CLI",
@@ -44,34 +78,87 @@ CLI_CONFIG: dict[str, dict] = {
         "skills_dir": "skills",
         "commands_dir": "prompts",
         "var_syntax": "$ARGUMENTS",
+        "requires_cli": True,
     },
-    "cursor": {
-        "name": "Cursor",
-        "folder": ".cursor",
+    "windsurf": {
+        "name": "Windsurf",
+        "folder": ".windsurf",
+        "skills_dir": "skills",
+        "commands_dir": "workflows",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": False,  # IDE-based
+    },
+    "kilocode": {
+        "name": "Kilo Code",
+        "folder": ".kilocode",
+        "skills_dir": "skills",
+        "commands_dir": "rules",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": False,  # IDE-based
+    },
+    "auggie": {
+        "name": "Auggie CLI",
+        "folder": ".augment",
+        "skills_dir": "skills",
+        "commands_dir": "rules",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": True,
+    },
+    "codebuddy": {
+        "name": "CodeBuddy",
+        "folder": ".codebuddy",
         "skills_dir": "skills",
         "commands_dir": "commands",
         "var_syntax": "$ARGUMENTS",
+        "requires_cli": True,
     },
-    "opencode": {
-        "name": "OpenCode",
-        "folder": ".opencode",
-        "skills_dir": "skills",
-        "commands_dir": "command",
-        "var_syntax": "$ARGUMENTS",
-    },
-    "qwen": {
-        "name": "Qwen",
-        "folder": ".qwen",
+    "qoder": {
+        "name": "Qoder CLI",
+        "folder": ".qoder",
         "skills_dir": "skills",
         "commands_dir": "commands",
-        "var_syntax": "{{args}}",
-    },
-    "copilot": {
-        "name": "GitHub Copilot",
-        "folder": ".github",
-        "skills_dir": "skills",
-        "commands_dir": "agents",  # Copilot uses .github/agents/ and .github/prompts/
         "var_syntax": "$ARGUMENTS",
+        "requires_cli": True,
+    },
+    "roo": {
+        "name": "Roo Code",
+        "folder": ".roo",
+        "skills_dir": "skills",
+        "commands_dir": "rules",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": False,  # IDE-based
+    },
+    "q": {
+        "name": "Amazon Q Developer CLI",
+        "folder": ".amazonq",
+        "skills_dir": "skills",
+        "commands_dir": "prompts",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": True,
+    },
+    "amp": {
+        "name": "Amp",
+        "folder": ".agents",
+        "skills_dir": "skills",
+        "commands_dir": "commands",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": True,
+    },
+    "shai": {
+        "name": "SHAI",
+        "folder": ".shai",
+        "skills_dir": "skills",
+        "commands_dir": "commands",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": True,
+    },
+    "bob": {
+        "name": "IBM Bob",
+        "folder": ".bob",
+        "skills_dir": "skills",
+        "commands_dir": "commands",
+        "var_syntax": "$ARGUMENTS",
+        "requires_cli": False,  # IDE-based
     },
 }
 

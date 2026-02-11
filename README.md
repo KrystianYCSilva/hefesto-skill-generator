@@ -36,22 +36,32 @@ MARKDOWN TEMPLATES  →  AI AGENT  →  SKILLS (output)
 
 - **Python CLI**: Bootstrap, detection, status (typer + rich)
 - **Template-driven AI**: Skill generation via Markdown templates
-- **Multi-CLI**: Auto-detects and generates for all 7 CLIs simultaneously
+- **Multi-CLI**: Auto-detects and generates for all 17 CLIs simultaneously
 - **Self-reviewing**: Auto-critica 13-point checklist before human approval
 
 ---
 
-## Supported CLIs
+## Supported CLIs (17 total)
 
-| CLI | Skills Directory | Variable Syntax |
-|-----|------------------|-----------------|
-| Claude Code | `.claude/skills/` | `$ARGUMENTS` |
-| Gemini CLI | `.gemini/skills/` | `{{args}}` |
-| OpenAI Codex | `.codex/skills/` | `$ARGUMENTS` |
-| VS Code/Copilot | `.github/skills/` | `$ARGUMENTS` |
-| OpenCode | `.opencode/skills/` | `$ARGUMENTS` |
-| Cursor | `.cursor/skills/` | `$ARGUMENTS` |
-| Qwen Code | `.qwen/skills/` | `{{args}}` |
+| CLI | Skills Directory | Variable Syntax | Type |
+|-----|------------------|-----------------|------|
+| GitHub Copilot | `.github/skills/` | `$ARGUMENTS` | IDE |
+| Claude Code | `.claude/skills/` | `$ARGUMENTS` | CLI |
+| Gemini CLI | `.gemini/skills/` | `{{args}}` | CLI |
+| Cursor | `.cursor/skills/` | `$ARGUMENTS` | IDE |
+| Qwen Code | `.qwen/skills/` | `{{args}}` | CLI |
+| opencode | `.opencode/skills/` | `$ARGUMENTS` | CLI |
+| Codex CLI | `.codex/skills/` | `$ARGUMENTS` | CLI |
+| Windsurf | `.windsurf/skills/` | `$ARGUMENTS` | IDE |
+| Kilo Code | `.kilocode/skills/` | `$ARGUMENTS` | IDE |
+| Auggie CLI | `.augment/skills/` | `$ARGUMENTS` | CLI |
+| CodeBuddy | `.codebuddy/skills/` | `$ARGUMENTS` | CLI |
+| Qoder CLI | `.qoder/skills/` | `$ARGUMENTS` | CLI |
+| Roo Code | `.roo/skills/` | `$ARGUMENTS` | IDE |
+| Amazon Q CLI | `.amazonq/skills/` | `$ARGUMENTS` | CLI |
+| Amp | `.agents/skills/` | `$ARGUMENTS` | CLI |
+| SHAI | `.shai/skills/` | `$ARGUMENTS` | CLI |
+| IBM Bob | `.bob/skills/` | `$ARGUMENTS` | IDE |
 
 ---
 

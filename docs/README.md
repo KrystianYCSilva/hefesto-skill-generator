@@ -1,132 +1,132 @@
-# docs/ - Documentacao do Projeto
+# Hefesto Skill Generator - Documentation
 
-> **AVISO PARA IAs**: Esta pasta e "arquivo morto" para humanos.
-> Para contexto ativo, consulte `/.context/` primeiro.
-
----
-
-## Estrutura
-
-| Pasta | Conteudo |
-|-------|----------|
-| `cards/` | Unidades de trabalho (tarefas de implementacao) |
-| `decisions/` | ADRs (decisoes arquiteturais) |
-| `plan/` | Planos de implementacao |
+> Human-readable documentation for understanding, maintaining, and extending Hefesto.
 
 ---
 
-## Links Rapidos
+## Documentation Index
 
-- [ARCHITECTURE.md](./ARCHITECTURE.md) - Visao geral do sistema
-- [Cards Ativos](./cards/) - Trabalho em andamento
-- [Decisoes](./decisions/) - Historico de ADRs
-- [Plano de Implementacao](./plan/PLAN-001-hefesto-v1.md) - Roadmap v1.0
+### Core Documentation
 
----
-
-## Convencoes de Nomenclatura
-
-| Tipo | Formato | Exemplo |
-|------|---------|---------|
-| Card | `CARD-XXX-descricao.md` | CARD-001-foundation.md |
-| ADR | `ADR-XXX-descricao.md` | ADR-001-agent-skills-standard.md |
-| Plano | `PLAN-XXX-descricao.md` | PLAN-001-hefesto-v1.md |
+- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - System architecture, components, data flow, and design decisions
+- **[decisions/](./decisions/)** - Architectural Decision Records (ADRs) documenting key decisions
 
 ---
 
-## Cards Disponiveis
+## What is Hefesto?
 
-### Alta Prioridade
+Hefesto Skill Generator is a template-driven system that generates [Agent Skills](https://agentskills.io) for 17 AI CLI tools from natural language descriptions.
 
-| Card | Titulo | Estimativa | Status |
-|------|--------|------------|--------|
-| [CARD-001](./cards/CARD-001-foundation.md) | Foundation | 4h | ✅ COMPLETED |
-| [CARD-002](./cards/CARD-002-templates.md) | Templates System | 8h | ✅ COMPLETED |
-| [CARD-003](./cards/CARD-003-commands.md) | Commands /hefesto.* | 12h | ✅ COMPLETED |
-| [CARD-004](./cards/CARD-004-multi-cli.md) | Multi-CLI Generator (Feature 004) | 8h | ✅ COMPLETED |
-| [CARD-005](./cards/CARD-005-human-gate.md) | Human Gate + Wizard | 10h | Planned |
+### Key Objectives
 
-### Media Prioridade
-
-| Card | Titulo | Estimativa | Dependencias |
-|------|--------|------------|--------------|
-| [CARD-006](./cards/CARD-006-knowledge-base.md) | Knowledge Base | 16h | CARD-001 |
-| [CARD-007](./cards/CARD-007-examples.md) | Examples | 12h | CARD-002, CARD-004 |
+1. **Zero-code skill generation**: Generate skills from descriptions without writing code
+2. **Multi-CLI support**: Single source generates for all detected AI CLIs
+3. **Quality assurance**: Auto-critique with 13-point checklist + human gate approval
+4. **Standard compliance**: Follow [agentskills.io](https://agentskills.io) specification
+5. **Developer experience**: Simple install, intuitive commands, clear workflows
 
 ---
 
-## Progresso por Fase
+## What Does Hefesto Do?
 
-| Fase | Card | Status | Progresso |
-|------|------|--------|-----------|
-| 1. Foundation | CARD-001 | ✅ COMPLETED | 6/6 |
-| 2. Templates | CARD-002 | ✅ COMPLETED | 13/13 |
-| 3. Commands | CARD-003 | ✅ COMPLETED | 9/9 |
-| 4. Multi-CLI | CARD-004 | ✅ COMPLETED (Feature 004) | 8/8 |
-| 5. Human Gate | CARD-005 | Planned | 0/8 |
-| 6. Knowledge | CARD-006 | Planned | 0/5 |
-| 7. Examples | CARD-007 | Planned | 0/6 |
-| 8. Validacao | - | Planned | 0/5 |
-| **TOTAL** | | | **36/56** (64% ✅) |
+### For Users
 
-**Estimativa Total Restante:** ~36h (de 74h total)
+- **Create skills** from natural language descriptions (`/hefesto.create`)
+- **Validate skills** against agentskills.io spec with auto-fix (`/hefesto.validate`)
+- **Update skills** to modify existing skills (`/hefesto.update`)
+- **Extract skills** from existing code/docs (`/hefesto.extract`)
+- **Generate agents** by composing skills (`/hefesto.agent`)
+- **List skills** installed in project (`/hefesto.list`)
 
----
+### For Projects
 
-## Feature 004: Multi-CLI Automatic Parallel Generation
-
-✅ **Status: COMPLETED (2026-02-05)**
-
-Feature 004 enables automatic detection and parallel skill generation across all 7 supported CLIs (Claude, Gemini, Codex, OpenCode, Cursor, Qwen, Copilot) with 3x performance improvement over sequential generation.
-
-### Quick Facts
-
-- **Detection Time**: <500ms for all 7 CLIs
-- **Parallel Speedup**: 3x faster than sequential (2s vs 6s)
-- **CLI Adapters**: 7 adapters with auto-transformations (e.g., Gemini `$ARGUMENTS` → `{{args}}`)
-- **Atomic Rollback**: Guaranteed all-or-nothing on multi-CLI generation
-- **Test Coverage**: 9/9 manual tests passed ✅
-- **Compliance**: 10/10 mandatory criteria + 3/3 desirable criteria + 8/8 T0 rules ✅
-
-### Key Deliverables
-
-| Component | Type | Location | Status |
-|-----------|------|----------|--------|
-| CLI Detector | Helper | `commands/helpers/cli-detector.md` | ✅ Complete |
-| CLI Adapter | Helper | `commands/helpers/cli-adapter.md` | ✅ Complete |
-| Parallel Generator | Helper | `commands/helpers/parallel-generator.md` | ✅ Complete |
-| Rollback Handler | Helper | `commands/helpers/rollback-handler.md` | ✅ Complete |
-| Multi-CLI Integration Guide | Helper | `commands/helpers/multi-cli-integration.md` | ✅ Complete |
-| Detection Report Template | Template | `commands/templates/detection-report.md` | ✅ Complete |
-| Generation Report Template | Template | `commands/templates/generation-report.md` | ✅ Complete |
-
-### Reports & Documentation
-
-Feature 004 includes comprehensive test reports and analysis:
-
-| Report | Lines | Location | Key Finding |
-|--------|-------|----------|-------------|
-| Test Report | 400 | `docs/reports/feature-004-test-report.md` | 9/9 tests passed |
-| Executive Summary | 300 | `docs/reports/feature-004-executive-summary.md` | 100% compliance |
-| Final Checklist | 350 | `docs/reports/feature-004-final-checklist.md` | All checks passed |
-| Test Manifest | 10 | `testes/RESUMO-TESTES.txt` | TESTE-01 through TESTE-09 |
+- **Bootstrap** AI development with `hefesto init`
+- **Auto-detect** installed AI CLIs (17 supported)
+- **Install commands** for each detected CLI
+- **Maintain consistency** across multi-CLI projects
 
 ---
 
-## ADRs
+## Architecture Overview
 
-| ADR | Titulo | Status |
-|-----|--------|--------|
-| [ADR-001](./decisions/ADR-001-agent-skills-standard.md) | Escolha do Agent Skills Standard | Aceito |
+```
+PYTHON CLI (hefesto)  →  Bootstrap + Management
+                         ↓
+                    .hefesto/templates/
+                         ↓
+MARKDOWN TEMPLATES  →  AI AGENT  →  SKILLS (output)
+                         ↑
+                    skill-template.md
+                    quality-checklist.md
+                    cli-compatibility.md
+```
+
+### Components
+
+1. **Python CLI** - Bootstrap, detection, status (typer + rich)
+2. **Templates** - Skill structure, quality checklist, CLI compatibility rules
+3. **AI Commands** - 7 slash commands per CLI (`/hefesto.*`)
+4. **Human Gate** - Approval workflow for all write operations
+5. **Multi-CLI Output** - Simultaneous generation for all detected CLIs
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed architecture documentation.
 
 ---
 
-## Planos
+## Requirements
 
-| Plano | Titulo | Status |
-|-------|--------|--------|
-| [PLAN-001](./plan/PLAN-001-hefesto-v1.md) | Hefesto v1.0.0 | Em Planejamento |
+### For Users
+
+- **At least 1 AI CLI** installed (Claude Code, Gemini CLI, Codex, Copilot, OpenCode, Cursor, Qwen, etc.)
+- **Python 3.11+** for CLI installation
+- **uv** or **pipx** recommended for installation
+
+### For Skills
+
+- Follow [agentskills.io](https://agentskills.io) specification
+- SKILL.md < 500 lines, < ~5000 tokens
+- Frontmatter: ONLY `name` + `description`
+- Task-oriented sections ("How to [task]")
 
 ---
 
-**Ultima Atualizacao:** 2026-02-05 (Feature 004 Complete)
+## Key Design Decisions
+
+See [decisions/](./decisions/) for detailed ADRs:
+
+- **[ADR-001](./decisions/ADR-001-agent-skills-standard.md)** - Why Agent Skills as primary standard
+- **[ADR-002](./decisions/ADR-002-research-integration.md)** - Research integration strategy
+- **[ADR-003](./decisions/ADR-003-lightweight-frontmatter.md)** - Lightweight frontmatter approach
+
+---
+
+## How to Extend Hefesto
+
+### Add Support for New CLI
+
+1. Add CLI rules to `templates/cli-compatibility.md`
+2. Create 7 commands in CLI format (create, validate, update, extract, agent, init, list)
+3. Update CLI detection in Python CLI
+4. Test installation with `hefesto init`
+
+### Add New Command
+
+1. Create `hefesto.{cmd}.md` for Claude (canonical)
+2. Adapt for other 16 CLIs
+3. Update templates if needed
+4. Document in README
+
+---
+
+## Links
+
+| Resource | URL |
+|----------|-----|
+| Agent Skills Spec | https://agentskills.io |
+| Main README | [../README.md](../README.md) |
+| Contributing | [../CONTRIBUTING.md](../CONTRIBUTING.md) |
+| Constitution (T0 Rules) | [../CONSTITUTION.md](../CONSTITUTION.md) |
+
+---
+
+**Hefesto Documentation** | v2.2.0 | 2026
